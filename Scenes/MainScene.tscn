@@ -1,0 +1,243 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/TrackScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Classes/Initialize.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/KHMenu.otf" type="DynamicFontData" id=3]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color( 0, 0, 0, 0.309804 )
+shadow_size = 5
+
+[sub_resource type="DynamicFont" id=3]
+size = 18
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+extra_spacing_bottom = -4
+font_data = ExtResource( 3 )
+
+[node name="Main Scene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0745098, 0.0823529, 0.168627, 1 )
+
+[node name="Check Panel" parent="." instance=ExtResource( 1 )]
+
+[node name="Settings Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 70.0
+margin_top = 862.0
+margin_right = -70.0
+margin_bottom = -16.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Tracking" type="Control" parent="Settings Panel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -71.5
+margin_right = 244.0
+margin_bottom = 71.5
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Settings Panel/Tracking"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -105.0
+margin_top = 14.0
+margin_right = 88.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 3 )
+text = "Tracking Mode:"
+
+[node name="Selection" type="OptionButton" parent="Settings Panel/Tracking"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -105.0
+margin_top = 37.0
+margin_right = 88.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 4 )
+text = "Automatic"
+items = [ "Manual", null, false, 0, null, "Automatic", null, false, 1, null ]
+selected = 1
+
+[node name="Icons" type="Control" parent="Settings Panel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -71.5
+margin_right = 244.0
+margin_bottom = 71.5
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Settings Panel/Icons"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -105.0
+margin_top = 80.0
+margin_right = 88.0
+margin_bottom = 99.0
+custom_fonts/font = SubResource( 3 )
+text = "Icon Style:"
+
+[node name="Selection" type="OptionButton" parent="Settings Panel/Icons"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -105.0
+margin_top = 103.0
+margin_right = 88.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 4 )
+text = "Simplified"
+items = [ "Simplified", null, false, 0, null, "Classic", null, false, 1, null ]
+selected = 0
+
+[node name="Color" type="Control" parent="Settings Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -244.0
+margin_top = -71.5
+margin_bottom = 71.5
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Settings Panel/Color"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -87.0
+margin_top = 14.0
+margin_right = 106.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 3 )
+text = "Background Color:"
+
+[node name="Selection" type="ColorPickerButton" parent="Settings Panel/Color"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -87.0
+margin_top = 37.0
+margin_right = 106.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 4 )
+color = Color( 0.137255, 0.137255, 0.137255, 1 )
+edit_alpha = false
+
+[node name="Credits" type="Control" parent="Settings Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -244.0
+margin_top = -71.5
+margin_bottom = 71.5
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Settings Panel/Credits"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -87.0
+margin_top = 80.0
+margin_right = 106.0
+margin_bottom = 99.0
+custom_fonts/font = SubResource( 3 )
+text = "Credits:"
+
+[node name="Button" type="Button" parent="Settings Panel/Credits"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -87.0
+margin_top = 103.0
+margin_right = 106.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 4 )
+text = "See the Legends!"
+
+[node name="Seeker Dialog" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.837
+margin_left = 60.0
+margin_top = 356.0
+margin_right = -60.0
+margin_bottom = -410.132
+window_title = "Seeking KINGDOM HEARTS..."
+
+[node name="Label" type="Label" parent="Seeker Dialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 5.0
+margin_bottom = -41.0
+text = "Seeking KINGDOM HEARTS Process...
+Please, be patient."
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="Seeker Dialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 199.5
+margin_top = 62.0
+margin_right = -199.5
+margin_bottom = -16.0
+text = "Cancel"
+
+[node name="Credits Dialog" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.83
+margin_left = 60.0
+margin_top = 306.0
+margin_right = -60.0
+margin_bottom = -231.88
+window_title = "All the names and shits..."
+
+[node name="Label" type="Label" parent="Credits Dialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = -45.0
+text = "Credits:
+
+TopazTK - General development of the whole thing.
+Denhonator - Creation of the KH1 Randomizer.
+Televo - Icons that are utilized by this program.
+zax - Creator of the web-based tracker that inspired this.
+
+Thanks to all of you for 5 years of support.
+Keep on Moddin'
+
+Links:
+
+https://youtube.com/u/TopazTK/
+https://patreon.com/topaztk/"
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="Credits Dialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 200.0
+margin_top = 276.0
+margin_right = -199.0
+margin_bottom = -23.0
+text = "Got it, chief!"
+
+[connection signal="item_selected" from="Settings Panel/Tracking/Selection" to="." method="trackSelect"]
+[connection signal="item_selected" from="Settings Panel/Icons/Selection" to="." method="iconSelected"]
+[connection signal="color_changed" from="Settings Panel/Color/Selection" to="." method="backColorShift"]
+[connection signal="pressed" from="Settings Panel/Credits/Button" to="." method="creditsButton"]
+[connection signal="pressed" from="Seeker Dialog/Button" to="." method="cancelButton"]
+[connection signal="pressed" from="Credits Dialog/Button" to="." method="cancelButton"]

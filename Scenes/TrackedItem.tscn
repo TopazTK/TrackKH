@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/debug.png" type="Texture" id=1]
+[ext_resource path="res://Classes/TrackedItem.cs" type="Script" id=2]
+[ext_resource path="res://Assets/cross.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Numbers/max.png" type="Texture" id=4]
+
+[node name="TrackedItem" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -120.0
+margin_bottom = -536.0
+script = ExtResource( 2 )
+
+[node name="MainAsset" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.247059 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ShadowAsset" type="TextureRect" parent="MainAsset"]
+self_modulate = Color( 0, 0, 0, 0.376471 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 3.0
+margin_bottom = 2.0
+mouse_filter = 2
+texture = ExtResource( 1 )
+expand = true
+
+[node name="SubAsset" type="TextureRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -16.0
+margin_top = -16.0
+margin_right = -16.0
+margin_bottom = -16.0
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ShadowAsset" type="TextureRect" parent="SubAsset"]
+self_modulate = Color( 0, 0, 0, 0.501961 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 3.0
+margin_bottom = 2.0
+mouse_filter = 2
+texture = ExtResource( 1 )
+expand = true
+
+[node name="NumberAsset" type="TextureRect" parent="."]
+visible = false
+anchor_left = 0.1
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+mouse_filter = 2
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+
+[node name="SubNumberAsset" type="TextureRect" parent="."]
+visible = false
+anchor_left = 0.064
+anchor_top = 0.156
+anchor_right = 0.664
+anchor_bottom = 0.356
+margin_left = -16.0
+margin_top = -16.0
+margin_right = -16.0
+margin_bottom = -16.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+
+[node name="CrossAsset" type="TextureRect" parent="."]
+visible = false
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 1.2
+anchor_bottom = 1.2
+rect_scale = Vector2( 0.6, 0.6 )
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+
+[node name="CrossShadow" type="TextureRect" parent="CrossAsset"]
+self_modulate = Color( 0, 0, 0, 0.501961 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 4.0
+margin_bottom = 4.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+
+[connection signal="mouse_entered" from="MainAsset" to="." method="mouseEnter"]
+[connection signal="mouse_exited" from="MainAsset" to="." method="mouseExit"]
+[connection signal="mouse_entered" from="SubAsset" to="." method="mouseEnter"]
+[connection signal="mouse_exited" from="SubAsset" to="." method="mouseExit"]
