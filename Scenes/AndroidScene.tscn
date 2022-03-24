@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/TrackScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Fonts/KHMenu.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Classes/AndroidInit.cs" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
@@ -21,9 +22,10 @@ size = 18
 extra_spacing_bottom = -4
 font_data = ExtResource( 2 )
 
-[node name="Control" type="Control"]
+[node name="Android Scene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -133,34 +135,6 @@ margin_bottom = 128.0
 custom_fonts/font = SubResource( 3 )
 text = "See the Legends!"
 
-[node name="Seeker Dialog" type="WindowDialog" parent="."]
-anchor_right = 1.0
-anchor_bottom = 0.837
-margin_left = 60.0
-margin_top = 356.0
-margin_right = -60.0
-margin_bottom = -410.132
-window_title = "Seeking KINGDOM HEARTS..."
-
-[node name="Label" type="Label" parent="Seeker Dialog"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 5.0
-margin_bottom = -41.0
-text = "Seeking KINGDOM HEARTS Process...
-Please, be patient."
-align = 1
-valign = 1
-
-[node name="Button" type="Button" parent="Seeker Dialog"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 199.5
-margin_top = 62.0
-margin_right = -199.5
-margin_bottom = -16.0
-text = "Cancel"
-
 [node name="Credits Dialog" type="WindowDialog" parent="."]
 anchor_right = 1.0
 anchor_bottom = 0.83
@@ -200,3 +174,8 @@ margin_top = 276.0
 margin_right = -199.0
 margin_bottom = -23.0
 text = "Got it, chief!"
+
+[connection signal="item_selected" from="Settings Panel/Icons/Selection" to="." method="iconSelected"]
+[connection signal="color_changed" from="Settings Panel/Color/Selection" to="." method="backColorShift"]
+[connection signal="pressed" from="Settings Panel/Credits/Button" to="." method="creditsButton"]
+[connection signal="button_down" from="Credits Dialog/Button" to="." method="cancelButton"]
