@@ -13,7 +13,7 @@ margin_bottom = -536.0
 script = ExtResource( 2 )
 
 [node name="MainAsset" type="TextureRect" parent="."]
-modulate = Color( 1, 1, 1, 0.247059 )
+modulate = Color( 0.45, 0.45, 0.45, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 0

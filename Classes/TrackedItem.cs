@@ -160,7 +160,7 @@ public class TrackedItem : Control
 			_displayedNumber = 0;
 			_numberNode.Visible = false;
 			_numberNode.Texture.Dispose();
-			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1F);
+			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1);
 		}
 	}
 	
