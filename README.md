@@ -8,7 +8,7 @@ This is a full-fledged Auo-Tracker for Denhonator's KH1 Randomizer, heavily insp
 
 ## Download
 
-Get the latest release by clicking the button below.
+Get the latest release by clicking the button below.  
 [![TrackKH](https://img.shields.io/badge/TrackKH-Download-blue.svg)](https://github.com/TopazTK/TrackKH/releases)
 
 ---
