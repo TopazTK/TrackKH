@@ -29,6 +29,8 @@ public class TrackedItem : Control
 	[Export] public bool BackTrackable = true;
 	[Export] public bool SubBackTrackable = true;
 	
+	[Export] public bool SubInclusive = false;
+	
 	[Export] public string TexturePath = "debug.png";
 	[Export] public string SubTexturePath = "debug.png";
 	
@@ -250,12 +252,64 @@ public class TrackedItem : Control
 			
 			if (Singleton.TrackMode == 1)
 			{
+				if ((long)SubAddress != -1)
+				{
+					switch (SubTrackingMode)
+					{
+						case 0x00:
+						{
+							var _count = Hypervisor.Read<byte>(SubAddress);
+							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
+							
+							if (_subLastCount > 0)
+							{
+								if (_subLastCount < MaximumCount)
+									SubActivate(_subLastCount);
+								
+								else
+									SubActivate(MaximumCount);
+								
+								if (BackTrackable)
+									_subLastCount = _count;
+							}
+							
+							else if (BackTrackable)
+								SubDeactivate();
+							
+							break;
+						}
+						
+						case 0x01:
+						{
+							var _value = Hypervisor.ReadArray(SubAddress, SubArrayLength);
+							var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
+							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
+							
+							if (_subLastCount > 0)
+							{
+								SubActivate(_subLastCount);
+								
+								if (SubBackTrackable)
+									_subLastCount = _count;
+							}
+							
+							else if (SubBackTrackable)
+								SubDeactivate();
+							
+							break;
+						}
+					}
+				}
+				
 				switch (TrackingMode)
 				{
 					case 0x00:
 					{
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						_lastCount = _lastCount < _count ? _count : _lastCount;
+						
+						if (SubInclusive && _lastCount < _subLastCount)
+						_lastCount += _subLastCount;
 						
 						if (_lastCount > 0)
 						{
@@ -286,6 +340,9 @@ public class TrackedItem : Control
 						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
+						
+						if (SubInclusive && _lastCount < _subLastCount)
+						_lastCount += _subLastCount;
 						
 						if (_lastCount > 0)
 						{
@@ -329,6 +386,9 @@ public class TrackedItem : Control
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						var _bitwise = _count & RequiredValue;
 						
+						if (SubInclusive && _count < _subLastCount)
+						_count += _subLastCount;
+						
 						if (_bitwise == RequiredValue)
 							Activate(1);
 						
@@ -345,6 +405,9 @@ public class TrackedItem : Control
 						
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
+						
+						if (SubInclusive && _lastCount < _subLastCount)
+						_lastCount += _subLastCount;
 						
 						if (_bitwise == RequiredValue)
 						{
@@ -395,6 +458,9 @@ public class TrackedItem : Control
 						
 						_lastCount = _lastCount < _count ? (byte)_count : _lastCount;
 						
+						if (SubInclusive && _lastCount < _subLastCount)
+						_lastCount += _subLastCount;
+						
 						if (_lastCount > 0)
 						{
 							Activate(1);
@@ -427,6 +493,9 @@ public class TrackedItem : Control
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
+						if (SubInclusive && _lastCount < _subLastCount)
+						_lastCount += _subLastCount;
+						
 						if (_count > 0)
 						{
 							if (RequiredValue == -1)
@@ -443,55 +512,6 @@ public class TrackedItem : Control
 							Deactivate();
 						
 						break;
-					}
-				}
-				
-				if ((long)SubAddress != -1)
-				{
-					switch (SubTrackingMode)
-					{
-						case 0x00:
-						{
-							var _count = Hypervisor.Read<byte>(SubAddress);
-							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
-							
-							if (_subLastCount > 0)
-							{
-								if (_subLastCount < MaximumCount)
-									SubActivate(_subLastCount);
-								
-								else
-									SubActivate(MaximumCount);
-								
-								if (BackTrackable)
-									_subLastCount = _count;
-							}
-							
-							else if (BackTrackable)
-								SubDeactivate();
-							
-							break;
-						}
-						
-						case 0x01:
-						{
-							var _value = Hypervisor.ReadArray(SubAddress, SubArrayLength);
-							var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
-							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
-							
-							if (_subLastCount > 0)
-							{
-								SubActivate(_subLastCount);
-								
-								if (SubBackTrackable)
-									_subLastCount = _count;
-							}
-							
-							else if (SubBackTrackable)
-								SubDeactivate();
-							
-							break;
-						}
 					}
 				}
 			}

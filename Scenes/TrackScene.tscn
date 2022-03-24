@@ -36,7 +36,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/fire.png"
 
@@ -55,7 +54,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/blizzard.png"
 
@@ -74,7 +72,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/thunder.png"
 
@@ -93,7 +90,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/cure.png"
 
@@ -112,7 +108,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/aero.png"
 
@@ -131,7 +126,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/gravity.png"
 
@@ -150,7 +144,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 4
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Magic/stop.png"
 
@@ -294,6 +287,7 @@ SubArrayLength = -1
 SubAddress = 44331145
 BackTrackable = false
 SubBackTrackable = false
+SubInclusive = true
 TexturePath = "Progress/postcards.png"
 SubTexturePath = "Progress/material.png"
 
@@ -333,6 +327,7 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 5
 SubTrackingMode = -1
+BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Progress/reports.png"
 
@@ -357,7 +352,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 3
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Trinity/blue.png"
 
@@ -376,7 +370,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 3
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Trinity/red.png"
 
@@ -395,7 +388,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 3
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Trinity/green.png"
 
@@ -414,7 +406,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 3
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Trinity/white.png"
 
@@ -433,7 +424,6 @@ SubArrayLength = -1
 SubAddress = -1
 TrackingMode = 3
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
 TexturePath = "Trinity/yellow.png"
 

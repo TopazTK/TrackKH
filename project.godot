@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="KHTracker"
-run/main_scene="res://Scenes/AndroidScene.tscn"
+run/main_scene="res://Scenes/MainScene.tscn"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.196078, 0.196078, 0.196078, 1 )
 config/icon="res://Assets/icon.png"
