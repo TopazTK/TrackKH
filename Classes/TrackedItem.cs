@@ -308,8 +308,8 @@ public class TrackedItem : Control
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _lastCount < _subLastCount)
-						_lastCount += _subLastCount;
+						if (SubInclusive && _count < _subLastCount)
+						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
 						{
@@ -341,8 +341,8 @@ public class TrackedItem : Control
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _lastCount < _subLastCount)
-						_lastCount += _subLastCount;
+						if (SubInclusive && _count < _subLastCount)
+						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
 						{
@@ -406,8 +406,8 @@ public class TrackedItem : Control
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _lastCount < _subLastCount)
-						_lastCount += _subLastCount;
+						if (SubInclusive && _count < _subLastCount)
+						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_bitwise == RequiredValue)
 						{
@@ -458,8 +458,8 @@ public class TrackedItem : Control
 						
 						_lastCount = _lastCount < _count ? (byte)_count : _lastCount;
 						
-						if (SubInclusive && _lastCount < _subLastCount)
-						_lastCount += _subLastCount;
+						if (SubInclusive && _count < _subLastCount)
+						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
 						{
@@ -493,8 +493,8 @@ public class TrackedItem : Control
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _lastCount < _subLastCount)
-						_lastCount += _subLastCount;
+						if (SubInclusive && _count < _subLastCount)
+						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_count > 0)
 						{
