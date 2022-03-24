@@ -35,6 +35,15 @@ Get the latest release by clicking the button below.
 
 ---
 
+## Controls
+- Left Click -> Add Check.
+- Right Click -> Add Sub-Check.
+- Middle Click -> Disable Check.
+- Shift + Left Click -> Remove Check.
+- Shift + Right Click -> Remove Sub-Check.
+
+---
+
 ## Planned Features
 - Fullscreen Overlaying to KH, with free movement of all icons.
 - Android Support (Both Manual and Automatic).
