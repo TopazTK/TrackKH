@@ -100,7 +100,7 @@ public class TrackedItem : Control
 	
 	private void Disable()
 	{
-		if (_mainNode.Modulate.a != 0.50F)
+		if (_mainNode.Modulate.r != 0.20F)
 		{
 			_displayedNumber = 0;
 			_subDisplayedNumber = 0;
@@ -110,22 +110,22 @@ public class TrackedItem : Control
 			_numberNode.Texture.Dispose();
 			_subNumberNode.Texture.Dispose();
 			_subNode.Visible = false;
-			_mainNode.Modulate = new Godot.Color(0.30F, 0.30F, 0.30F, 0.50F);
+			_mainNode.Modulate = new Godot.Color(0.20F, 0.20F, 0.20F, 1);
 		}
 	}
 	
 	private void Enable()
 	{
-		if (_mainNode.Modulate.a != 0.25F)
+		if (_mainNode.Modulate.r != 0.45F)
 		{
-			_mainNode.Modulate = new Godot.Color(1, 1, 1, 0.25F);
+			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1);
 			_crossNode.Visible = false;
 		}
 	}
 	
 	private void Activate(int Input)
 	{
-		if (_mainNode.Modulate.a != 1)
+		if (_mainNode.Modulate.r != 1)
 			_mainNode.Modulate = new Godot.Color(1, 1, 1, 1);
 		
 		if (Input > 1 && Input != _displayedNumber)
@@ -155,12 +155,12 @@ public class TrackedItem : Control
 
 	private void Deactivate()
 	{
-		if (_mainNode.Modulate.a != 0.25F)
+		if (_mainNode.Modulate.r != 0.45F)
 		{
 			_displayedNumber = 0;
 			_numberNode.Visible = false;
 			_numberNode.Texture.Dispose();
-			_mainNode.Modulate = new Godot.Color(1, 1, 1, 0.25F);
+			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1F);
 		}
 	}
 	
