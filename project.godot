@@ -20,10 +20,6 @@ config/icon="res://Assets/icon.png"
 
 Globals="*res://Classes/Singleton.cs"
 
-[debug]
-
-settings/fps/force_fps=240
-
 [display]
 
 window/size/width=620
@@ -115,7 +111,6 @@ track_toggle={
 
 [physics]
 
-common/physics_fps=30
 common/enable_pause_aware_picking=true
 
 [rendering]

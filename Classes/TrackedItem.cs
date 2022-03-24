@@ -16,6 +16,7 @@ public class TrackedItem : Control
 	[Export] public int IncreaseFactor = 1;
 	
 	[Export] public ulong PrimaryAddress = 0x00;
+	[Export] public ulong FallbackAddress = 0x00;
 	[Export] public ulong SecondaryAddress = 0x00;
 	
 	[Export] public int MaximumSubCount = 0x00;
@@ -306,9 +307,13 @@ public class TrackedItem : Control
 					case 0x00:
 					{
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
+						
+						if (FallbackAddress != -1)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
+						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount)
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
@@ -341,7 +346,7 @@ public class TrackedItem : Control
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount)
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
@@ -406,7 +411,7 @@ public class TrackedItem : Control
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount)
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_bitwise == RequiredValue)
@@ -458,7 +463,7 @@ public class TrackedItem : Control
 						
 						_lastCount = _lastCount < _count ? (byte)_count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount)
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_lastCount > 0)
@@ -493,7 +498,7 @@ public class TrackedItem : Control
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount)
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
 						
 						if (_count > 0)
