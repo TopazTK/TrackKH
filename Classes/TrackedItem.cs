@@ -114,11 +114,25 @@ public class TrackedItem : Control
 		{
 			_displayedNumber = 0;
 			_subDisplayedNumber = 0;
+			
 			_crossNode.Visible = true;
 			_numberNode.Visible = false;
 			_subNumberNode.Visible = false;
+			
 			_numberNode.Texture.Dispose();
 			_subNumberNode.Texture.Dispose();
+			
+			if (TexturePath.Contains("{0}"))
+			{
+				var _assetPath = _loadedIcon == 0 ? "res://Assets/Simplified/" : "res://Assets/Classic/";
+				
+				_mainNode.Texture.Dispose();
+				_shadowNode.Texture.Dispose();
+				
+				_mainNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, 0)) as Texture;
+				_shadowNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, 0)) as Texture;
+			}
+			
 			_subNode.Visible = false;
 			_mainNode.Modulate = new Godot.Color(0.20F, 0.20F, 0.20F, 1);
 		}
@@ -128,6 +142,17 @@ public class TrackedItem : Control
 	{
 		if (_mainNode.Modulate.r != 0.45F)
 		{
+			if (TexturePath.Contains("{0}"))
+			{
+				var _assetPath = _loadedIcon == 0 ? "res://Assets/Simplified/" : "res://Assets/Classic/";
+				
+				_mainNode.Texture.Dispose();
+				_shadowNode.Texture.Dispose();
+				
+				_mainNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, _textureBitwise)) as Texture;
+				_shadowNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, _textureBitwise)) as Texture;
+			}
+			
 			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1);
 			_crossNode.Visible = false;
 		}
@@ -250,6 +275,12 @@ public class TrackedItem : Control
 					else if (_subLastCount + 1 <= MaximumSubCount)
 						_subLastCount += 1;
 				}
+				
+				if (TexturePath.Contains("{0}") && _textureBitwise != _lastCount)
+				{
+					_textureBitwise = _lastCount;
+					SwapTexture();
+				}
 			}
 			
 			if (_lastCount == 0)
@@ -264,11 +295,16 @@ public class TrackedItem : Control
 			_loadedIcon = Singleton.IconMode;
 			var _assetPath = _loadedIcon == 0 ? "res://Assets/Simplified/" : "res://Assets/Classic/";
 			
+			var _texturePath = TexturePath;
+			
+			if (_texturePath.Contains("{0}"))
+				_texturePath = string.Format(_texturePath, 0);
+			
 			_mainNode.Texture.Dispose();
 			_shadowNode.Texture.Dispose();
 			
-			_mainNode.Texture = ResourceLoader.Load(_assetPath + TexturePath) as Texture;
-			_shadowNode.Texture = ResourceLoader.Load(_assetPath + TexturePath) as Texture;
+			_mainNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
+			_shadowNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
 		}
 		
 		if (Enabled)
@@ -332,14 +368,18 @@ public class TrackedItem : Control
 					case 0x00:
 					{
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
+						var _fallCount = Hypervisor.Read<byte>(FallbackAddress);
 						
 						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
+							_count += _fallCount;
 						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
-						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
+						if (SubInclusive && _count <= _subLastCount && _count + _subLastCount >= _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
+						
+						if (_fallCount == RequiredValue)
+							BackTrackable = false;
 						
 						if (_lastCount > 0)
 						{
@@ -369,9 +409,6 @@ public class TrackedItem : Control
 					{
 						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
-						
-						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
 						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
@@ -420,9 +457,6 @@ public class TrackedItem : Control
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						var _bitwise = _count & RequiredValue;
 						
-						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
-						
 						if (SubInclusive && _count < _subLastCount)
 						_count += _subLastCount;
 						
@@ -442,9 +476,6 @@ public class TrackedItem : Control
 						
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
-						
-						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
@@ -496,9 +527,6 @@ public class TrackedItem : Control
 						if (_count > MaximumCount)
 						_count = MaximumCount;
 						
-						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
-						
 						_lastCount = _lastCount < _count ? (byte)_count : _lastCount;
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
@@ -534,9 +562,6 @@ public class TrackedItem : Control
 							_value.Add(Hypervisor.Read<byte>(PrimaryAddress + EntryOffset * i));
 						
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
-						
-						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
-							_count += Hypervisor.Read<byte>(FallbackAddress);
 						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
@@ -585,17 +610,23 @@ public class TrackedItem : Control
 			
 			else
 			{
-				if (_lastCount > 0)
-					Activate(_lastCount);
-				
-				else
-					Deactivate();
+				if (!TexturePath.Contains("{0}"))
+				{
+					if (_lastCount > 0)
+						Activate(_lastCount);
 					
-				if (_subLastCount > 0)
-					SubActivate(_subLastCount);
+					else
+						Deactivate();
+						
+					if (_subLastCount > 0)
+						SubActivate(_subLastCount);
+					
+					else
+						SubDeactivate();
+				}
 				
 				else
-					SubDeactivate();
+					Activate(1);
 			}
 		}
 		
