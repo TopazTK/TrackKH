@@ -46,7 +46,8 @@ public class TrackedItem : Control
 		3 = Bitwise-lookup: A specific value is bitwised from the address, then compared.
 		4 = Bitwise-followup : A specific value is bitwised from the SecondaryAddress, then the count is read from PrimaryAddress.
 		5 = Bitwise-calculation: A specific array is taken from the PrimaryAddress, then cound is calculated based on the bitwise.
-		6 = Incrementor-based (Offsetted): The address is the starting point, offsets increase by a certain amount each item.. 
+		6 = Incrementor-based (Offsetted): The address is the starting point, offsets increase by a certain amount each item.
+		7 = Incrementor-based (Bitwise): Same as "1", but the values change the bitwise. Unique to the emblem piece.
 	*/
 	
 	private TextureRect _mainNode;
@@ -66,6 +67,9 @@ public class TrackedItem : Control
 	private int _subDisplayedNumber = 0;
 	
 	private byte _loadedIcon;
+	
+	private byte _textureSwitch = 0;
+	private byte _textureBitwise = 0;
 	
 	public void mouseEnter() => _mouseOver = true;
 	public void mouseExit() => _mouseOver = false;
@@ -89,8 +93,13 @@ public class TrackedItem : Control
 		_subNode.Texture.Dispose();
 		_subShadowNode.Texture.Dispose();
 		
-		_mainNode.Texture = ResourceLoader.Load(_assetPath + TexturePath) as Texture;
-		_shadowNode.Texture = ResourceLoader.Load(_assetPath + TexturePath) as Texture;
+		var _texturePath = TexturePath;
+		
+		if (_texturePath.Contains("{0}"))
+			_texturePath = string.Format(_texturePath, 0);
+		
+		_mainNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
+		_shadowNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
 		
 		if ((long)SubAddress != -1)
 		{
@@ -153,7 +162,23 @@ public class TrackedItem : Control
 			_numberNode.Texture.Dispose();
 		}
 	}
-
+	
+	private void SwapTexture()
+	{
+		if (_textureSwitch != _textureBitwise)
+		{
+			var _assetPath = _loadedIcon == 0 ? "res://Assets/Simplified/" : "res://Assets/Classic/";
+			
+			_mainNode.Texture.Dispose();
+			_shadowNode.Texture.Dispose();
+			
+			_mainNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, _textureBitwise)) as Texture;
+			_shadowNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, _textureBitwise)) as Texture;
+			
+			_textureSwitch = _textureBitwise;
+		}
+	}
+	
 	private void Deactivate()
 	{
 		if (_mainNode.Modulate.r != 0.45F)
@@ -308,7 +333,7 @@ public class TrackedItem : Control
 					{
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						
-						if (FallbackAddress != -1)
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
 							_count += Hypervisor.Read<byte>(FallbackAddress);
 						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
@@ -344,6 +369,10 @@ public class TrackedItem : Control
 					{
 						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
+						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
+						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
@@ -391,6 +420,9 @@ public class TrackedItem : Control
 						var _count = Hypervisor.Read<byte>(PrimaryAddress);
 						var _bitwise = _count & RequiredValue;
 						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
+						
 						if (SubInclusive && _count < _subLastCount)
 						_count += _subLastCount;
 						
@@ -410,6 +442,9 @@ public class TrackedItem : Control
 						
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
+						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
 						_lastCount = (byte)(_count + _subLastCount);
@@ -461,6 +496,9 @@ public class TrackedItem : Control
 						if (_count > MaximumCount)
 						_count = MaximumCount;
 						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
+						
 						_lastCount = _lastCount < _count ? (byte)_count : _lastCount;
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
@@ -496,6 +534,10 @@ public class TrackedItem : Control
 							_value.Add(Hypervisor.Read<byte>(PrimaryAddress + EntryOffset * i));
 						
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
+						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+							_count += Hypervisor.Read<byte>(FallbackAddress);
+						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
 						
 						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
@@ -515,6 +557,26 @@ public class TrackedItem : Control
 						
 						else if (BackTrackable)
 							Deactivate();
+						
+						break;
+					}
+					
+					case 0x07:
+					{
+						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						byte _bitwise = 0;
+						
+						for (int i = 0; i < _value.Length; i++)
+						{
+							if (_value[i] != 0)
+							_bitwise += (byte)(Math.Pow(2, i));
+						}
+						
+						if (_textureBitwise < _bitwise || BackTrackable)
+							_textureBitwise = _bitwise;
+						
+						Activate(1);
+						SwapTexture();
 						
 						break;
 					}

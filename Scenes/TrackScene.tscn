@@ -660,11 +660,10 @@ SecondaryAddress = -1
 MaximumSubCount = -1
 SubArrayLength = -1
 SubAddress = -1
-TrackingMode = 1
+TrackingMode = 7
 SubTrackingMode = -1
-BackTrackable = false
 SubBackTrackable = false
-TexturePath = "Key/emblem.png"
+TexturePath = "Pieces/emblem_{0}.png"
 
 [node name="Gummi" parent="Key" instance=ExtResource( 1 )]
 margin_left = 357.0
