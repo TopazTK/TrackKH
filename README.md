@@ -28,8 +28,10 @@ Get the latest release by clicking the button below.
 - All Magic and their appropriate levels.
 - All redeemed Summons.
 - All learned Trinities.
-- All finish-related items.
-- Reports and Jack-in-the-Box.
+- All Destiny Islands items.
+- All separate Emblem Pieces.
+- Reports and Torn Pages.
+- Synthesis and Jack-in-the-Box.
 - All rescued Puppies and redeemed Gifts.
 - All obtained and sent Postcards.
 
