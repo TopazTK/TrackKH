@@ -14,7 +14,7 @@ public class Initialize : Node
 	
 	public override void _Ready()
 	{
-		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v0.75 TEST] | TopazTK");
+		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v0.95 TEST] | TopazTK");
 		
 		_sceneInstance = GetNode("Check Panel");
 		_seekerWindow = GetNode("Seeker Dialog") as WindowDialog;
@@ -47,7 +47,7 @@ public class Initialize : Node
 		}
 	}
 	
-	private void iconSelected(byte index) => Singleton.IconMode = index;
+	private void iconSelect(byte index) => Singleton.IconMode = index;
 	
 	private void trackSelect(byte index)
 	{

@@ -48,6 +48,7 @@ public class TrackedItem : Control
 		5 = Bitwise-calculation: A specific array is taken from the PrimaryAddress, then cound is calculated based on the bitwise.
 		6 = Incrementor-based (Offsetted): The address is the starting point, offsets increase by a certain amount each item.
 		7 = Incrementor-based (Bitwise): Same as "1", but the values change the bitwise. Unique to the emblem piece.
+		8 = Incrementor-based (Specific): Same as "1", but the values that we seek will be specific.
 	*/
 	
 	private TextureRect _mainNode;
@@ -59,6 +60,7 @@ public class TrackedItem : Control
 	private TextureRect _subNumberNode;
 	
 	private bool _mouseOver = false;
+	private bool _permDisable = false;
 	
 	private byte _lastCount = 0;
 	private byte _subLastCount = 0;
@@ -106,6 +108,9 @@ public class TrackedItem : Control
 			_subNode.Texture = ResourceLoader.Load(_assetPath + SubTexturePath) as Texture;
 			_subShadowNode.Texture = ResourceLoader.Load(_assetPath + SubTexturePath) as Texture;
 		}
+		
+		if (!Enabled)
+			_permDisable = true;
 	}
 	
 	private void Disable()
@@ -140,7 +145,7 @@ public class TrackedItem : Control
 	
 	private void Enable()
 	{
-		if (_mainNode.Modulate.r != 0.45F)
+		if (_mainNode.Modulate.r != 0.45F && !_permDisable)
 		{
 			if (TexturePath.Contains("{0}"))
 			{
@@ -251,7 +256,7 @@ public class TrackedItem : Control
 	
 	public override void _Process(float delta)
 	{
-		if (Input.IsActionJustPressed("track_toggle") && _mouseOver)
+		if (Input.IsActionJustPressed("track_toggle") && _mouseOver && !_permDisable)
 			this.Enabled = !this.Enabled;
 			
 		if (Singleton.TrackMode == 0)
@@ -602,6 +607,37 @@ public class TrackedItem : Control
 						
 						Activate(1);
 						SwapTexture();
+						
+						break;
+					}
+					
+					case 0x08:
+					{
+						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						
+						var _count = (byte)_value.Where(x => x == RequiredValue || x - 0x80 == RequiredValue).ToArray().Length;
+						
+						if (EntryOffset != 0xFFFFFFFFFFFFFFFF)
+						{
+							var _offCalc = (byte)(RequiredValue + (int)EntryOffset);
+							_count += (byte)_value.Where(x => x == _offCalc || x - 0x80 == _offCalc).ToArray().Length;
+						}
+						
+						_lastCount = _lastCount < _count ? _count : _lastCount;
+						
+						if (SubInclusive && _count < _subLastCount && _count + _subLastCount > _lastCount)
+						_lastCount = (byte)(_count + _subLastCount);
+						
+						if (_lastCount > 0)
+						{
+							Activate(_lastCount);
+								
+							if (BackTrackable)
+								_lastCount = _count;
+						}
+						
+						else if (BackTrackable)
+							Deactivate();
 						
 						break;
 					}
