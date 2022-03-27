@@ -41,9 +41,9 @@ color = Color( 0.0745098, 0.0823529, 0.168627, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 70.0
-margin_top = 939.0
+margin_top = 948.0
 margin_right = -70.0
-margin_bottom = -19.0
+margin_bottom = -14.0
 custom_styles/panel = SubResource( 5 )
 
 [node name="Tracking" type="Control" parent="Settings Panel"]
@@ -171,9 +171,9 @@ text = "See the Legends!"
 anchor_right = 1.0
 anchor_bottom = 0.837
 margin_left = 60.0
-margin_top = 396.0
+margin_top = 428.0
 margin_right = -60.0
-margin_bottom = -414.7
+margin_bottom = -383.515
 popup_exclusive = true
 window_title = "Seeking KINGDOM HEARTS..."
 
@@ -200,9 +200,9 @@ text = "Cancel"
 anchor_right = 1.0
 anchor_bottom = 0.83
 margin_left = 60.0
-margin_top = 322.0
+margin_top = 315.0
 margin_right = -60.0
-margin_bottom = -261.0
+margin_bottom = -262.85
 popup_exclusive = true
 window_title = "All the names and shits..."
 
@@ -232,9 +232,9 @@ valign = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 200.0
-margin_top = 276.0
+margin_top = 277.0
 margin_right = -199.0
-margin_bottom = -23.0
+margin_bottom = -22.0
 text = "Got it, chief!"
 
 [connection signal="item_selected" from="Settings Panel/Tracking/Selection" to="." method="trackSelect"]

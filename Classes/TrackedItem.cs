@@ -26,6 +26,7 @@ public class TrackedItem : Control
 	
 	[Export] public int TrackingMode = 0;
 	[Export] public int SubTrackingMode = 0;
+	[Export] public bool SubSoloTrackable = false;
 	
 	[Export] public bool BackTrackable = true;
 	[Export] public bool SubBackTrackable = true;
@@ -34,6 +35,7 @@ public class TrackedItem : Control
 	
 	[Export] public string TexturePath = "debug.png";
 	[Export] public string SubTexturePath = "debug.png";
+	[Export] public string[] FileList;
 	
 	/*
 		TrackingMode:
@@ -75,7 +77,7 @@ public class TrackedItem : Control
 	
 	public void mouseEnter() => _mouseOver = true;
 	public void mouseExit() => _mouseOver = false;
-
+	
 	public override void _Ready()
 	{
 		_mainNode = GetNode("MainAsset") as TextureRect;
@@ -225,21 +227,24 @@ public class TrackedItem : Control
 		if (!_subNode.Visible)
 			_subNode.Visible = true;
 		
-		if (Input >= 1 && Input != _subDisplayedNumber)
+		if (MaximumSubCount > 1)
 		{
-			_subDisplayedNumber = Input;
+			if (Input >= 1 && Input != _subDisplayedNumber)
+			{
+				_subDisplayedNumber = Input;
+				
+				_subNumberNode.Texture.Dispose();
+				_subNumberNode.Texture = ResourceLoader.Load("res://Assets/Numbers/" + Input + ".png") as Texture;
+				
+				_subNumberNode.Visible = true;
+			}
 			
-			_subNumberNode.Texture.Dispose();
-			_subNumberNode.Texture = ResourceLoader.Load("res://Assets/Numbers/" + Input + ".png") as Texture;
-			
-			_subNumberNode.Visible = true;
-		}
-		
-		else if (SubBackTrackable && Input == 0)
-		{
-			_subDisplayedNumber = 0;
-			_subNumberNode.Visible = false;
-			_subNumberNode.Texture.Dispose();
+			else if (SubBackTrackable && Input == 0)
+			{
+				_subDisplayedNumber = 0;
+				_subNumberNode.Visible = false;
+				_subNumberNode.Texture.Dispose();
+			}
 		}
 	}
 
@@ -272,7 +277,7 @@ public class TrackedItem : Control
 						_lastCount += (byte)IncreaseFactor;
 				}
 				
-				if (_lastCount > 0 && Input.IsActionJustPressed("track_subclick"))
+				if ((_lastCount > 0 || SubSoloTrackable) && Input.IsActionJustPressed("track_subclick") && SubTrackingMode != 0x0F)
 				{
 					if (_subLastCount - 1 >= 0 && Input.IsActionPressed("track_modifier"))
 						_subLastCount -= 1;
@@ -288,8 +293,32 @@ public class TrackedItem : Control
 				}
 			}
 			
-			if (_lastCount == 0)
+			if (_lastCount == 0 && !SubSoloTrackable)
 				_subLastCount = 0;
+		}
+		
+		if (SubTrackingMode == 0x0F)
+		{
+			if (_mouseOver)
+			{
+				if (Input.IsActionJustReleased("track_subup"))
+				{
+					if (_subLastCount + 1 <= MaximumSubCount)
+						_subLastCount += 1;
+						
+					else
+						_subLastCount = 0;
+				}
+				
+				if (_lastCount > 0 && Input.IsActionJustReleased("track_subdown"))
+				{
+					if (_subLastCount - 1 > -1)
+						_subLastCount -= 1;
+						
+					else
+						_subLastCount = (byte)MaximumSubCount;
+				}
+			}
 		}
 	}
 	
@@ -310,6 +339,29 @@ public class TrackedItem : Control
 			
 			_mainNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
 			_shadowNode.Texture = ResourceLoader.Load(_assetPath + _texturePath) as Texture;
+			
+			_textureSwitch = 0x00;
+		}
+		
+		if (SubTrackingMode == 0x0F)
+		{
+			if (_subLastCount != _subDisplayedNumber)
+			{
+				_subDisplayedNumber = _subLastCount;
+				
+				_subNode.Texture.Dispose();
+				_subShadowNode.Texture.Dispose();
+				
+				if (_subLastCount == 0)
+					_subNode.Visible = false;
+				
+				else
+				{
+					_subNode.Texture = ResourceLoader.Load("res://Assets/Simplified/"  + FileList[_subLastCount - 1]) as Texture;
+					_subShadowNode.Texture = ResourceLoader.Load("res://Assets/Simplified/"  + FileList[_subLastCount - 1]) as Texture;
+					_subNode.Visible = true;
+				}
+			}
 		}
 		
 		if (Enabled)
@@ -336,11 +388,11 @@ public class TrackedItem : Control
 								else
 									SubActivate(MaximumCount);
 								
-								if (BackTrackable)
+								if (SubBackTrackable)
 									_subLastCount = _count;
 							}
 							
-							else if (BackTrackable)
+							else if (SubBackTrackable)
 								SubDeactivate();
 							
 							break;
@@ -600,6 +652,20 @@ public class TrackedItem : Control
 						{
 							if (_value[i] != 0)
 							_bitwise += (byte)(Math.Pow(2, i));
+						}
+						
+						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
+						{
+							var _fallVal = Hypervisor.ReadArray(FallbackAddress, ArrayLength);
+							byte _fallWise = 0;
+							
+							for (int i = 0; i < _fallVal.Length; i++)
+							{
+								if (_fallVal[i] == RequiredValue)
+								_fallWise += (byte)(Math.Pow(2, i));
+							}
+							
+							_bitwise += _fallWise;
 						}
 						
 						if (_textureBitwise < _bitwise || BackTrackable)

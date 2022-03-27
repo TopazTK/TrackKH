@@ -14,7 +14,7 @@ public class Initialize : Node
 	
 	public override void _Ready()
 	{
-		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v0.95 TEST] | TopazTK");
+		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v1.00] | TopazTK");
 		
 		_sceneInstance = GetNode("Check Panel");
 		_seekerWindow = GetNode("Seeker Dialog") as WindowDialog;
