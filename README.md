@@ -2,7 +2,7 @@
 
 This is a full-fledged Auo-Tracker for Denhonator's KH1 Randomizer, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/).
 
-![Untitled](https://user-images.githubusercontent.com/95656963/159856364-54436c26-5b06-4fa9-9d24-12ddcced7a68.png)
+![Untitled](https://user-images.githubusercontent.com/95656963/160305214-61e49830-71ac-47dd-a56f-2d2f2600efbb.png)
 
 ---
 
@@ -16,6 +16,7 @@ Get the latest release by clicking the button below.
 
 ## Features
 - Automatic and Manual tracking.
+- Manual Source Magic tracking.
 - Item exclusion from tracking logic.
 - Ability to resize the window at will.
 - Background color selection to allow Chroma Keying.
@@ -32,6 +33,7 @@ Get the latest release by clicking the button below.
 - All separate Emblem Pieces.
 - Reports and Torn Pages.
 - Synthesis and Jack-in-the-Box.
+- All Movement.
 - All rescued Puppies and redeemed Gifts.
 - All obtained and sent Postcards.
 
@@ -43,6 +45,7 @@ Get the latest release by clicking the button below.
 - Middle Click -> Disable Check.
 - Shift + Left Click -> Remove Check.
 - Shift + Right Click -> Remove Sub-Check.
+- Middle Mouse Wheel -> Set Source Magic.
 
 ---
 
