@@ -1,4 +1,4 @@
-# Auto-Tracker for KH Randomizers
+![image](https://user-images.githubusercontent.com/95656963/171329840-0a47c1a5-6ac4-49f0-8327-e614c21a85db.png)
 
 This is a full-fledged Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/).
 
