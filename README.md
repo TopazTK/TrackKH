@@ -1,3 +1,4 @@
+<center>
 ![image](https://user-images.githubusercontent.com/95656963/171330139-9442a06c-2527-4019-9260-cdecf694b8b3.png)
 
 This is a full-fledged Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/).
@@ -76,3 +77,4 @@ If you wish to support this project, consider becoming a Patron.
 [![Patreon](https://img.shields.io/endpoint?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%2F%3Fusername%3Dtopaztk%26type%3Dpatrons)](https://www.patreon.com/topaztk)
 
 ---
+</center>
