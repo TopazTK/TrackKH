@@ -4,8 +4,6 @@
   
 This is a full-fledged Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/).
 
-![image](https://user-images.githubusercontent.com/95656963/171329645-71ee6168-e09c-4215-bf00-576af7045c41.png)
-
 ---
 
 ## Supported Games
