@@ -1,0 +1,1373 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/TrackedItem.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/TrackedWorld.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Classes/TrackKH1.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Styles/PanelStyle.tres" type="StyleBox" id=4]
+
+[node name="Check Panel" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 7.0
+margin_right = -15.0
+margin_bottom = -6.0
+mouse_filter = 2
+custom_styles/panel = ExtResource( 4 )
+script = ExtResource( 3 )
+
+[node name="World Container" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 572.0
+margin_bottom = 629.0
+
+[node name="Sub Container 1" type="VBoxContainer" parent="World Container"]
+margin_right = 274.0
+margin_bottom = 714.0
+custom_constants/separation = 7
+
+[node name="World 1" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_right = 274.0
+margin_bottom = 96.0
+TexturePath = "Worlds/islands.png"
+
+[node name="World 2" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 103.0
+margin_right = 274.0
+margin_bottom = 199.0
+TexturePath = "Worlds/wonderland.png"
+
+[node name="World 3" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 206.0
+margin_right = 274.0
+margin_bottom = 302.0
+TexturePath = "Worlds/jungle.png"
+
+[node name="World 4" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 309.0
+margin_right = 274.0
+margin_bottom = 405.0
+TexturePath = "Worlds/monstro.png"
+
+[node name="World 5" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 412.0
+margin_right = 274.0
+margin_bottom = 508.0
+TexturePath = "Worlds/atlantica.png"
+
+[node name="World 6" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 515.0
+margin_right = 274.0
+margin_bottom = 611.0
+TexturePath = "Worlds/pooh.png"
+
+[node name="World 7" parent="World Container/Sub Container 1" instance=ExtResource( 2 )]
+margin_top = 618.0
+margin_right = 274.0
+margin_bottom = 714.0
+TexturePath = "Worlds/final.png"
+
+[node name="Sub Container 2" type="VBoxContainer" parent="World Container"]
+margin_left = 278.0
+margin_right = 552.0
+margin_bottom = 714.0
+custom_constants/separation = 7
+
+[node name="World 1" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_right = 274.0
+margin_bottom = 96.0
+TexturePath = "Worlds/traverse.png"
+
+[node name="World 2" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 103.0
+margin_right = 274.0
+margin_bottom = 199.0
+TexturePath = "Worlds/coliseum.png"
+
+[node name="World 6" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 206.0
+margin_right = 274.0
+margin_bottom = 302.0
+TexturePath = "Worlds/agrabah.png"
+
+[node name="World 7" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 309.0
+margin_right = 274.0
+margin_bottom = 405.0
+TexturePath = "Worlds/halloween.png"
+
+[node name="World 8" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 412.0
+margin_right = 274.0
+margin_bottom = 508.0
+TexturePath = "Worlds/neverland.png"
+
+[node name="World 5" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 515.0
+margin_right = 274.0
+margin_bottom = 611.0
+TexturePath = "Worlds/bastion.png"
+
+[node name="Misc" parent="World Container/Sub Container 2" instance=ExtResource( 2 )]
+margin_top = 618.0
+margin_right = 274.0
+margin_bottom = 714.0
+TexturePath = "Progress/material.png"
+
+[node name="Ability Container" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 743.0
+margin_right = -25.0
+margin_bottom = -242.0
+rect_scale = Vector2( 0.998953, 1 )
+custom_constants/separation = 7
+alignment = 1
+
+[node name="Row 1" type="HBoxContainer" parent="Ability Container"]
+margin_right = 540.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 540, 48 )
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Blue" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 34.0
+margin_right = 82.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44330981
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 3
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Trinity/blue.png"
+
+[node name="Red" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 87.0
+margin_right = 135.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 2
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44330981
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 3
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Trinity/red.png"
+
+[node name="Green" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 140.0
+margin_right = 188.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 4
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44330981
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 3
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Trinity/green.png"
+
+[node name="White" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 193.0
+margin_right = 241.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 16
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44330981
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 3
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Trinity/white.png"
+
+[node name="Yellow" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 246.0
+margin_right = 294.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 8
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44330981
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 3
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Trinity/yellow.png"
+
+[node name="Roll" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 299.0
+margin_right = 347.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 22
+MaximumCount = 5
+ArrayLength = 40
+EntryOffset = -1
+PrimaryAddress = 44323854
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 8
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Abilities/roll.png"
+
+[node name="Jump" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 352.0
+margin_right = 400.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 5
+ArrayLength = 16
+EntryOffset = -1
+PrimaryAddress = 44325219
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 8
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Abilities/jump.png"
+
+[node name="Kick" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 405.0
+margin_right = 453.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 2
+MaximumCount = 5
+ArrayLength = 16
+EntryOffset = -1
+PrimaryAddress = 44325219
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 8
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Abilities/kick.png"
+
+[node name="Glide" parent="Ability Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 458.0
+margin_right = 506.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 5
+ArrayLength = 16
+EntryOffset = 1
+PrimaryAddress = 44325219
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 8
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Abilities/glide.png"
+
+[node name="Row 2" type="HBoxContainer" parent="Ability Container"]
+margin_top = 55.0
+margin_right = 540.0
+margin_bottom = 103.0
+rect_min_size = Vector2( 540, 48 )
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Fire" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 87.0
+margin_right = 135.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+RequiredValue = 1
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324956
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/fire.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Blizzard" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 140.0
+margin_right = 188.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+RequiredValue = 2
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324957
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/blizzard.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Thunder" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 193.0
+margin_right = 241.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+RequiredValue = 4
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324958
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/thunder.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Cure" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 246.0
+margin_right = 294.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+RequiredValue = 8
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324959
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/cure.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Aero" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 299.0
+margin_right = 347.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+RequiredValue = 64
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324962
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/aero.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Gravity" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 352.0
+margin_right = 400.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 16
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324960
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/gravity.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Stop" parent="Ability Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 405.0
+margin_right = 453.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 32
+MaximumCount = 3
+ArrayLength = -1
+PrimaryAddress = 44324961
+FallbackAddress = -1
+SecondaryAddress = 44323902
+MaximumSubCount = 7
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 4
+SubTrackingMode = 15
+SubBackTrackable = false
+TexturePath = "Magic/stop.png"
+FileList = PoolStringArray( "Magic/fire.png", "Magic/blizzard.png", "Magic/thunder.png", "Magic/cure.png", "Magic/aero.png", "Magic/gravity.png", "Magic/stop.png" )
+
+[node name="Item Container" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 856.0
+margin_right = -25.0
+margin_bottom = -7.0
+rect_scale = Vector2( 0.998953, 1 )
+custom_constants/separation = 7
+alignment = 1
+
+[node name="Row 1" type="HBoxContainer" parent="Item Container"]
+margin_top = 3.0
+margin_right = 540.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 540, 48 )
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Report 01" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_right = 55.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 13
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_01.png"
+
+[node name="Report 02" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.0
+margin_right = 108.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_02.png"
+
+[node name="Report 03" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 113.0
+margin_right = 161.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_03.png"
+
+[node name="Report 04" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 166.0
+margin_right = 214.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_04.png"
+
+[node name="Report 05" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 219.0
+margin_right = 267.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_05.png"
+
+[node name="Report 06" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 272.0
+margin_right = 320.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_06.png"
+
+[node name="Report 07" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_right = 373.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_07.png"
+
+[node name="Report 08" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 378.0
+margin_right = 426.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_08.png"
+
+[node name="Report 09" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 431.0
+margin_right = 479.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_09.png"
+
+[node name="Report 10" parent="Item Container/Row 1" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 484.0
+margin_right = 532.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 2
+EntryOffset = -1
+PrimaryAddress = 44330378
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 5
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Reports/report_10.png"
+
+[node name="Row 2" type="HBoxContainer" parent="Item Container"]
+margin_top = 58.0
+margin_right = 540.0
+margin_bottom = 106.0
+rect_min_size = Vector2( 540, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Simba" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_right = 55.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 5
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 1
+SubArrayLength = -1
+SubAddress = 44325172
+TrackingMode = 2
+SubSoloTrackable = true
+BackTrackable = false
+TexturePath = "Summon/simba.png"
+SubTexturePath = "Gems/earthshine.png"
+
+[node name="Genie" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.0
+margin_right = 108.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 2
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 2
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Summon/genie.png"
+
+[node name="Bambi" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 113.0
+margin_right = 161.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 1
+SubArrayLength = -1
+SubAddress = 44325170
+TrackingMode = 2
+SubSoloTrackable = true
+BackTrackable = false
+TexturePath = "Summon/bambi.png"
+SubTexturePath = "Gems/naturespark.png"
+
+[node name="Dumbo" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 166.0
+margin_right = 214.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 1
+SubArrayLength = -1
+SubAddress = 44325169
+TrackingMode = 2
+SubSoloTrackable = true
+BackTrackable = false
+TexturePath = "Summon/dumbo.png"
+SubTexturePath = "Gems/watergleam.png"
+
+[node name="Tinker Bell" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 219.0
+margin_right = 267.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 2
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Summon/tinkerbell.png"
+
+[node name="Mushu" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 272.0
+margin_right = 320.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 4
+MaximumCount = 1
+ArrayLength = 7
+PrimaryAddress = 44325786
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 1
+SubArrayLength = -1
+SubAddress = 44325171
+TrackingMode = 2
+SubSoloTrackable = true
+BackTrackable = false
+TexturePath = "Summon/mushu.png"
+SubTexturePath = "Gems/fireglow.png"
+
+[node name="Postcard 01" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_right = 373.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 10
+ArrayLength = -1
+PrimaryAddress = 44325174
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 10
+SubArrayLength = -1
+SubAddress = 44331145
+BackTrackable = false
+SubBackTrackable = false
+SubInclusive = true
+TexturePath = "Postcards/postcard_01.png"
+SubTexturePath = "Progress/material.png"
+
+[node name="Postcard 02" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 378.0
+margin_right = 426.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 10
+ArrayLength = -1
+PrimaryAddress = 44325174
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 10
+SubArrayLength = -1
+SubAddress = 44331145
+BackTrackable = false
+SubBackTrackable = false
+SubInclusive = true
+TexturePath = "Postcards/postcard_02.png"
+SubTexturePath = "Progress/material.png"
+
+[node name="Postcard 03" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 431.0
+margin_right = 479.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 10
+ArrayLength = -1
+PrimaryAddress = 44325174
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = 10
+SubArrayLength = -1
+SubAddress = 44331145
+BackTrackable = false
+SubBackTrackable = false
+SubInclusive = true
+TexturePath = "Postcards/postcard_03.png"
+SubTexturePath = "Progress/material.png"
+
+[node name="Jack in the Box" parent="Item Container/Row 2" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 484.0
+margin_right = 532.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325191
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Key/jack.png"
+
+[node name="Row 3" type="HBoxContainer" parent="Item Container"]
+margin_top = 113.0
+margin_right = 540.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 540, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Page 01" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_right = 55.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 5
+ArrayLength = 5
+PrimaryAddress = 44325175
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pages/page_01.png"
+
+[node name="Page 02" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.0
+margin_right = 108.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 5
+ArrayLength = 5
+PrimaryAddress = 44325175
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pages/page_02.png"
+
+[node name="Page 03" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 113.0
+margin_right = 161.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 5
+ArrayLength = 5
+PrimaryAddress = 44325175
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pages/page_03.png"
+
+[node name="Emblem 01" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 166.0
+margin_right = 214.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 15
+ArrayLength = 4
+PrimaryAddress = 44325151
+FallbackAddress = 44331640
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 7
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pieces/emblem_1.png"
+
+[node name="Emblem 02" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 219.0
+margin_right = 267.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 15
+ArrayLength = 4
+PrimaryAddress = 44325151
+FallbackAddress = 44331640
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 7
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pieces/emblem_2.png"
+
+[node name="Emblem 03" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 272.0
+margin_right = 320.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 15
+ArrayLength = 4
+PrimaryAddress = 44325151
+FallbackAddress = 44331640
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 7
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pieces/emblem_4.png"
+
+[node name="Emblem 04" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_right = 373.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 15
+ArrayLength = 4
+PrimaryAddress = 44325151
+FallbackAddress = 44331640
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 7
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Pieces/emblem_8.png"
+
+[node name="Book 01" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 378.0
+margin_right = 426.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 2
+ArrayLength = 2
+EntryOffset = 5
+PrimaryAddress = 44325141
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 6
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Key/book_khama.png"
+
+[node name="Book 02" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 431.0
+margin_right = 479.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = -1
+MaximumCount = 2
+ArrayLength = 2
+EntryOffset = 5
+PrimaryAddress = 44325141
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+TrackingMode = 6
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Key/books.png"
+
+[node name="Gummi" parent="Item Container/Row 3" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 484.0
+margin_right = 532.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325168
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Key/gummi.png"
+
+[node name="Row 4" type="HBoxContainer" parent="Item Container"]
+margin_top = 168.0
+margin_right = 540.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 540, 48 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Loggers" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.0
+margin_right = 108.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 2
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325155
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/loggers.png"
+
+[node name="Cloth" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 113.0
+margin_right = 161.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325156
+FallbackAddress = 44327895
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Supplies/cloth.png"
+
+[node name="Rope" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 166.0
+margin_right = 214.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325157
+FallbackAddress = 44327896
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+SubBackTrackable = false
+TexturePath = "Supplies/rope.png"
+
+[node name="Seagull Egg" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 219.0
+margin_right = 267.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325158
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/egg.png"
+
+[node name="Mushroom" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 272.0
+margin_right = 320.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325160
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/mushroom.png"
+
+[node name="Coconut" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_right = 373.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 2
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325161
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/coconut.png"
+
+[node name="Fish" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 378.0
+margin_right = 426.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 3
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325159
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/fish.png"
+
+[node name="Drinking Water" parent="Item Container/Row 4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 431.0
+margin_right = 479.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+RequiredValue = 1
+MaximumCount = 1
+ArrayLength = -1
+PrimaryAddress = 44325162
+FallbackAddress = -1
+SecondaryAddress = -1
+MaximumSubCount = -1
+SubArrayLength = -1
+SubAddress = -1
+SubTrackingMode = -1
+BackTrackable = false
+SubBackTrackable = false
+TexturePath = "Supplies/water.png"

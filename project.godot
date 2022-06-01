@@ -12,18 +12,21 @@ config_version=4
 
 config/name="KHTracker"
 run/main_scene="res://Scenes/MainScene.tscn"
-boot_splash/fullsize=false
-boot_splash/bg_color=Color( 0.196078, 0.196078, 0.196078, 1 )
-config/icon="res://Assets/icon.png"
+boot_splash/image="res://Assets/splash_full.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 
 [autoload]
 
 Globals="*res://Classes/Singleton.cs"
 
+[debug]
+
+settings/fps/force_fps=165
+
 [display]
 
 window/size/width=620
-window/size/height=1095
+window/size/height=954
 window/vsync/use_vsync=false
 window/handheld/orientation="portrait"
 window/stretch/mode="2d"
@@ -116,6 +119,11 @@ track_subup={
 track_subdown={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+settings_toggle={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777245,"unicode":0,"echo":false,"script":null)
  ]
 }
 

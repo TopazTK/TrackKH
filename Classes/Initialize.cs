@@ -4,83 +4,114 @@ using System.Diagnostics;
 
 public class Initialize : Node
 {
+	int _frameElapse = 0;
 	Color _rememberColor = new Color(0.135F, 0.135F, 0.135F);
 	
 	Node _sceneInstance;
-	OptionButton _trackOption;
 	
-	WindowDialog _seekerWindow;
-	WindowDialog _creditsWindow;
+	CheckButton _trackOption;
+	CheckButton _iconOption;
+	
+	Control _multiDialog;
+	Control _seekerDialog;
+	
+	AnimationPlayer _splashAnim;
+	AnimationPlayer _messageAnim;
 	
 	public override void _Ready()
 	{
-		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v1.00] | TopazTK");
+		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v1.25] | TopazTK");
 		
 		_sceneInstance = GetNode("Check Panel");
-		_seekerWindow = GetNode("Seeker Dialog") as WindowDialog;
-		_creditsWindow = GetNode("Credits Dialog") as WindowDialog;
-		_trackOption = GetNode("Settings Panel/Tracking/Selection") as OptionButton;
+		
+		_multiDialog = GetNode("Multi Dialog") as Control;
+		_seekerDialog = GetNode("Seeker Dialog") as Control;
+		
+		_trackOption = GetNode("Multi Dialog/Tabs/General/Track Toggle") as CheckButton;
+		_iconOption = GetNode("Multi Dialog/Tabs/General/Icon Toggle") as CheckButton;
+		
+		_splashAnim = GetNode("SplashAnims") as AnimationPlayer;
+		_messageAnim = GetNode("MessageAnims") as AnimationPlayer;
+		
+		_splashAnim.Play("Logo Fade");
 	}
 	
 	public override void _Process(float delta)
 	{
-		if (_trackOption.Selected == 1)
+		if (_trackOption.Pressed)
 		{
-			if (Hypervisor.GameProcess == null && _seekerWindow.Visible)
-			{
-				var _processes = Process.GetProcessesByName("KINGDOM HEARTS FINAL MIX");
-				
-				if (_processes.Length > 0)
-				{
-					Hypervisor.GameProcess = _processes[0];
-					Hypervisor.GameHandle = Hypervisor.GameProcess.Handle;
-					Hypervisor.ExeAddress = (ulong)Hypervisor.GameProcess.MainModule.BaseAddress;
-					Hypervisor.GameAddress = Hypervisor.ExeAddress + 0x3A0606;
-					
-					Singleton.TrackMode = 1;
-					_seekerWindow.Visible = false;
-				}
-			}
+			_frameElapse++;
 			
-			else if (!_seekerWindow.Visible && Hypervisor.GameProcess == null)
-				_trackOption.Selected = 0;
+			if (_frameElapse == 85)
+			{
+				if (Hypervisor.GameProcess == null && _seekerDialog.Visible)
+				{
+					var _processes = Process.GetProcessesByName("KINGDOM HEARTS FINAL MIX");
+					
+					if (_processes.Length > 0)
+					{
+						Hypervisor.GameProcess = _processes[0];
+						Hypervisor.GameHandle = Hypervisor.GameProcess.Handle;
+						Hypervisor.ExeAddress = (ulong)Hypervisor.GameProcess.MainModule.BaseAddress;
+						Hypervisor.GameAddress = Hypervisor.ExeAddress + 0x3A0606;
+						
+						Singleton.TrackMode = 1;
+						_messageAnim.Play("SeekerHide");
+					}
+				}
+				
+				_frameElapse = 0;
+			}
+		}
+		
+		if (Input.IsActionJustPressed("settings_toggle") && !_seekerDialog.Visible)
+		{
+			if (!_multiDialog.Visible)
+				_messageAnim.Play("DialogShow");
+				
+			else
+				_messageAnim.Play("DialogHide");
 		}
 	}
 	
 	private void iconSelect(byte index) => Singleton.IconMode = index;
 	
-	private void trackSelect(byte index)
+	private void trackSelect()
 	{
-		if (index == 0)
+		if (!_trackOption.Pressed)
 		{
 			Hypervisor.GameProcess = null;
 			Singleton.TrackMode = 0;
 		}
 		
 		else
-			_seekerWindow.Visible = true;
+		{
+			if (!_seekerDialog.Visible)
+				_messageAnim.Play("SeekerShow");
+		}
 		
 		_sceneInstance.QueueFree();
 		
-		var _scene = GD.Load<PackedScene>("res://Scenes/TrackScene.tscn");
+		var _scene = GD.Load<PackedScene>("res://Scenes/TrackKH1.tscn");
 		_sceneInstance = _scene.Instance();
 		
-		(_sceneInstance as TrackScene).BackColor = _rememberColor;
+		(_sceneInstance as TrackKH1).BackColor = _rememberColor;
 		
 		AddChild(_sceneInstance);
+		MoveChild(_sceneInstance, 1);
 	}
 	
-	private void backColorShift(Color color)
+	private void colorShift(Color color)
 	{
-		(_sceneInstance as TrackScene).BackColor = color;
+		(_sceneInstance as TrackKH1).BackColor = color;
 		_rememberColor = color;
 	}
 	
-	private void creditsButton() => _creditsWindow.Visible = true;
-	
-	private void cancelButton()
+	private void seekerAbort()
 	{
-		_seekerWindow.Visible = false;
-		_creditsWindow.Visible = false;
+		_trackOption.Pressed = false;
+		_messageAnim.Play("SeekerHide");
 	}
+	
+	private void iconToggle() => Singleton.IconMode = _iconOption.Pressed == true ? (byte)1 : (byte)0;
 }

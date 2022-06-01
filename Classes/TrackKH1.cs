@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class TrackScene : Panel
+public class TrackKH1 : Panel
 {
 	[Export] public Color BackColor = new Color(0.13F, 0.13F, 0.13F, 1);
 	
@@ -12,7 +12,7 @@ public class TrackScene : Panel
 		_styleBox = GetStylebox("panel") as StyleBoxFlat;
 	}
 	
-	public override void _Process(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 		_styleBox.BgColor = BackColor;
 	}

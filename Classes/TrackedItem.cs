@@ -61,6 +61,12 @@ public class TrackedItem : Control
 	private TextureRect _numberNode;
 	private TextureRect _subNumberNode;
 	
+	private AnimationPlayer _mainAnim;
+	private AnimationPlayer _numberAnim;
+	private AnimationPlayer _crossAnim;
+	private AnimationPlayer _subAnim;
+	private AnimationPlayer _subNumberAnim;
+	
 	private bool _mouseOver = false;
 	private bool _permDisable = false;
 	
@@ -71,6 +77,7 @@ public class TrackedItem : Control
 	private int _subDisplayedNumber = 0;
 	
 	private byte _loadedIcon;
+	private bool _isActive;
 	
 	private byte _textureSwitch = 0;
 	private byte _textureBitwise = 0;
@@ -87,6 +94,12 @@ public class TrackedItem : Control
 		_crossNode = GetNode("CrossAsset") as TextureRect;
 		_numberNode = GetNode("NumberAsset") as TextureRect;
 		_subNumberNode = GetNode("SubNumberAsset") as TextureRect;
+		
+		_mainAnim = GetNode("MainAnim") as AnimationPlayer;
+		_numberAnim = GetNode("NumberAnim") as AnimationPlayer;
+		_crossAnim = GetNode("CrossAnim") as AnimationPlayer;
+		_subAnim = GetNode("SubAnim") as AnimationPlayer;
+		_subNumberAnim = GetNode("SubNumberAnim") as AnimationPlayer;
 		
 		_loadedIcon = Singleton.IconMode;
 		var _assetPath = _loadedIcon == 0 ? "res://Assets/Simplified/" : "res://Assets/Classic/";
@@ -122,9 +135,23 @@ public class TrackedItem : Control
 			_displayedNumber = 0;
 			_subDisplayedNumber = 0;
 			
-			_crossNode.Visible = true;
-			_numberNode.Visible = false;
-			_subNumberNode.Visible = false;
+			if (!_crossNode.Visible)
+				_crossAnim.Play("PromptCross");
+			
+			if (_numberNode.Visible)
+				_numberAnim.Play("HideNum");
+				
+			if (_subNode.Visible)
+				_subAnim.Play("HideSub");
+			
+			if (_subNumberNode.Visible)
+				_subNumberAnim.Play("HideSubNum");
+			
+			if (_mainNode.Modulate.r != 1F)
+				_mainAnim.Play("DisableItemHalf");
+				
+			else
+				_mainAnim.Play("DisableItemFull");
 			
 			_numberNode.Texture.Dispose();
 			_subNumberNode.Texture.Dispose();
@@ -160,15 +187,17 @@ public class TrackedItem : Control
 				_shadowNode.Texture = ResourceLoader.Load(_assetPath + string.Format(TexturePath, _textureBitwise)) as Texture;
 			}
 			
-			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1);
-			_crossNode.Visible = false;
+			if (!_isActive)
+				_mainAnim.Play("EnableItemHalf");
+			
+			_crossAnim.Play("HideCross");
 		}
 	}
 	
 	private void Activate(int Input)
 	{
 		if (_mainNode.Modulate.r != 1)
-			_mainNode.Modulate = new Godot.Color(1, 1, 1, 1);
+			_mainAnim.Play("PromptItem");
 		
 		if (Input > 1 && Input != _displayedNumber)
 		{
@@ -177,22 +206,27 @@ public class TrackedItem : Control
 			_numberNode.Texture.Dispose();
 			_numberNode.Texture = ResourceLoader.Load("res://Assets/Numbers/" + Input + ".png") as Texture;
 			
-			_numberNode.Visible = true;
+			if (!_numberNode.Visible)
+				_numberAnim.Play("PromptNum");
 		}
 		
 		else if (Input == 1)
 		{
 			_displayedNumber = 1;
-			_numberNode.Visible = false;
-			_numberNode.Texture.Dispose();
+			
+			if (_numberNode.Visible)
+			_numberAnim.Play("HideNum");
 		}
 		
 		else if (BackTrackable && Input == 0)
 		{
 			_displayedNumber = 0;
-			_numberNode.Visible = false;
-			_numberNode.Texture.Dispose();
+			
+			if (_numberNode.Visible)
+			_numberAnim.Play("HideNum");
 		}
+		
+		_isActive = true;
 	}
 	
 	private void SwapTexture()
@@ -213,37 +247,46 @@ public class TrackedItem : Control
 	
 	private void Deactivate()
 	{
-		if (_mainNode.Modulate.r != 0.45F)
+		if (_mainNode.Modulate.r > 0.46F)
 		{
 			_displayedNumber = 0;
-			_numberNode.Visible = false;
-			_numberNode.Texture.Dispose();
-			_mainNode.Modulate = new Godot.Color(0.45F, 0.45F, 0.45F, 1);
+			
+			if (_numberNode.Visible)
+				_numberAnim.Play("HideNum");
+				
+			if (_subNode.Visible)
+				_subAnim.Play("HideSub");
+			
+			if (_subNumberNode.Visible)
+				_subNumberAnim.Play("HideSubNum");
+			
+			_mainAnim.Play("HideItem");
+			_isActive = false;
 		}
 	}
 	
 	private void SubActivate(int Input)
 	{
 		if (!_subNode.Visible)
-			_subNode.Visible = true;
+			_subAnim.Play("PromptSub");
 		
 		if (MaximumSubCount > 1)
 		{
 			if (Input >= 1 && Input != _subDisplayedNumber)
 			{
 				_subDisplayedNumber = Input;
-				
-				_subNumberNode.Texture.Dispose();
 				_subNumberNode.Texture = ResourceLoader.Load("res://Assets/Numbers/" + Input + ".png") as Texture;
 				
-				_subNumberNode.Visible = true;
+				if (!_subNumberNode.Visible)
+					_subNumberAnim.Play("PromptSubNum");
 			}
 			
 			else if (SubBackTrackable && Input == 0)
 			{
 				_subDisplayedNumber = 0;
-				_subNumberNode.Visible = false;
-				_subNumberNode.Texture.Dispose();
+				
+				if (_subNumberNode.Visible)
+					_subNumberAnim.Play("HideSubNum");
 			}
 		}
 	}
@@ -253,9 +296,11 @@ public class TrackedItem : Control
 		if (_subNode.Visible)
 		{
 			_subDisplayedNumber = 0;
-			_subNumberNode.Visible = false;
-			_subNumberNode.Texture.Dispose();
-			_subNode.Visible = false;
+			
+			if (_subNumberNode.Visible)
+					_subNumberAnim.Play("HideSubNum");
+			
+			_subAnim.Play("HideSub");
 		}
 	}
 	
@@ -263,7 +308,13 @@ public class TrackedItem : Control
 	{
 		if (Input.IsActionJustPressed("track_toggle") && _mouseOver && !_permDisable)
 			this.Enabled = !this.Enabled;
-			
+		
+		if (_mainNode.RectSize.x < 96 && _shadowNode.SelfModulate.a > 0.20F)
+		{
+			_subNode.RectPosition = new Vector2(_subNode.RectPosition.x + 10, _subNode.RectPosition.y + 5);
+			_shadowNode.SelfModulate = new Color(0, 0, 0, 0.20F);
+		}
+		
 		if (Singleton.TrackMode == 0)
 		{
 			if (_mouseOver)
@@ -297,7 +348,7 @@ public class TrackedItem : Control
 				_subLastCount = 0;
 		}
 		
-		if (SubTrackingMode == 0x0F)
+		if (SubTrackingMode == 0x0F && Enabled)
 		{
 			if (_mouseOver)
 			{
@@ -343,23 +394,22 @@ public class TrackedItem : Control
 			_textureSwitch = 0x00;
 		}
 		
-		if (SubTrackingMode == 0x0F)
+		if (SubTrackingMode == 0x0F && Enabled)
 		{
 			if (_subLastCount != _subDisplayedNumber)
 			{
 				_subDisplayedNumber = _subLastCount;
 				
-				_subNode.Texture.Dispose();
-				_subShadowNode.Texture.Dispose();
-				
-				if (_subLastCount == 0)
-					_subNode.Visible = false;
+				if (_subLastCount == 0 && _subNode.Visible)
+					_subAnim.Play("HideSub");
 				
 				else
 				{
 					_subNode.Texture = ResourceLoader.Load("res://Assets/Simplified/"  + FileList[_subLastCount - 1]) as Texture;
 					_subShadowNode.Texture = ResourceLoader.Load("res://Assets/Simplified/"  + FileList[_subLastCount - 1]) as Texture;
-					_subNode.Visible = true;
+					
+					if (!_subNode.Visible)
+						_subAnim.Play("PromptSub");
 				}
 			}
 		}
