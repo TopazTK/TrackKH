@@ -4,8 +4,6 @@
   
 This is a full-fledged Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/).
 
----
-
 ## Supported Games
 
 - Kingdom Hearts I [Denhonator]
