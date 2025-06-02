@@ -20,7 +20,7 @@ public class Initialize : Node
 	
 	public override void _Ready()
 	{
-		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v1.25] | TopazTK");
+		OS.SetWindowTitle("Auto-Tracker for KH Randomizer [v2.50] | TopazTK");
 		
 		_sceneInstance = GetNode("Check Panel");
 		
@@ -30,16 +30,13 @@ public class Initialize : Node
 		_trackOption = GetNode("Multi Dialog/Tabs/General/Track Toggle") as CheckButton;
 		_iconOption = GetNode("Multi Dialog/Tabs/General/Icon Toggle") as CheckButton;
 		
-		_splashAnim = GetNode("SplashAnims") as AnimationPlayer;
 		_messageAnim = GetNode("MessageAnims") as AnimationPlayer;
-		
-		_splashAnim.Play("Logo Fade");
 	}
 	
 	public override void _Process(float delta)
 	{
 		if (_trackOption.Pressed)
-		{
+		{an
 			_frameElapse++;
 			
 			if (_frameElapse == 85)
@@ -53,7 +50,7 @@ public class Initialize : Node
 						Hypervisor.GameProcess = _processes[0];
 						Hypervisor.GameHandle = Hypervisor.GameProcess.Handle;
 						Hypervisor.ExeAddress = (ulong)Hypervisor.GameProcess.MainModule.BaseAddress;
-						Hypervisor.GameAddress = Hypervisor.ExeAddress + 0x3A0606;
+						Hypervisor.GameAddress = Hypervisor.ExeAddress;
 						
 						Singleton.TrackMode = 1;
 						_messageAnim.Play("SeekerHide");

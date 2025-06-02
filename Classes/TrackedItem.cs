@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class TrackedItem : Control
 {
+	static bool IS_EGS = false;
 	[Export] public bool Enabled = true;
 	
 	[Export] public int RequiredValue = 0;
@@ -421,13 +422,18 @@ public class TrackedItem : Control
 			
 			if (Singleton.TrackMode == 1)
 			{
+				var _saveByte = Hypervisor.Read<byte>(0x2DE9360);
+				
+				if (_saveByte != 0x05)
+					IS_EGS = true;
+				
 				if ((long)SubAddress != -1)
 				{
 					switch (SubTrackingMode)
 					{
 						case 0x00:
 						{
-							var _count = Hypervisor.Read<byte>(SubAddress);
+							var _count = Hypervisor.Read<byte>(IS_EGS ? SubAddress + 0xA00 : SubAddress);
 							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
 							
 							if (_subLastCount > 0)
@@ -450,7 +456,7 @@ public class TrackedItem : Control
 						
 						case 0x01:
 						{
-							var _value = Hypervisor.ReadArray(SubAddress, SubArrayLength);
+							var _value = Hypervisor.ReadArray(IS_EGS ? SubAddress + 0xA00 : SubAddress, SubArrayLength);
 							var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 							_subLastCount = _subLastCount < _count ? _count : _subLastCount;
 							
@@ -474,8 +480,8 @@ public class TrackedItem : Control
 				{
 					case 0x00:
 					{
-						var _count = Hypervisor.Read<byte>(PrimaryAddress);
-						var _fallCount = Hypervisor.Read<byte>(FallbackAddress);
+						var _count = Hypervisor.Read<byte>(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress);
+						var _fallCount = Hypervisor.Read<byte>(IS_EGS ? FallbackAddress + 0xA00 : FallbackAddress);
 						
 						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
 							_count += _fallCount;
@@ -514,7 +520,7 @@ public class TrackedItem : Control
 					
 					case 0x01:
 					{
-						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						var _value = Hypervisor.ReadArray(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress, ArrayLength);
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						
 						_lastCount = _lastCount < _count ? _count : _lastCount;
@@ -542,7 +548,7 @@ public class TrackedItem : Control
 					
 					case 0x02:
 					{
-						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						var _value = Hypervisor.ReadArray(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress, ArrayLength);
 						
 						try
 						{
@@ -561,7 +567,7 @@ public class TrackedItem : Control
 					
 					case 0x03:
 					{
-						var _count = Hypervisor.Read<byte>(PrimaryAddress);
+						var _count = Hypervisor.Read<byte>(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress);
 						var _bitwise = _count & RequiredValue;
 						
 						if (SubInclusive && _count < _subLastCount)
@@ -578,8 +584,8 @@ public class TrackedItem : Control
 					
 					case 0x04:
 					{
-						var _count = Hypervisor.Read<byte>(PrimaryAddress);
-						var _bitCount = Hypervisor.Read<byte>(SecondaryAddress);
+						var _count = Hypervisor.Read<byte>(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress);
+						var _bitCount = Hypervisor.Read<byte>(IS_EGS ? SecondaryAddress + 0xA00 : SecondaryAddress);
 						
 						var _bitwise = _bitCount & RequiredValue;
 						_lastCount = _lastCount < _count ? _count : _lastCount;
@@ -611,7 +617,7 @@ public class TrackedItem : Control
 					
 					case 0x05:
 					{
-						var _bitArray = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						var _bitArray = Hypervisor.ReadArray(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress, ArrayLength);
 						int _count = 0;
 						
 						for (int i = 0; i < _bitArray.Length; i++)
@@ -641,8 +647,6 @@ public class TrackedItem : Control
 						
 						if (_lastCount > 0)
 						{
-							Activate(1);
-							
 							if (_lastCount > 1)
 							{
 								Activate(_lastCount);
@@ -666,7 +670,7 @@ public class TrackedItem : Control
 						var _value = new List<byte>();
 						
 						for (ulong i = 0; i < (ulong)ArrayLength; i++)
-							_value.Add(Hypervisor.Read<byte>(PrimaryAddress + EntryOffset * i));
+							_value.Add(Hypervisor.Read<byte>((IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress) + EntryOffset * i));
 						
 						var _count = (byte)_value.Where(x => x > 0x00).ToArray().Length;
 						
@@ -695,7 +699,7 @@ public class TrackedItem : Control
 					
 					case 0x07:
 					{
-						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						var _value = Hypervisor.ReadArray(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress, ArrayLength);
 						byte _bitwise = 0;
 						
 						for (int i = 0; i < _value.Length; i++)
@@ -706,7 +710,7 @@ public class TrackedItem : Control
 						
 						if (FallbackAddress != 0xFFFFFFFFFFFFFFFF)
 						{
-							var _fallVal = Hypervisor.ReadArray(FallbackAddress, ArrayLength);
+							var _fallVal = Hypervisor.ReadArray(IS_EGS ? FallbackAddress + 0xA00 : FallbackAddress, ArrayLength);
 							byte _fallWise = 0;
 							
 							for (int i = 0; i < _fallVal.Length; i++)
@@ -729,7 +733,7 @@ public class TrackedItem : Control
 					
 					case 0x08:
 					{
-						var _value = Hypervisor.ReadArray(PrimaryAddress, ArrayLength);
+						var _value = Hypervisor.ReadArray(IS_EGS ? PrimaryAddress + 0xA00 : PrimaryAddress, ArrayLength);
 						
 						var _count = (byte)_value.Where(x => x == RequiredValue || x - 0x80 == RequiredValue).ToArray().Length;
 						
@@ -757,6 +761,20 @@ public class TrackedItem : Control
 						
 						break;
 					}
+					
+					case 0x09:
+						{
+							if (Enabled && _lastCount == 0x00)
+							{
+								Activate(1);
+								_lastCount = 0x01;
+							}
+							
+							else if (BackTrackable)
+								Deactivate();
+								
+								break;
+						}
 				}
 			}
 			

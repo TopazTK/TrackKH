@@ -6,7 +6,7 @@ This is a full-fledged Auto-Tracker for Kingdom Hearts Randomizers, heavily insp
 
 ## Supported Games
 
-- Kingdom Hearts I [Denhonator]
+- Kingdom Hearts I [GICU]
 
 ---
 
@@ -20,7 +20,6 @@ Get the latest release by clicking the button below.
 
 ## Features
 - Automatic and Manual tracking.
-- Manual Source Magic tracking.
 - Item exclusion from tracking logic.
 - Ability to resize the window at will.
 - Background color selection to allow Chroma Keying.
@@ -31,15 +30,18 @@ Get the latest release by clicking the button below.
 
 ## Checks
 - All Magic and their appropriate levels.
-- All redeemed Summons.
+- All Summons.
 - All learned Trinities.
-- All Destiny Islands items.
+- All World Progression Items.
+- All Finish Items [Raft Materials / Lucky Emblems].
 - All separate Emblem Pieces.
-- Reports and Torn Pages.
-- Synthesis and Jack-in-the-Box.
+- All Worlds.
+- All Chest-Unlock Keyblades.
 - All Movement.
 - All rescued Puppies and redeemed Gifts.
 - All obtained and sent Postcards.
+- Torn Pages, Cups, and Synthesis.
+- Second Chance and Combo Master.
 
 ---
 
@@ -49,7 +51,6 @@ Get the latest release by clicking the button below.
 - Middle Click -> Disable Check.
 - Shift + Left Click -> Remove Check.
 - Shift + Right Click -> Remove Sub-Check.
-- Middle Mouse Wheel -> Set Source Magic.
 
 ---
 
@@ -62,7 +63,7 @@ Get the latest release by clicking the button below.
 
 ## Credits
 - TopazTK for making the thing.
-- Denhonator for making the randomizer this was created for.
+- GICU for making the randomizer this was created for.
 - Televo for the smexy icons.
 - zax for his inspiration with the web-tracker.
 
