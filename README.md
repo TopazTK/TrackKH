@@ -2,7 +2,7 @@
 
 ![171330349-49a734fc-763f-4e2e-bc1a-cc24ebebe975](https://github.com/user-attachments/assets/38089599-788a-40d0-b9c8-bd9a9331af02)
   
-This is a full-fledged, world-based Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/) and reworked to behave similar to [RedBuddha's Auto-Tracker (maintained by Dee-Ayy](https://github.com/Dee-Ayy/KhTracker).
+This is a full-fledged, world-based Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/) and reworked to behave similar to [RedBuddha's Auto-Tracker (maintained by Dee-Ayy)](https://github.com/Dee-Ayy/KhTracker).
 
 ## Supported Games
 
