@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://b2wk8askq4s78"]
 
-[ext_resource type="Script" uid="uid://cr6mouvo3lglb" path="res://Scripts/MAIN_SCRIPT.cs" id="1_74yg8"]
+[ext_resource type="Script" uid="uid://mo8dlfx45wlp" path="res://Scripts/MAIN_SCRIPT.cs" id="1_74yg8"]
 [ext_resource type="PackedScene" uid="uid://bq5acceq4rgat" path="res://Scenes/CHECK_PANEL.tscn" id="1_px4tq"]
-[ext_resource type="Texture2D" uid="uid://bba2n1ypv6edj" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
-[ext_resource type="Texture2D" uid="uid://cxahp3c87lhq5" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
-[ext_resource type="Texture2D" uid="uid://cpl2hctulxcry" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
-[ext_resource type="Texture2D" uid="uid://bc3vsttrtndlf" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
+[ext_resource type="Texture2D" uid="uid://dip071xwbb26i" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
+[ext_resource type="Texture2D" uid="uid://qn17f0sl15yk" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
+[ext_resource type="Texture2D" uid="uid://udgy6go24wcc" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
+[ext_resource type="Texture2D" uid="uid://cr68k8qjis71i" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
 
 [sub_resource type="Animation" id="Animation_fv758"]
 length = 0.001
@@ -450,7 +450,7 @@ offset_right = -5.0
 offset_bottom = 346.5
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 color = Color(0.0745098, 0.0823529, 0.168627, 1)
 
 [node name="CHECK_SCENE" parent="." instance=ExtResource("1_px4tq")]

@@ -16,7 +16,7 @@ run/main_scene="uid://b2wk8askq4s78"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 boot_splash/fullsize=false
 boot_splash/use_filter=false
-boot_splash/image="uid://bba2n1ypv6edj"
+boot_splash/image="uid://dip071xwbb26i"
 config/icon="uid://c6qgr3f2spc2s"
 config/windows_native_icon="res://Assets/icon.ico"
 

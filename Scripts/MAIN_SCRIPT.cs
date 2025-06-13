@@ -90,6 +90,8 @@ public partial class MAIN_SCRIPT : Control
 				var _loadScene = GD.Load<PackedScene>("user://saveTrack.tscn");
 				var _instantiateScene = _loadScene.Instantiate() as PANEL_SCRIPT;
 				
+				_instantiateScene.MouseFilter = MouseFilterEnum.Pass;
+				
 				AddChild(_instantiateScene);
 			}
 		}

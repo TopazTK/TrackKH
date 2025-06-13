@@ -38,7 +38,6 @@ public partial class WORLD_SCRIPT : Control
 	[Export] public ulong UNLOCK_ADDRESS = 0x00;
 	[Export] public string ICON_PATH = "debug";
 	
-	[Export] public bool SIGNAL_CONNECTED = false;
 	[Export] public string[] GHOST_NAMES = new string[0];
 	
 	TextureRect BACKDROP;
@@ -60,6 +59,7 @@ public partial class WORLD_SCRIPT : Control
 	GridContainer CHECK_CONTAIN;
 	
 	bool _mouseOver = false;
+	bool _signalConnect = false;
 	
 	string _texturePath = "Assets/Minimal/";
 
@@ -97,6 +97,9 @@ public partial class WORLD_SCRIPT : Control
 		ICON_MAIN.Texture = _loadMain;
 		SHDW_MAIN.Texture = _loadMain;
 		
+		this.MouseEntered += mouseEnter;
+		this.MouseExited += mouseExit;
+		
 		if (IS_IGNORED)
 		{
 			ICON_SPECIAL.Texture = _ignoreTexture;
@@ -115,12 +118,22 @@ public partial class WORLD_SCRIPT : Control
 			CHECK_CONTAIN.AddChild(_ghostCheck);
 		}
 		
+		if (AMOUNT > 0)
+		{
+			var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + AMOUNT + ".png") as Texture2D;
+			
+			ICON_NUMBER.Texture = _numberTexture;
+			SHDW_NUMBER.Texture = _numberTexture;
+			
+			ANIM_NUMBER.Play("NUMBER_APPEAR");
+		}
+		
 		ExecuteLogic();
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!SIGNAL_CONNECTED)
+		if (!_signalConnect)
 		{
 			var _parentNode = GetParent().GetParent();
 			
@@ -141,10 +154,7 @@ public partial class WORLD_SCRIPT : Control
 			foreach (var _node in _entryNodes.GetChildren())
 				_node.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
 			
-			this.MouseEntered += mouseEnter;
-			this.MouseExited += mouseExit;
-			
-			SIGNAL_CONNECTED = true;
+			_signalConnect = true;
 		}
 		
 		if (Input.IsActionJustPressed("track_toggle") && _mouseOver)

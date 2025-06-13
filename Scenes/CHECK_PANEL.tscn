@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bq5acceq4rgat"]
 
-[ext_resource type="Script" uid="uid://bfni3o52ys4tj" path="res://Scripts/PANEL_SCRIPT.cs" id="1_qvuw4"]
+[ext_resource type="Script" uid="uid://buqif3jvs5em7" path="res://Scripts/PANEL_SCRIPT.cs" id="1_qvuw4"]
 [ext_resource type="StyleBox" path="res://Assets/Styles/PanelStyle.tres" id="1_xjvo1"]
 [ext_resource type="PackedScene" uid="uid://bd0wm3mp0nbct" path="res://Scenes/WORLD_BOX.tscn" id="2_bs8br"]
 [ext_resource type="PackedScene" uid="uid://3hdu6yv5hif4" path="res://Scenes/IMPORTANT_CHECK.tscn" id="4_ak5n4"]
-[ext_resource type="Texture2D" uid="uid://drpj3yb3ux5wv" path="res://Assets/General/separator.png" id="4_evkeg"]
+[ext_resource type="Texture2D" uid="uid://dckrv1bnc76dg" path="res://Assets/General/separator.png" id="4_evkeg"]
 [ext_resource type="PackedScene" uid="uid://311ela8bwpxn" path="res://Scenes/DEATH_CHECK.tscn" id="6_n1aln"]
 [ext_resource type="PackedScene" uid="uid://bo5b2p8pl20p4" path="res://Scenes/REGULAR_CHECK.tscn" id="7_uyawc"]
 
@@ -39,14 +39,12 @@ columns = 2
 [node name="LEVEL" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 AMOUNT_ADDRESS = 48141156
 ICON_PATH = "levels"
 
 [node name="ISLANDS" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 1
 UNLOCK_ADDRESS = 48142340
 ICON_PATH = "islands"
@@ -54,14 +52,12 @@ ICON_PATH = "islands"
 [node name="TRAVERSE" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 3
 ICON_PATH = "traverse"
 
 [node name="WONDERLAND" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 4
 UNLOCK_ADDRESS = 48142478
 ICON_PATH = "wonderland"
@@ -69,7 +65,6 @@ ICON_PATH = "wonderland"
 [node name="COLISEUM" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 11
 UNLOCK_ADDRESS = 48142479
 ICON_PATH = "coliseum"
@@ -77,7 +72,6 @@ ICON_PATH = "coliseum"
 [node name="JUNGLE" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 5
 UNLOCK_ADDRESS = 48142480
 ICON_PATH = "jungle"
@@ -85,7 +79,6 @@ ICON_PATH = "jungle"
 [node name="AGRABAH" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 8
 UNLOCK_ADDRESS = 48142484
 ICON_PATH = "agrabah"
@@ -93,7 +86,6 @@ ICON_PATH = "agrabah"
 [node name="MONSTRO" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 12
 UNLOCK_ADDRESS = 48142485
 ICON_PATH = "monstro"
@@ -101,7 +93,6 @@ ICON_PATH = "monstro"
 [node name="HALLOWEEN" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 10
 UNLOCK_ADDRESS = 48142495
 ICON_PATH = "halloween"
@@ -109,7 +100,6 @@ ICON_PATH = "halloween"
 [node name="ATLANTICA" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 9
 UNLOCK_ADDRESS = 48142486
 ICON_PATH = "atlantica"
@@ -117,7 +107,6 @@ ICON_PATH = "atlantica"
 [node name="NEVERLAND" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 13
 UNLOCK_ADDRESS = 48142494
 ICON_PATH = "neverland"
@@ -125,7 +114,6 @@ ICON_PATH = "neverland"
 [node name="BASTION" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 15
 UNLOCK_ADDRESS = 48142497
 ICON_PATH = "bastion"
@@ -133,7 +121,6 @@ ICON_PATH = "bastion"
 [node name="FINAL" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 16
 UNLOCK_ADDRESS = 48142498
 ICON_PATH = "final"
@@ -141,7 +128,6 @@ ICON_PATH = "final"
 [node name="POOH" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-mouse_default_cursor_shape = 0
 WORLD_ID = 6
 ICON_PATH = "pooh"
 
