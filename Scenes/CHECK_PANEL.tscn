@@ -1,0 +1,476 @@
+[gd_scene load_steps=8 format=3 uid="uid://bq5acceq4rgat"]
+
+[ext_resource type="Script" uid="uid://bfni3o52ys4tj" path="res://Scripts/PANEL_SCRIPT.cs" id="1_qvuw4"]
+[ext_resource type="StyleBox" path="res://Assets/Styles/PanelStyle.tres" id="1_xjvo1"]
+[ext_resource type="PackedScene" uid="uid://bd0wm3mp0nbct" path="res://Scenes/WORLD_BOX.tscn" id="2_bs8br"]
+[ext_resource type="PackedScene" uid="uid://3hdu6yv5hif4" path="res://Scenes/IMPORTANT_CHECK.tscn" id="4_ak5n4"]
+[ext_resource type="Texture2D" uid="uid://drpj3yb3ux5wv" path="res://Assets/General/separator.png" id="4_evkeg"]
+[ext_resource type="PackedScene" uid="uid://311ela8bwpxn" path="res://Scenes/DEATH_CHECK.tscn" id="6_n1aln"]
+[ext_resource type="PackedScene" uid="uid://bo5b2p8pl20p4" path="res://Scenes/REGULAR_CHECK.tscn" id="7_uyawc"]
+
+[node name="CHECK_SCENE" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("1_xjvo1")
+script = ExtResource("1_qvuw4")
+
+[node name="MAIN_CONTAINER" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 10
+
+[node name="WORLD_CONTAINER" type="GridContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+theme_override_constants/h_separation = 7
+theme_override_constants/v_separation = 7
+columns = 2
+
+[node name="LEVEL" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+AMOUNT_ADDRESS = 48141156
+ICON_PATH = "levels"
+
+[node name="ISLANDS" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 1
+UNLOCK_ADDRESS = 48142340
+ICON_PATH = "islands"
+
+[node name="TRAVERSE" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 3
+ICON_PATH = "traverse"
+
+[node name="WONDERLAND" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 4
+UNLOCK_ADDRESS = 48142478
+ICON_PATH = "wonderland"
+
+[node name="COLISEUM" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 11
+UNLOCK_ADDRESS = 48142479
+ICON_PATH = "coliseum"
+
+[node name="JUNGLE" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 5
+UNLOCK_ADDRESS = 48142480
+ICON_PATH = "jungle"
+
+[node name="AGRABAH" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 8
+UNLOCK_ADDRESS = 48142484
+ICON_PATH = "agrabah"
+
+[node name="MONSTRO" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 12
+UNLOCK_ADDRESS = 48142485
+ICON_PATH = "monstro"
+
+[node name="HALLOWEEN" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 10
+UNLOCK_ADDRESS = 48142495
+ICON_PATH = "halloween"
+
+[node name="ATLANTICA" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 9
+UNLOCK_ADDRESS = 48142486
+ICON_PATH = "atlantica"
+
+[node name="NEVERLAND" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 13
+UNLOCK_ADDRESS = 48142494
+ICON_PATH = "neverland"
+
+[node name="BASTION" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 15
+UNLOCK_ADDRESS = 48142497
+ICON_PATH = "bastion"
+
+[node name="FINAL" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 16
+UNLOCK_ADDRESS = 48142498
+ICON_PATH = "final"
+
+[node name="POOH" parent="MAIN_CONTAINER/WORLD_CONTAINER" instance=ExtResource("2_bs8br")]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_default_cursor_shape = 0
+WORLD_ID = 6
+ICON_PATH = "pooh"
+
+[node name="SEPARATE_ONE" type="TextureRect" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_evkeg")
+stretch_mode = 3
+
+[node name="IC_CONTAINER" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="POSTCARD" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 10
+MAX_SUB_AMOUNT = 10
+SHOW_SUM_AMOUNT = true
+TRACK_ADDRESS = 48142540
+SUB_TRACK_ADDRESS = 48148511
+ICON_PATH = "postcard"
+SUB_ICON_PATH = "redeem_1"
+
+[node name="PUPPY" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 99
+MAX_SUB_AMOUNT = 11
+ARRAY_LENGTH = 13
+SUB_ARRAY_LENGTH = 11
+TRACK_MODE = 2
+SUB_TRACK_MODE = 1
+TRACK_ADDRESS = 48147043
+SUB_TRACK_ADDRESS = 48144796
+ICON_PATH = "puppy"
+SUB_ICON_PATH = "redeem_2"
+
+[node name="SYNTH" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 33
+TRACK_ADDRESS = 48865096
+ICON_PATH = "synth"
+
+[node name="EMBLEM" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 99
+ARRAY_LENGTH = 4
+TRACK_MODE = 1
+TRACK_ADDRESS = 48142517
+ICON_PATH = "Emblems/emblem"
+
+[node name="MITSUBISHI" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+TRACK_ADDRESS = 48142341
+ICON_PATH = "mitsubishi"
+
+[node name="LUCKY" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+TRACK_ADDRESS = 48142567
+ICON_PATH = "lucky"
+
+[node name="DEATH_CHECK" parent="MAIN_CONTAINER/IC_CONTAINER" instance=ExtResource("6_n1aln")]
+layout_mode = 2
+
+[node name="MOVE_CONTAINER" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="ROLL" parent="MAIN_CONTAINER/MOVE_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 5
+SUB_AMOUNT = 22
+ARRAY_LENGTH = 40
+TRACK_MODE = 3
+TRACK_ADDRESS = 48141220
+ICON_PATH = "Movement/roll"
+
+[node name="JUMP" parent="MAIN_CONTAINER/MOVE_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 5
+SUB_AMOUNT = 1
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+ICON_PATH = "Movement/jump"
+
+[node name="KICK" parent="MAIN_CONTAINER/MOVE_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 5
+SUB_AMOUNT = 2
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+ICON_PATH = "Movement/kick"
+
+[node name="GLIDE" parent="MAIN_CONTAINER/MOVE_CONTAINER" instance=ExtResource("4_ak5n4")]
+layout_mode = 2
+MAX_AMOUNT = 5
+SUB_AMOUNT = 3
+MAX_SUB_AMOUNT = 4
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+ICON_PATH = "Movement/glide"
+
+[node name="SEPARATE_TWO" type="TextureRect" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_evkeg")
+stretch_mode = 3
+
+[node name="MAGIC_CHECKS" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="FIRE" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142504
+ICON_PATH = "Magic/fire"
+
+[node name="BLIZZARD" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142505
+ICON_PATH = "Magic/blizzard"
+
+[node name="THUNDER" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142506
+ICON_PATH = "Magic/thunder"
+
+[node name="CURE" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142507
+ICON_PATH = "Magic/cure"
+
+[node name="AERO" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142510
+ICON_PATH = "Magic/aero"
+
+[node name="GRAVITY" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142508
+ICON_PATH = "Magic/gravity"
+
+[node name="STOP" parent="MAIN_CONTAINER/MAGIC_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 3
+MAX_AMOUNT = 3
+TRACK_ADDRESS = 48142509
+ICON_PATH = "Magic/stop"
+
+[node name="SUMMON_CHECKS" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SIMBA" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142566
+ICON_PATH = "Summon/simba"
+
+[node name="GENIE" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142563
+ICON_PATH = "Summon/genie"
+
+[node name="BAMBI" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142562
+ICON_PATH = "Summon/bambi"
+
+[node name="DUMBO" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142560
+ICON_PATH = "Summon/dumbo"
+
+[node name="TINKER" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142564
+ICON_PATH = "Summon/tinker"
+
+[node name="MUSHU" parent="MAIN_CONTAINER/SUMMON_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142565
+ICON_PATH = "Summon/mushu"
+
+[node name="NECESSARY_CHECKS" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="CHANCE" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+SUB_AMOUNT = 25
+ARRAY_LENGTH = 40
+TRACK_MODE = 3
+TRACK_ADDRESS = 48141220
+ICON_PATH = "Ability/chance"
+
+[node name="BLUE_TRINITY" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142499
+ICON_PATH = "Trinity/blue"
+
+[node name="RED_TRINITY" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142500
+ICON_PATH = "Trinity/red"
+
+[node name="GREEN_TRINITY" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142501
+ICON_PATH = "Trinity/green"
+
+[node name="WHITE_TRINITY" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142503
+ICON_PATH = "Trinity/white"
+
+[node name="YELLOW_TRINITY" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142502
+ICON_PATH = "Trinity/yellow"
+
+[node name="MASTER" parent="MAIN_CONTAINER/NECESSARY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+SUB_AMOUNT = 65
+ARRAY_LENGTH = 40
+TRACK_MODE = 3
+TRACK_ADDRESS = 48141220
+ICON_PATH = "Ability/master"
+
+[node name="ENTRY_CHECKS" type="HBoxContainer" parent="MAIN_CONTAINER"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PASS" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142558
+ICON_PATH = "Entry/pass"
+
+[node name="FOOTPRINTS" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142552
+ICON_PATH = "Entry/footprints"
+
+[node name="SLIDE" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142546
+ICON_PATH = "Entry/slide"
+
+[node name="FORGET" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142556
+ICON_PATH = "Entry/forget"
+
+[node name="JACK" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142557
+ICON_PATH = "Entry/jack"
+
+[node name="TRIDENT" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142539
+ICON_PATH = "Entry/trident"
+
+[node name="BOOK" parent="MAIN_CONTAINER/ENTRY_CHECKS" instance=ExtResource("7_uyawc")]
+layout_mode = 2
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142512
+ICON_PATH = "Entry/book"
