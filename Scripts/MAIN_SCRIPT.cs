@@ -11,7 +11,7 @@ public partial class MAIN_SCRIPT : Control
 	
 	public override void _Ready()
 	{
-		GetWindow().Title = "Auto-Tracker for KH Randomizer [v3.00] | TopazTK";
+		GetWindow().Title = "Auto-Tracker for KH Randomizer [v3.25] | TopazTK";
 		
 		ANIM_SPLASH = GetNode("ANIM_SPLASH") as AnimationPlayer;
 		ANIM_SPLASH.Play("SPLASH_INIT");
@@ -30,9 +30,9 @@ public partial class MAIN_SCRIPT : Control
 					ANIM_SPLASH.Play("SPLASH_FINISH");
 			
 			var _fetchModules = _fetchProcess[0].Modules.OfType<ProcessModule>();
-			var _checkSteam = _fetchModules.Any(x => x.ModuleName.Contains("steam_api64"));
+			var _checkEpic = _fetchModules.Any(x => x.ModuleName.Contains("EOSSDK-Win64-Shipping"));
 			
-			if (!_checkSteam)
+			if (_checkEpic)
 				Hypervisor.AttachProcess(_fetchProcess[0], 0xA00);
 			
 			else

@@ -112,7 +112,7 @@ public partial class IC_SCRIPT : Control
 				if (SUB_AMOUNT > 0)
 					ANIM_SUBCHECK.Play("SUBCHECK_APPEAR");
 				
-				if (SUB_AMOUNT > 1)
+				if (SUB_AMOUNT >= 1)
 					ANIM_SUBNUM.Play("SUBNUM_APPEAR");
 			}
 			

@@ -136,23 +136,13 @@ public partial class WORLD_SCRIPT : Control
 		if (!_signalConnect)
 		{
 			var _parentNode = GetParent().GetParent();
+			var _trackableNode = _parentNode.GetNode("TRACKABLES");
 			
-			var _magicNodes = _parentNode.GetNode("MAGIC_CHECKS");
-			var _summonNodes = _parentNode.GetNode("SUMMON_CHECKS");
-			var _necessaryNodes = _parentNode.GetNode("NECESSARY_CHECKS");
-			var _entryNodes = _parentNode.GetNode("ENTRY_CHECKS");
-			
-			foreach (var _node in _magicNodes.GetChildren())
-				_node.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
-			
-			foreach (var _node in _summonNodes.GetChildren())
-				_node.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
-			
-			foreach (var _node in _necessaryNodes.GetChildren())
-				_node.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
-			
-			foreach (var _node in _entryNodes.GetChildren())
-				_node.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
+			foreach (var _node in _trackableNode.GetChildren())
+			{
+				foreach (var _subNode in _node.GetChildren())
+					_subNode.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
+			}
 			
 			_signalConnect = true;
 		}
@@ -193,8 +183,9 @@ public partial class WORLD_SCRIPT : Control
 	{
 		if (!IS_IGNORED)
 		{
-			var _worldRead = Hypervisor.Read<byte>(0x233FE84);
-			var _checkGummi = Hypervisor.Read<long>(0x05076A8);
+			var _worldRead = Hypervisor.Read<byte>((Hypervisor.BaseOffset == 0xA00 ? 0x234045CU : 0x233FE84U));
+			var _checkGummi = Hypervisor.Read<long>((Hypervisor.BaseOffset == 0xA00 ? 0x5079A8U : 0x05076A8U));
+			
 			var _amountRead = AMOUNT_ADDRESS == 0x00 ? 0x00 : Hypervisor.Read<byte>(AMOUNT_ADDRESS);
 			
 			if (UNLOCK_ADDRESS != 0x00)

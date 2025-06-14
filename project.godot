@@ -11,14 +11,15 @@ config_version=5
 [application]
 
 config/name="TrackKH-v3"
-config/version="v3.00"
+config/version="v3.25"
 run/main_scene="uid://b2wk8askq4s78"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 boot_splash/fullsize=false
 boot_splash/use_filter=false
-boot_splash/image="uid://dip071xwbb26i"
-config/icon="uid://c6qgr3f2spc2s"
+boot_splash/image="uid://djt3wtlby47sp"
+config/icon="uid://b4tk34evkb23a"
 config/windows_native_icon="res://Assets/icon.ico"
+boot_splash/minimum_display_time=500
 
 [autoload]
 
@@ -27,7 +28,8 @@ GLOBAL_VARS="*res://Scripts/GLOBAL_VARS.cs"
 [display]
 
 window/size/viewport_width=570
-window/size/viewport_height=1125
+window/size/viewport_height=1255
+window/size/extend_to_title=true
 window/stretch/mode="canvas_items"
 
 [dotnet]

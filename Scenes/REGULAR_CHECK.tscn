@@ -1,10 +1,10 @@
 [gd_scene load_steps=26 format=3 uid="uid://bo5b2p8pl20p4"]
 
-[ext_resource type="Script" uid="uid://hk5seuqaeakj" path="res://Scripts/RC_SCRIPT.cs" id="1_7l5yo"]
-[ext_resource type="Texture2D" uid="uid://bcve18v6v5an2" path="res://Assets/debug.png" id="2_vpy5p"]
-[ext_resource type="Texture2D" uid="uid://ibitsb6f7vis" path="res://Assets/General/Numbers/13.png" id="3_nftfr"]
-[ext_resource type="Texture2D" uid="uid://k7dufjbl0dyq" path="res://Assets/Minimal/Important Checks/Sub-Checks/redeem_1.png" id="4_wodtb"]
-[ext_resource type="Texture2D" uid="uid://dy2t53js46grg" path="res://Assets/General/ignore.png" id="5_2x2h2"]
+[ext_resource type="Script" uid="uid://cvus43jvxfadx" path="res://Scripts/RC_SCRIPT.cs" id="1_7l5yo"]
+[ext_resource type="Texture2D" uid="uid://dx5t6fumskwpu" path="res://Assets/debug.png" id="2_vpy5p"]
+[ext_resource type="Texture2D" uid="uid://cs0s6v0h8qgkc" path="res://Assets/General/Numbers/13.png" id="3_nftfr"]
+[ext_resource type="Texture2D" uid="uid://rep71kd38hgx" path="res://Assets/Minimal/Important Checks/Sub-Checks/redeem_1.png" id="4_wodtb"]
+[ext_resource type="Texture2D" uid="uid://wj32st3tpybw" path="res://Assets/General/ignore.png" id="5_2x2h2"]
 
 [sub_resource type="Animation" id="Animation_d7iue"]
 resource_name = "MAIN_ACTIVATE"
@@ -678,9 +678,9 @@ offset_bottom = 66.0
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 10.0
+offset_left = 3.0
 offset_top = 48.0
-offset_right = 74.0
+offset_right = 67.0
 offset_bottom = 69.0
 texture = ExtResource("3_nftfr")
 
@@ -690,8 +690,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
-offset_right = 57.0
-offset_bottom = 20.0
+offset_right = 65.0
+offset_bottom = 22.0
 texture = ExtResource("3_nftfr")
 
 [node name="ICON_SUBCHECK" type="TextureRect" parent="."]
@@ -721,9 +721,9 @@ expand_mode = 1
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = -6.0
+offset_left = -8.0
 offset_top = 12.0
-offset_right = 42.0
+offset_right = 40.0
 offset_bottom = 33.0
 texture = ExtResource("3_nftfr")
 expand_mode = 1

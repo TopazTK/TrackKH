@@ -1,10 +1,10 @@
 [gd_scene load_steps=26 format=3 uid="uid://3hdu6yv5hif4"]
 
-[ext_resource type="Script" uid="uid://mtdaqon33pvx" path="res://Scripts/IC_SCRIPT.cs" id="1_8cmwk"]
-[ext_resource type="Texture2D" uid="uid://1vxifm1qhce5" path="res://Assets/debug.png" id="2_j70gb"]
-[ext_resource type="Texture2D" uid="uid://bwe4ipaxjyiv6" path="res://Assets/General/Numbers/13.png" id="3_d7iue"]
-[ext_resource type="Texture2D" uid="uid://xvvbsps3ghxb" path="res://Assets/Minimal/Important Checks/Sub-Checks/redeem_1.png" id="4_jhvsp"]
-[ext_resource type="Texture2D" uid="uid://i7maaa3au2ah" path="res://Assets/General/ignore.png" id="5_dhgm5"]
+[ext_resource type="Script" uid="uid://c0o4lrg82qdpw" path="res://Scripts/IC_SCRIPT.cs" id="1_8cmwk"]
+[ext_resource type="Texture2D" uid="uid://dx5t6fumskwpu" path="res://Assets/debug.png" id="2_j70gb"]
+[ext_resource type="Texture2D" uid="uid://cs0s6v0h8qgkc" path="res://Assets/General/Numbers/13.png" id="3_d7iue"]
+[ext_resource type="Texture2D" uid="uid://rep71kd38hgx" path="res://Assets/Minimal/Important Checks/Sub-Checks/redeem_1.png" id="4_jhvsp"]
+[ext_resource type="Texture2D" uid="uid://wj32st3tpybw" path="res://Assets/General/ignore.png" id="5_dhgm5"]
 
 [sub_resource type="Animation" id="Animation_d7iue"]
 resource_name = "MAIN_ACTIVATE"
@@ -678,9 +678,9 @@ offset_bottom = 66.0
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 10.0
+offset_left = 3.0
 offset_top = 48.0
-offset_right = 74.0
+offset_right = 67.0
 offset_bottom = 69.0
 texture = ExtResource("3_d7iue")
 
@@ -721,9 +721,9 @@ expand_mode = 1
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = -6.0
+offset_left = -8.0
 offset_top = 12.0
-offset_right = 42.0
+offset_right = 40.0
 offset_bottom = 33.0
 texture = ExtResource("3_d7iue")
 expand_mode = 1

@@ -23,7 +23,7 @@ public static class Hypervisor
 	public static Process Process;
 	public static ulong PureAddress;
 	public static ulong MemoryOffset;
-	public static ulong BaseOffset;
+	public static long BaseOffset;
 	
 	public static void Log(string Input, byte Type)
 	{
@@ -72,7 +72,7 @@ public static class Hypervisor
 	/// Initialize the Hypervisor on a process.
 	/// </summary>
 	/// <param name="Input">The input process.</param>
-	public static void AttachProcess(Process Input, ulong Offset = 0x00)
+	public static void AttachProcess(Process Input, long Offset = 0x00)
 	{
 		Process = Input;
 		Handle = Input.Handle;
@@ -95,7 +95,10 @@ public static class Hypervisor
 		var _address = (IntPtr)Address;
 		
 		if (!Absolute)
-			_address = (IntPtr)(PureAddress + Address + BaseOffset);
+		{
+			_address = (IntPtr)(PureAddress + Address);
+			_address += (IntPtr)BaseOffset;
+		}
 		
 		var _dynoMethod = new DynamicMethod("SizeOfType", typeof(int), []);
 		ILGenerator _ilGen = _dynoMethod.GetILGenerator();
@@ -147,7 +150,10 @@ public static class Hypervisor
 		var _address = (IntPtr)Address;
 		
 		if (!Absolute)
-			_address = (IntPtr)(PureAddress + Address + BaseOffset);
+		{
+			_address = (IntPtr)(PureAddress + Address);
+			_address += (IntPtr)BaseOffset;
+		}
 		
 		var _dynoMethod = new DynamicMethod("SizeOfType", typeof(int), []);
 		ILGenerator _ilGen = _dynoMethod.GetILGenerator();
@@ -192,7 +198,10 @@ public static class Hypervisor
 		var _address = (IntPtr)Address;
 		
 		if (!Absolute)
-			_address = (IntPtr)(PureAddress + Address + BaseOffset);
+		{
+			_address = (IntPtr)(PureAddress + Address);
+			_address += (IntPtr)BaseOffset;
+		}
 		
 		UnlockBlock(Address, Absolute: Absolute);
 		
@@ -236,7 +245,10 @@ public static class Hypervisor
 		var _address = (IntPtr)Address;
 		
 		if (!Absolute)
-			_address = (IntPtr)(PureAddress + Address + BaseOffset);
+		{
+			_address = (IntPtr)(PureAddress + Address);
+			_address += (IntPtr)BaseOffset;
+		}
 		
 		UnlockBlock(Address, Absolute: Absolute);
 		
@@ -261,7 +273,8 @@ public static class Hypervisor
 	/// <returns></returns>
 	public static string ReadString(ulong Address, bool Absolute = false)
 	{
-		IntPtr _address = (IntPtr)(PureAddress + Address + BaseOffset);
+		IntPtr _address = (IntPtr)(PureAddress + Address);
+		_address += (IntPtr)BaseOffset;
 		
 		if (Absolute)
 			_address = (IntPtr)(Address);
@@ -287,7 +300,8 @@ public static class Hypervisor
 	/// <param name="Absolute">Whether the address is an absolute address or not. Defaults to false.</param>
 	public static void Write(ulong Address, string Value, bool Absolute = false, bool Unicode = false)
 	{
-		IntPtr _address = (IntPtr)(PureAddress + Address + BaseOffset);
+		IntPtr _address = (IntPtr)(PureAddress + Address);
+		_address += (IntPtr)BaseOffset;
 		
 		if (Absolute)
 			_address = (IntPtr)(Address);
@@ -357,7 +371,10 @@ public static class Hypervisor
 		var _address = (IntPtr)Address;
 		
 		if (!Absolute)
-			_address = (IntPtr)(PureAddress + Address + BaseOffset);
+		{
+			_address = (IntPtr)(PureAddress + Address);
+			_address += (IntPtr)BaseOffset;
+		}
 			
 		int _oldProtect = 0;
 		VirtualProtectEx(Handle, _address, Size, 0x40, ref _oldProtect);

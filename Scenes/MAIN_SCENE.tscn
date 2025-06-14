@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://b2wk8askq4s78"]
 
-[ext_resource type="Script" uid="uid://mo8dlfx45wlp" path="res://Scripts/MAIN_SCRIPT.cs" id="1_74yg8"]
+[ext_resource type="Script" uid="uid://bmcfncrja5m6d" path="res://Scripts/MAIN_SCRIPT.cs" id="1_74yg8"]
 [ext_resource type="PackedScene" uid="uid://bq5acceq4rgat" path="res://Scenes/CHECK_PANEL.tscn" id="1_px4tq"]
-[ext_resource type="Texture2D" uid="uid://dip071xwbb26i" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
-[ext_resource type="Texture2D" uid="uid://qn17f0sl15yk" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
-[ext_resource type="Texture2D" uid="uid://udgy6go24wcc" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
-[ext_resource type="Texture2D" uid="uid://cr68k8qjis71i" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
+[ext_resource type="Texture2D" uid="uid://djt3wtlby47sp" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
+[ext_resource type="Texture2D" uid="uid://vs0hs35rbf5g" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
+[ext_resource type="Texture2D" uid="uid://bvf8d06sdfomh" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
+[ext_resource type="Texture2D" uid="uid://bl163na3vwjxd" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
 
 [sub_resource type="Animation" id="Animation_fv758"]
 length = 0.001
@@ -48,67 +48,67 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SPLASH/LOGO_SHADOW:position")
+tracks/3/path = NodePath("SPLASH/BACKGROUND_BARE:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(5, 5)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("SPLASH/LOGO:position")
+tracks/4/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [0.0]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("SPLASH/BACKGROUND_BARE:modulate")
+tracks/5/path = NodePath("SPLASH/LOGO/LOGO_BACK:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [0.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:rotation")
+tracks/6/path = NodePath("SPLASH/LOGO/LOGO_BACK:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(1, 1)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("SPLASH/LOGO/LOGO_BACK:rotation")
+tracks/7/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_CROWN:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(1, 1)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("SPLASH/LOGO/LOGO_BACK:scale")
+tracks/8/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -120,7 +120,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_CROWN:scale")
+tracks/9/path = NodePath("SPLASH/LOGO/LOGO_CROWN:scale")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -132,38 +132,58 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:scale")
+tracks/10/path = NodePath("SPLASH/BACKGROUND:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"update": 1,
+"values": [true]
 }
-tracks/11/type = "value"
+tracks/11/type = "bezier"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("SPLASH/LOGO/LOGO_CROWN:scale")
+tracks/11/path = NodePath("SPLASH/LOGO/LOGO_BACK:position:y")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
-tracks/12/type = "value"
+tracks/12/type = "bezier"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("SPLASH/BACKGROUND:visible")
+tracks/12/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:position:y")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("SPLASH/LOGO/LOGO_CROWN:position:y")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/14/type = "bezier"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_CROWN:position:y")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_ngbl8"]
@@ -322,74 +342,94 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SPLASH/LOGO_SHADOW:position")
+tracks/3/path = NodePath("SPLASH/BACKGROUND_BARE:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Vector2(5, 5), Vector2(5, 109)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("SPLASH/LOGO:position")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 104)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("SPLASH/BACKGROUND_BARE:modulate")
-tracks/5/interp = 2
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(0.5, 2),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SPLASH/LOGO/LOGO_BACK:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [0.0, 6.28319]
+}
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:rotation")
+tracks/6/path = NodePath("SPLASH/BACKGROUND:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.5, 1.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("SPLASH/LOGO/LOGO_BACK:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0.5, 1.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("SPLASH/BACKGROUND:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SPLASH/LOGO/LOGO_BACK:position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0, 540, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_BACK:position:y")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0, 540, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SPLASH/LOGO/LOGO_CROWN:position:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0, 540, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SPLASH/LOGO_SHADOW/LOGO_CROWN:position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(469, -0.25, 0, 0.25, 0, 540, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
 }
 
 [sub_resource type="Animation" id="Animation_4qfp7"]
@@ -430,7 +470,7 @@ _data = {
 }
 
 [node name="MAIN_SCENE" type="Control"]
-custom_minimum_size = Vector2(575, 1125)
+custom_minimum_size = Vector2(575, 1255)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -447,7 +487,7 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.692
 offset_right = -5.0
-offset_bottom = 346.5
+offset_bottom = 386.54
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -472,16 +512,18 @@ mouse_filter = 2
 
 [node name="BACKGROUND" type="TextureRect" parent="SPLASH"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 3.0
+offset_right = 573.0
+offset_bottom = 1255.0
 mouse_filter = 2
 texture = ExtResource("3_4qfp7")
 
 [node name="BACKGROUND_BARE" type="TextureRect" parent="SPLASH"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 3.0
+offset_right = 573.0
+offset_bottom = 1255.0
 mouse_filter = 2
 texture = ExtResource("4_ngbl8")
 
@@ -496,11 +538,11 @@ mouse_filter = 2
 
 [node name="LOGO_BACK" type="TextureRect" parent="SPLASH/LOGO_SHADOW"]
 layout_mode = 0
-offset_left = 203.0
-offset_top = 406.0
-offset_right = 373.0
-offset_bottom = 576.0
-pivot_offset = Vector2(85, 85)
+offset_left = 202.0
+offset_top = 469.0
+offset_right = 374.0
+offset_bottom = 641.0
+pivot_offset = Vector2(86, 86)
 mouse_filter = 2
 texture = ExtResource("5_0f5nm")
 expand_mode = 1
@@ -508,11 +550,11 @@ stretch_mode = 5
 
 [node name="LOGO_CROWN" type="TextureRect" parent="SPLASH/LOGO_SHADOW"]
 layout_mode = 0
-offset_left = 203.0
-offset_top = 406.0
-offset_right = 373.0
-offset_bottom = 576.0
-pivot_offset = Vector2(85, 85)
+offset_left = 202.0
+offset_top = 469.0
+offset_right = 374.0
+offset_bottom = 641.0
+pivot_offset = Vector2(86, 86)
 mouse_filter = 2
 texture = ExtResource("6_rd841")
 expand_mode = 1
@@ -526,11 +568,11 @@ mouse_filter = 2
 
 [node name="LOGO_BACK" type="TextureRect" parent="SPLASH/LOGO"]
 layout_mode = 0
-offset_left = 203.0
-offset_top = 406.0
-offset_right = 373.0
-offset_bottom = 576.0
-pivot_offset = Vector2(85, 85)
+offset_left = 202.0
+offset_top = 469.0
+offset_right = 374.0
+offset_bottom = 641.0
+pivot_offset = Vector2(86, 86)
 mouse_filter = 2
 texture = ExtResource("5_0f5nm")
 expand_mode = 1
@@ -538,11 +580,11 @@ stretch_mode = 5
 
 [node name="LOGO_CROWN" type="TextureRect" parent="SPLASH/LOGO"]
 layout_mode = 0
-offset_left = 203.0
-offset_top = 406.0
-offset_right = 373.0
-offset_bottom = 576.0
-pivot_offset = Vector2(85, 85)
+offset_left = 202.0
+offset_top = 469.0
+offset_right = 374.0
+offset_bottom = 641.0
+pivot_offset = Vector2(86, 86)
 mouse_filter = 2
 texture = ExtResource("6_rd841")
 expand_mode = 1

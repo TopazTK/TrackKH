@@ -1,11 +1,11 @@
 [gd_scene load_steps=23 format=3 uid="uid://bd0wm3mp0nbct"]
 
-[ext_resource type="Texture2D" uid="uid://bheafrqpea4xb" path="res://Assets/General/world_box.png" id="1_q3d3o"]
-[ext_resource type="Script" uid="uid://c7b4y26vv1epg" path="res://Scripts/WORLD_SCRIPT.cs" id="1_vt4t2"]
-[ext_resource type="Texture2D" uid="uid://bcve18v6v5an2" path="res://Assets/debug.png" id="3_vt4t2"]
-[ext_resource type="Texture2D" uid="uid://xsqjwibfhddk" path="res://Assets/General/Numbers/20.png" id="4_vybjb"]
-[ext_resource type="Texture2D" uid="uid://bqj7wmi02ybre" path="res://Assets/General/lock.png" id="5_gxhhx"]
-[ext_resource type="Texture2D" uid="uid://dy2t53js46grg" path="res://Assets/General/ignore.png" id="5_sjkt1"]
+[ext_resource type="Texture2D" uid="uid://cuuuvfae8dwla" path="res://Assets/General/world_box.png" id="1_q3d3o"]
+[ext_resource type="Script" uid="uid://c3u0aaraa7n86" path="res://Scripts/WORLD_SCRIPT.cs" id="1_vt4t2"]
+[ext_resource type="Texture2D" uid="uid://dx5t6fumskwpu" path="res://Assets/debug.png" id="3_vt4t2"]
+[ext_resource type="Texture2D" uid="uid://c2ok0l5l7i2vg" path="res://Assets/General/Numbers/20.png" id="4_vybjb"]
+[ext_resource type="Texture2D" uid="uid://c4ya3ov0pj4ji" path="res://Assets/General/lock.png" id="5_gxhhx"]
+[ext_resource type="Texture2D" uid="uid://wj32st3tpybw" path="res://Assets/General/ignore.png" id="5_sjkt1"]
 
 [sub_resource type="Animation" id="Animation_8xhlf"]
 resource_name = "BACKDROP_ACTIVE"
