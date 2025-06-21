@@ -1,10 +1,10 @@
-[gd_resource type="StyleBoxFlat" format=2]
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://c7vip428khkav"]
 
 [resource]
-bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
-shadow_color = Color( 0, 0, 0, 0.309804 )
+shadow_color = Color(0, 0, 0, 0.309804)
 shadow_size = 5

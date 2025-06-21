@@ -1,10 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://bo5b2p8pl20p4"]
+[gd_scene load_steps=23 format=3 uid="uid://bo5b2p8pl20p4"]
 
 [ext_resource type="Script" uid="uid://cvus43jvxfadx" path="res://Scripts/RC_SCRIPT.cs" id="1_7l5yo"]
-[ext_resource type="Texture2D" uid="uid://dx5t6fumskwpu" path="res://Assets/debug.png" id="2_vpy5p"]
-[ext_resource type="Texture2D" uid="uid://cs0s6v0h8qgkc" path="res://Assets/General/Numbers/13.png" id="3_nftfr"]
-[ext_resource type="Texture2D" uid="uid://rep71kd38hgx" path="res://Assets/Minimal/Important Checks/Sub-Checks/redeem_1.png" id="4_wodtb"]
-[ext_resource type="Texture2D" uid="uid://wj32st3tpybw" path="res://Assets/General/ignore.png" id="5_2x2h2"]
+[ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="2_vpy5p"]
 
 [sub_resource type="Animation" id="Animation_d7iue"]
 resource_name = "MAIN_ACTIVATE"
@@ -673,6 +670,8 @@ offset_left = 3.0
 offset_top = 2.0
 offset_right = 67.0
 offset_bottom = 66.0
+expand_mode = 1
+stretch_mode = 4
 
 [node name="ICON_NUMBER" type="TextureRect" parent="."]
 visible = false
@@ -682,7 +681,6 @@ offset_left = 3.0
 offset_top = 48.0
 offset_right = 67.0
 offset_bottom = 69.0
-texture = ExtResource("3_nftfr")
 
 [node name="SHDW_NUMBER" type="TextureRect" parent="ICON_NUMBER"]
 self_modulate = Color(0, 0, 0, 0.376471)
@@ -692,7 +690,6 @@ offset_left = 1.0
 offset_top = 1.0
 offset_right = 65.0
 offset_bottom = 22.0
-texture = ExtResource("3_nftfr")
 
 [node name="ICON_SUBCHECK" type="TextureRect" parent="."]
 visible = false
@@ -702,7 +699,6 @@ offset_left = -8.0
 offset_top = -8.0
 offset_right = 24.0
 offset_bottom = 24.0
-texture = ExtResource("4_wodtb")
 expand_mode = 1
 stretch_mode = 4
 
@@ -714,7 +710,6 @@ offset_left = 2.0
 offset_top = 1.0
 offset_right = 34.0
 offset_bottom = 33.0
-texture = ExtResource("4_wodtb")
 expand_mode = 1
 
 [node name="ICON_SUBNUM" type="TextureRect" parent="."]
@@ -725,7 +720,6 @@ offset_left = -8.0
 offset_top = 12.0
 offset_right = 40.0
 offset_bottom = 33.0
-texture = ExtResource("3_nftfr")
 expand_mode = 1
 stretch_mode = 4
 
@@ -737,7 +731,6 @@ offset_left = 1.0
 offset_top = 1.0
 offset_right = 49.0
 offset_bottom = 20.0
-texture = ExtResource("3_nftfr")
 expand_mode = 1
 stretch_mode = 4
 
@@ -749,7 +742,6 @@ offset_left = 4.0
 offset_top = 5.0
 offset_right = 60.0
 offset_bottom = 61.0
-texture = ExtResource("5_2x2h2")
 
 [node name="SHDW_SPECIAL" type="TextureRect" parent="ICON_SPECIAL"]
 self_modulate = Color(0, 0, 0, 0.376471)
@@ -759,7 +751,6 @@ offset_left = 2.0
 offset_top = 1.0
 offset_right = 58.0
 offset_bottom = 57.0
-texture = ExtResource("5_2x2h2")
 
 [node name="ANIM_MAIN" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,11 +1,42 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2wk8askq4s78"]
+[gd_scene load_steps=21 format=3 uid="uid://b2wk8askq4s78"]
 
 [ext_resource type="Script" uid="uid://bmcfncrja5m6d" path="res://Scripts/MAIN_SCRIPT.cs" id="1_74yg8"]
 [ext_resource type="PackedScene" uid="uid://bq5acceq4rgat" path="res://Scenes/CHECK_PANEL.tscn" id="1_px4tq"]
-[ext_resource type="Texture2D" uid="uid://djt3wtlby47sp" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
-[ext_resource type="Texture2D" uid="uid://vs0hs35rbf5g" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
-[ext_resource type="Texture2D" uid="uid://bvf8d06sdfomh" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
-[ext_resource type="Texture2D" uid="uid://bl163na3vwjxd" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
+[ext_resource type="Texture2D" uid="uid://cqcybl0nejc13" path="res://Assets/General/Splash/splashFull.png" id="3_4qfp7"]
+[ext_resource type="StyleBox" uid="uid://bgvs2t56lm23r" path="res://Assets/Styles/ForegroundTab.tres" id="4_ccr4o"]
+[ext_resource type="Texture2D" uid="uid://dnvtycf6ssfbm" path="res://Assets/General/Splash/splashBackground.png" id="4_ngbl8"]
+[ext_resource type="Texture2D" uid="uid://c7r00na5xssgf" path="res://Assets/General/Splash/icon_back.png" id="5_0f5nm"]
+[ext_resource type="StyleBox" uid="uid://dyfcgckdyb6ny" path="res://Assets/Styles/BackgroundTab.tres" id="5_fv758"]
+[ext_resource type="Texture2D" uid="uid://dgcxj13l6m6tn" path="res://Assets/General/Splash/crown.png" id="6_rd841"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0f5nm"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.309804)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rd841"]
+content_margin_left = 30.0
+content_margin_right = 30.0
+bg_color = Color(0.190762, 0.190762, 0.190762, 1)
+border_width_bottom = 7
+border_color = Color(0.32549, 0.32549, 0.32549, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijwf1"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="Animation" id="Animation_fv758"]
 length = 0.001
@@ -469,6 +500,126 @@ _data = {
 &"SPLASH_LOOP": SubResource("Animation_4qfp7")
 }
 
+[sub_resource type="Animation" id="Animation_rd841"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OPTIONS:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OPTIONS:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("OPTIONS:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_k4a1u"]
+resource_name = "WINDOW_APPEAR"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OPTIONS:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OPTIONS:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("OPTIONS:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ijwf1"]
+resource_name = "WINDOW_DISAPPEAR"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OPTIONS:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OPTIONS:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 50, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("OPTIONS:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6603q"]
+_data = {
+&"RESET": SubResource("Animation_rd841"),
+&"WINDOW_APPEAR": SubResource("Animation_k4a1u"),
+&"WINDOW_DISAPPEAR": SubResource("Animation_ijwf1")
+}
+
 [node name="MAIN_SCENE" type="Control"]
 custom_minimum_size = Vector2(575, 1255)
 layout_mode = 3
@@ -486,8 +637,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.692
-offset_right = -5.0
-offset_bottom = 386.54
+offset_left = -210.0
+offset_top = -127.0
+offset_right = 221.0
+offset_bottom = 508.54
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -502,6 +655,179 @@ offset_right = -15.0
 offset_bottom = -10.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="OPTIONS" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BACKGROUND" type="ColorRect" parent="OPTIONS"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -750.0
+offset_right = 500.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.376471)
+
+[node name="BACKPANEL" type="Panel" parent="OPTIONS"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.5
+offset_top = -149.5
+offset_right = 150.5
+offset_bottom = 124.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0f5nm")
+
+[node name="TABS" type="TabContainer" parent="OPTIONS/BACKPANEL"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 17.0
+offset_bottom = 3.0
+theme_override_styles/tab_focus = ExtResource("4_ccr4o")
+theme_override_styles/tab_selected = ExtResource("4_ccr4o")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_rd841")
+theme_override_styles/tab_unselected = ExtResource("5_fv758")
+tab_alignment = 1
+current_tab = 0
+
+[node name="Options" type="Panel" parent="OPTIONS/BACKPANEL/TABS"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ijwf1")
+metadata/_tab_index = 0
+
+[node name="CLASSIC_CHECK" type="CheckButton" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_top = 12.0
+offset_right = 119.0
+offset_bottom = 43.0
+grow_horizontal = 2
+text = "Use Classic Icons"
+
+[node name="AUTOSAVE_CHECK" type="CheckButton" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_top = 39.0
+offset_right = 119.0
+offset_bottom = 70.0
+grow_horizontal = 2
+button_pressed = true
+text = "Enable Autosave"
+
+[node name="ARCHI_CHECK" type="CheckButton" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_top = 66.0
+offset_right = 119.0
+offset_bottom = 97.0
+grow_horizontal = 2
+text = "Archipelago Mode"
+
+[node name="BCK_BUTTON" type="Button" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -123.0
+offset_top = 104.0
+offset_right = 121.0
+offset_bottom = 135.0
+grow_horizontal = 2
+text = "Select Background PNG..."
+
+[node name="BCK_LABEL" type="Label" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.5
+offset_top = 149.0
+offset_right = 26.5
+offset_bottom = 172.0
+grow_horizontal = 2
+text = "Background Color:"
+
+[node name="BCK_COLORPICK" type="ColorPickerButton" parent="OPTIONS/BACKPANEL/TABS/Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 178.0
+offset_right = 125.0
+offset_bottom = 209.0
+grow_horizontal = 2
+color = Color(0.137255, 0.137255, 0.137255, 1)
+edit_alpha = false
+
+[node name="BCK_DIALOG" type="FileDialog" parent="OPTIONS/BACKPANEL/TABS/Options"]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(415, 375)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png")
+
+[node name="About" type="Panel" parent="OPTIONS/BACKPANEL/TABS"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ijwf1")
+metadata/_tab_index = 1
+
+[node name="CREDITS" type="RichTextLabel" parent="OPTIONS/BACKPANEL/TABS/About"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = -7.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 13
+theme_override_font_sizes/bold_font_size = 12
+bbcode_enabled = true
+text = "Auto-Tracker for KH Randomizers
+Version v4.00 - STABLE
+
+Supported Games:
+Kingdom Hearts I [PC]
+
+Credits:
+[b]TopazTK[/b] - Total and Complete Development
+[b] Televo[/b]  - Graphical Design and Icons
+[b]GICU[/b]  - Creator of the Kingdom Hearts I Randomizer"
+horizontal_alignment = 1
 
 [node name="SPLASH" type="Control" parent="."]
 anchors_preset = 0
@@ -596,3 +922,8 @@ libraries = {
 }
 next/SPLASH_INIT = &"SPLASH_LOOP"
 next/SPLASH_LOOP = &"SPLASH_FINISH"
+
+[node name="ANIM_WINDOW" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_6603q")
+}

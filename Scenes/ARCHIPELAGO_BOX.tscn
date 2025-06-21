@@ -1,0 +1,965 @@
+[gd_scene load_steps=20 format=3 uid="uid://bjwrmgcadx76"]
+
+[ext_resource type="Texture2D" uid="uid://c3436lxxltemj" path="res://Assets/General/archi_box.png" id="2_hul6t"]
+[ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="3_dcpi3"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_yskv7"]
+script/source = "using Godot;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public partial class ARCHIPELAGO_SCRIPT : Control
+{
+	/*
+	 *
+	 * A LIST OF WORLD IDS FOR USE:
+	 *
+	 * 0x00 - N/A
+	 * 0x01 - Destiny Islands
+	 * 0x02 - N/A
+	 * 0x03 - Traverse Town
+	 * 0x04 - Wonderland
+	 * 0x05 - Deep Jungle
+	 * 0x06 - 100 Acre Woods
+	 * 0x07 - Agrabah [Unused?]
+	 * 0x08 - Agrabah
+	 * 0x09 - Atlantica
+	 * 0x0A - Halloween Town
+	 * 0x0B - Olympus Coliseum
+	 * 0x0C - Monstro
+	 * 0x0D - Neverland
+	 * 0x0E - Hollow Bastion [Unused?]
+	 * 0x0F - Hollow Bastion
+	 * 0x10 - End of the World
+	 *
+	 */
+	
+	[Export] public int AMOUNT = 0;
+	[Export] public byte WORLD_ID;
+	[Export] public bool IS_ACTIVE = false;
+	[Export] public bool IS_LOCKED = false;
+	[Export] public bool IS_IGNORED = false;
+	[Export] public ulong AMOUNT_ADDRESS = 0x00;
+	[Export] public ulong UNLOCK_ADDRESS = 0x00;
+	[Export] public string ICON_PATH = \"debug\";
+	
+	[Export] public string[] GHOST_NAMES = new string[0];
+	
+	TextureRect BACKDROP;
+	
+	TextureRect ICON_MAIN;
+	TextureRect SHDW_MAIN;
+	
+	TextureRect ICON_NUMBER;
+	TextureRect SHDW_NUMBER;
+	
+	TextureRect ICON_SPECIAL;
+	TextureRect SHDW_SPECIAL;
+	
+	AnimationPlayer ANIM_MAIN;
+	AnimationPlayer ANIM_NUMBER;
+	AnimationPlayer ANIM_SPECIAL;
+	AnimationPlayer ANIM_BACKDROP;
+	
+	GridContainer CHECK_CONTAIN;
+	
+	bool _mouseOver = false;
+	bool _signalConnect = false;
+	
+	bool _iconMode = false;
+	string _texturePath = \"Assets/Minimal/\";
+	
+	public void mouseEnter() => _mouseOver = true;
+	public void mouseExit() => _mouseOver = false;
+	
+	public override void _Ready()
+	{
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_texturePath = _iconMode ? \"Assets/Classic/\" : \"Assets/Minimal/\";
+		
+		var _loadMain = ResourceLoader.Load(_texturePath + \"Worlds/\" + ICON_PATH + \".dds\") as Texture2D;
+		var _ignoreTexture = ResourceLoader.Load(\"Assets/General/ignore.dds\") as Texture2D;
+		
+		IS_LOCKED = false;
+		IS_ACTIVE = false;
+		
+		BACKDROP = GetNode(\"BACKDROP\") as TextureRect;
+		
+		ICON_MAIN = GetNode(\"ICON_MAIN\") as TextureRect;
+		ICON_NUMBER = GetNode(\"ICON_NUMBER\") as TextureRect;
+		ICON_SPECIAL = GetNode(\"ICON_SPECIAL\") as TextureRect;
+		
+		SHDW_MAIN = GetNode(\"ICON_MAIN/SHDW_MAIN\") as TextureRect;
+		SHDW_NUMBER = GetNode(\"ICON_NUMBER/SHDW_NUMBER\") as TextureRect;
+		SHDW_SPECIAL = GetNode(\"ICON_SPECIAL/SHDW_SPECIAL\") as TextureRect;
+		
+		ANIM_MAIN = GetNode(\"ANIM_MAIN\") as AnimationPlayer;
+		ANIM_NUMBER = GetNode(\"ANIM_NUMBER\") as AnimationPlayer;
+		ANIM_SPECIAL = GetNode(\"ANIM_SPECIAL\") as AnimationPlayer;
+		ANIM_BACKDROP = GetNode(\"ANIM_BACKDROP\") as AnimationPlayer;
+		
+		CHECK_CONTAIN = GetNode(\"CHECK_CONTAIN\") as GridContainer;
+		
+		ICON_MAIN.Texture = _loadMain;
+		SHDW_MAIN.Texture = _loadMain;
+		
+		this.MouseEntered += mouseEnter;
+		this.MouseExited += mouseExit;
+		
+		if (IS_IGNORED)
+		{
+			ICON_SPECIAL.Texture = _ignoreTexture;
+			SHDW_SPECIAL.Texture = _ignoreTexture;
+			
+			ANIM_MAIN.Play(\"MAIN_DISABLE\");
+			ANIM_SPECIAL.Play(\"SPECIAL_APPEAR\");
+		}
+		
+		foreach(var _ghostName in GHOST_NAMES)
+		{
+			var _fetchScene = GD.Load<PackedScene>(\"res://Scenes/GHOST_CHECK.tscn\");
+			var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
+			_ghostCheck.ICON_PATH = \"Regular Checks/\" + _ghostName;
+			
+			CHECK_CONTAIN.AddChild(_ghostCheck);
+		}
+		
+		if (AMOUNT > 0)
+		{
+			var _numberTexture = ResourceLoader.Load(\"Assets/General/Numbers/\" + AMOUNT + \".png\") as Texture2D;
+			
+			ICON_NUMBER.Texture = _numberTexture;
+			SHDW_NUMBER.Texture = _numberTexture;
+			
+			ANIM_NUMBER.Play(\"NUMBER_APPEAR\");
+		}
+		
+		ExecuteLogic();
+	}
+	
+	public override void _PhysicsProcess(double delta)
+	{
+		if (_iconMode != GLOBAL_VARS.ICON_CLASSIC)
+		{
+			_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+			_texturePath = _iconMode ? \"Assets/Classic/\" : \"Assets/Minimal/\";
+			
+			var _fetchMainPath = ICON_PATH == \"debug\" ? \"Assets/debug.png\" : _texturePath + \"Worlds/\" + ICON_PATH + \".dds\";
+			
+			var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
+			
+			ICON_MAIN.Texture = _loadMain;
+			SHDW_MAIN.Texture = _loadMain;
+		}
+		
+		if (!_signalConnect)
+		{
+			var _parentNode = GetParent();
+			var _trackableNode = _parentNode.GetNode(\"TRACKABLES\");
+			
+			foreach (var _node in _trackableNode.GetChildren())
+			{
+				foreach (var _subNode in _node.GetChildren())
+					_subNode.Connect(\"RECEIVE_SIGNAL\", new Callable(this, MethodName.ApplyCheck));
+			}
+			
+			_signalConnect = true;
+		}
+		
+		if (GHOST_NAMES.Length > 10)
+			CHECK_CONTAIN.AddThemeConstantOverride(\"v_separation\", -6);
+		
+		else
+			CHECK_CONTAIN.AddThemeConstantOverride(\"v_separation\", 2);
+		
+		if (Input.IsActionJustPressed(\"track_toggle\") && _mouseOver)
+		{
+			var _ignoreTexture = ResourceLoader.Load(\"Assets/General/ignore.dds\") as Texture2D;
+			var _lockTexture = ResourceLoader.Load(\"Assets/General/lock.dds\") as Texture2D;
+			
+			ICON_SPECIAL.Texture = _ignoreTexture;
+			SHDW_SPECIAL.Texture = _ignoreTexture;
+			
+			if (!IS_LOCKED)
+			{
+				ANIM_MAIN.Play(IS_IGNORED ? \"MAIN_ENABLE\" : \"MAIN_DISABLE\");
+				ANIM_SPECIAL.Play(IS_IGNORED ? \"SPECIAL_DISAPPEAR\" : \"SPECIAL_APPEAR\");
+				
+				if (AMOUNT > 0)
+					ANIM_NUMBER.Play(IS_IGNORED ? \"NUMBER_APPEAR\" : \"NUMBER_DISAPPEAR\");
+				
+				if (IS_ACTIVE)
+					ANIM_BACKDROP.Play(IS_IGNORED ? \"BACKDROP_ACTIVE\" : \"BACKDROP_IDLE\");
+			}
+			
+			else if (IS_IGNORED)
+			{
+				ICON_SPECIAL.Texture = _lockTexture;
+				SHDW_SPECIAL.Texture = _lockTexture;
+			}
+			
+			IS_IGNORED = !IS_IGNORED;
+		}
+		
+		ExecuteLogic();
+	}
+	
+	public void ExecuteLogic()
+	{
+		if (!IS_IGNORED)
+		{
+			var _worldRead = Hypervisor.Read<byte>((Hypervisor.BaseOffset == 0xA00 ? 0x234045CU : 0x233FE84U));
+			var _checkGummi = Hypervisor.Read<long>((Hypervisor.BaseOffset == 0xA00 ? 0x5079A8U : 0x05076A8U));
+			
+			var _amountRead = AMOUNT_ADDRESS == 0x00 ? 0x00 : Hypervisor.Read<byte>(AMOUNT_ADDRESS);
+			
+			if (UNLOCK_ADDRESS != 0x00)
+			{
+				var _unlockAmount = Hypervisor.Read<byte>(UNLOCK_ADDRESS);
+				
+				if (_unlockAmount == 0x00 && !IS_LOCKED)
+				{
+					var _lockTexture = ResourceLoader.Load(\"Assets/General/lock.dds\") as Texture2D;
+					
+					ICON_SPECIAL.Texture = _lockTexture;
+					SHDW_SPECIAL.Texture = _lockTexture;
+					
+					ANIM_MAIN.Play(\"MAIN_DISABLE\");
+					ANIM_SPECIAL.Play(\"SPECIAL_APPEAR\");
+					
+					IS_LOCKED = true;
+				}
+				
+				else if (_unlockAmount > 0x00 && IS_LOCKED)
+				{
+					ANIM_MAIN.Play(\"MAIN_ENABLE\");
+					ANIM_SPECIAL.Play(\"SPECIAL_DISAPPEAR\");
+					
+					IS_LOCKED = false;
+				}
+			}
+			
+			if (_amountRead > AMOUNT)
+			{
+				var _numberTexture = ResourceLoader.Load(\"Assets/General/Numbers/\" + _amountRead + \".png\") as Texture2D;
+				
+				ICON_NUMBER.Texture = _numberTexture;
+				SHDW_NUMBER.Texture = _numberTexture;
+				
+				if (_amountRead != 0x00 && !ICON_NUMBER.Visible)
+					ANIM_NUMBER.Play(\"NUMBER_APPEAR\");
+				
+				else if (_amountRead == 0x00 && ICON_NUMBER.Visible)
+					ANIM_NUMBER.Play(\"NUMBER_DISAPPEAR\");
+				
+				AMOUNT = _amountRead;
+			}
+			
+			if (WORLD_ID != 0x00 && !IS_LOCKED)
+			{
+				if (_checkGummi == 0x00 && _worldRead == WORLD_ID && !IS_ACTIVE)
+				{
+					ANIM_BACKDROP.Play(\"BACKDROP_ACTIVE\");
+					IS_ACTIVE = true;
+				}
+				
+				else if ((_checkGummi != 0x00 || _worldRead != WORLD_ID) && IS_ACTIVE)
+				{
+					ANIM_BACKDROP.Play(\"BACKDROP_IDLE\");
+					IS_ACTIVE = false;
+				}
+			}
+		}
+	}
+	
+	public void ApplyCheck(string CHECK_NAME)
+	{
+		var _fetchScene = GD.Load<PackedScene>(\"res://Scenes/GHOST_CHECK.tscn\");
+		
+		var _textPointer = Hypervisor.Read<ulong>(0x283B3B0);
+		var _checkText = Hypervisor.Read<byte>(_textPointer, 0x04, true);
+		
+		var _checkActive = Hypervisor.Read<byte>(0x283B380);
+		var _checkColor = Hypervisor.Read<int>(0x0527A10, 0x04);
+		
+		var _checkShowing = Hypervisor.Read<byte>(0x283B390);
+		
+		var _colorEnsure = _checkColor[0] == 0x00 && _checkColor[1] == 0x00 && _checkColor[2] == 0x00 && _checkColor[3] == 0x8E;
+		
+		if (_checkText.SequenceEqual<byte>([ 0x30, 0x56, 0x53, 0x51 ]) && _colorEnsure && _checkActive > 0 && _checkShowing > 0)
+		{
+			if (ICON_PATH == \"archipelago\")
+			{
+				var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
+				_ghostCheck.ICON_PATH = \"Regular Checks/\" + CHECK_NAME;
+				CHECK_CONTAIN.AddChild(_ghostCheck);
+				
+				var _ghostList = new List<string>();
+				_ghostList.AddRange(GHOST_NAMES);
+				_ghostList.Add(CHECK_NAME);
+				
+				GHOST_NAMES = _ghostList.ToArray();
+			}
+			
+			else
+				return;
+		}
+		
+		else if (IS_ACTIVE)
+		{
+			var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
+			_ghostCheck.ICON_PATH = \"Regular Checks/\" + CHECK_NAME;
+			CHECK_CONTAIN.AddChild(_ghostCheck);
+			
+			var _ghostList = new List<string>();
+			_ghostList.AddRange(GHOST_NAMES);
+			_ghostList.Add(CHECK_NAME);
+			
+			GHOST_NAMES = _ghostList.ToArray();
+		}
+	}
+}
+"
+
+[sub_resource type="Animation" id="Animation_8xhlf"]
+resource_name = "BACKDROP_ACTIVE"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BACKDROP:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 2, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BACKDROP:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 2, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BACKDROP:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 2, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_50yc3"]
+resource_name = "BACKDROP_IDLE"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BACKDROP:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2, -0.15, 0, 0.15, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BACKDROP:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2, -0.15, 0, 0.15, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BACKDROP:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2, -0.15, 0, 0.15, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_5cela"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BACKDROP:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0, 0.001)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BACKDROP:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0, 0.001)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BACKDROP:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0, 0.001)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhmo4"]
+_data = {
+&"BACKDROP_ACTIVE": SubResource("Animation_8xhlf"),
+&"BACKDROP_IDLE": SubResource("Animation_50yc3"),
+&"RESET": SubResource("Animation_5cela")
+}
+
+[sub_resource type="Animation" id="Animation_cee7g"]
+resource_name = "MAIN_DISABLE"
+length = 0.4
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_MAIN:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.196078, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_MAIN:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.196078, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_MAIN:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.196078, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_sjkt1"]
+resource_name = "MAIN_ENABLE"
+length = 0.3
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_MAIN:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.196078, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_MAIN:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.196078, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_MAIN:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.196078, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_gxhhx"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_MAIN:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_MAIN:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_MAIN:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xhlf"]
+_data = {
+&"MAIN_DISABLE": SubResource("Animation_cee7g"),
+&"MAIN_ENABLE": SubResource("Animation_sjkt1"),
+&"RESET": SubResource("Animation_gxhhx")
+}
+
+[sub_resource type="Animation" id="Animation_odimb"]
+resource_name = "NUMBER_APPEAR"
+length = 0.3
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_NUMBER:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(56, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_NUMBER:self_modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.2, 0, 0.2, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_NUMBER/SHDW_NUMBER:self_modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 0.376471, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ICON_NUMBER:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_g2mtw"]
+resource_name = "NUMBER_DISAPPEAR"
+length = 0.3
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_NUMBER:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(51, -0.25, 0, 0.25, 0, 56, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_NUMBER:self_modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_NUMBER/SHDW_NUMBER:self_modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.376471, -0.15, 0, 0.15, 0, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ICON_NUMBER:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_tpr1d"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_NUMBER:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(61, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_NUMBER:self_modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_NUMBER/SHDW_NUMBER:self_modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ICON_NUMBER:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5cela"]
+_data = {
+&"NUMBER_APPEAR": SubResource("Animation_odimb"),
+&"NUMBER_DISAPPEAR": SubResource("Animation_g2mtw"),
+&"RESET": SubResource("Animation_tpr1d")
+}
+
+[sub_resource type="Animation" id="Animation_1j3na"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_SPECIAL:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_SPECIAL:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(16, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_SPECIAL:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_o141q"]
+resource_name = "SPECIAL_APPEAR"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_SPECIAL:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_SPECIAL:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_SPECIAL:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(16, -0.15, 0, 0.15, 0, 11, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_5kyvj"]
+resource_name = "SPECIAL_DISAPPEAR"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ICON_SPECIAL:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ICON_SPECIAL:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ICON_SPECIAL:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(11, -0.15, 0, 0.15, 0, 16, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_50yc3"]
+_data = {
+&"RESET": SubResource("Animation_1j3na"),
+&"SPECIAL_APPEAR": SubResource("Animation_o141q"),
+&"SPECIAL_DISAPPEAR": SubResource("Animation_5kyvj")
+}
+
+[node name="ARCHIPELAGO_BOX" type="Control"]
+custom_minimum_size = Vector2(262, 81)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -308.0
+offset_bottom = -989.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = SubResource("CSharpScript_yskv7")
+AMOUNT = null
+WORLD_ID = null
+IS_ACTIVE = null
+IS_LOCKED = null
+IS_IGNORED = null
+AMOUNT_ADDRESS = null
+UNLOCK_ADDRESS = null
+ICON_PATH = null
+GHOST_NAMES = null
+
+[node name="BACKDROP" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.437
+anchor_bottom = 0.074
+offset_right = -222.2
+offset_bottom = -41.4
+texture = ExtResource("2_hul6t")
+
+[node name="ICON_MAIN" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 72.0
+texture = ExtResource("3_dcpi3")
+expand_mode = 1
+
+[node name="SHDW_MAIN" type="TextureRect" parent="ICON_MAIN"]
+self_modulate = Color(0, 0, 0, 0.376471)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 66.0
+offset_bottom = 65.0
+texture = ExtResource("3_dcpi3")
+expand_mode = 1
+
+[node name="ICON_NUMBER" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 26.0
+offset_top = 61.0
+offset_right = 90.0
+offset_bottom = 82.0
+expand_mode = 1
+stretch_mode = 4
+
+[node name="SHDW_NUMBER" type="TextureRect" parent="ICON_NUMBER"]
+self_modulate = Color(0, 0, 0, 0)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 65.0
+offset_bottom = 23.0
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ICON_SPECIAL" type="TextureRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 75.0
+offset_bottom = 72.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SHDW_SPECIAL" type="TextureRect" parent="ICON_SPECIAL"]
+self_modulate = Color(0, 0, 0, 0.376471)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 60.0
+offset_bottom = 59.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CHECK_CONTAIN" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.366
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.108
+offset_top = 8.0
+offset_right = -3.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = -2
+theme_override_constants/v_separation = 2
+columns = 5
+
+[node name="ANIM_BACKDROP" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bhmo4")
+}
+
+[node name="ANIM_MAIN" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8xhlf")
+}
+
+[node name="ANIM_NUMBER" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5cela")
+}
+
+[node name="ANIM_SPECIAL" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_50yc3")
+}

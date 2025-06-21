@@ -41,6 +41,8 @@ public partial class IC_SCRIPT : Control
 	AnimationPlayer ANIM_SPECIAL;
 	
 	bool _mouseOver = false;
+	
+	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
 	
 	public void mouseEnter() => _mouseOver = true;
@@ -48,11 +50,11 @@ public partial class IC_SCRIPT : Control
 	
 	public override void _Ready()
 	{
-		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
-		var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/" + ICON_PATH + (TRACK_MODE == 0x01 ? AMOUNT.ToString("_0") + ".png" : ".png");
-		var _fetchSubPath = SUB_ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/Sub-Checks/" + SUB_ICON_PATH + ".png";
+		var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/" + ICON_PATH + (TRACK_MODE == 0x01 ? AMOUNT.ToString("_0") + ".dds" : ".dds");
+		var _fetchSubPath = SUB_ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/Sub-Checks/" + SUB_ICON_PATH + ".dds";
 		
 		var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
 		var _loadSub = ResourceLoader.Load(_fetchSubPath) as Texture2D;
@@ -129,7 +131,7 @@ public partial class IC_SCRIPT : Control
 			
 			if (TRACK_MODE == 1)
 			{
-				var _fetchPath = _texturePath + "Important Checks/" + ICON_PATH + "_0.png";
+				var _fetchPath = _texturePath + "Important Checks/" + ICON_PATH + "_0.dds";
 				var _loadTexture = ResourceLoader.Load(_fetchPath) as Texture2D;
 				
 				ICON_MAIN.Texture = _loadTexture;
@@ -138,10 +140,30 @@ public partial class IC_SCRIPT : Control
 			
 			ANIM_SPECIAL.Play("SPECIAL_APPEAR");
 		}
+		
+		AddUserSignal("AUTOSAVE");
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (_iconMode != GLOBAL_VARS.ICON_CLASSIC)
+		{
+			_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+			_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+			
+			var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/" + ICON_PATH + (TRACK_MODE == 0x01 ? AMOUNT.ToString("_0") + ".dds" : ".dds");
+			var _fetchSubPath = SUB_ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Important Checks/Sub-Checks/" + SUB_ICON_PATH + ".dds";
+			
+			var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
+			var _loadSub = ResourceLoader.Load(_fetchSubPath) as Texture2D;
+			
+			ICON_MAIN.Texture = _loadMain;
+			SHDW_MAIN.Texture = _loadMain;
+			
+			ICON_SUBCHECK.Texture = _loadSub;
+			SHDW_SUBCHECK.Texture = _loadSub;
+		}
+		
 		if (Input.IsActionJustPressed("track_toggle") && _mouseOver)
 		{
 			if (AMOUNT > 0)
@@ -158,7 +180,7 @@ public partial class IC_SCRIPT : Control
 			
 			if (TRACK_MODE == 1)
 			{
-				var _fetchMainPath = IS_IGNORED ? _texturePath + "Important Checks/" + ICON_PATH + AMOUNT.ToString("_0") + ".png" : _texturePath + "Important Checks/" + ICON_PATH + "_0.png";
+				var _fetchMainPath = IS_IGNORED ? _texturePath + "Important Checks/" + ICON_PATH + AMOUNT.ToString("_0") + ".dds" : _texturePath + "Important Checks/" + ICON_PATH + "_0.dds";
 				var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
 				
 				ICON_MAIN.Texture = _loadMain;
@@ -197,11 +219,14 @@ public partial class IC_SCRIPT : Control
 								ICON_SUBNUM.Texture = _numberTexture;
 								SHDW_SUBNUM.Texture = _numberTexture;
 								
-								if (_fetchAmount > 1 && !ICON_SUBNUM.Visible)
+								if (_fetchAmount >= 1 && !ICON_SUBNUM.Visible)
 									ANIM_SUBNUM.Play("SUBNUM_APPEAR");
 							}
 							
 							SUB_AMOUNT = _fetchAmount;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+								EmitSignal("AUTOSAVE");
 						}
 						
 						break;
@@ -224,11 +249,14 @@ public partial class IC_SCRIPT : Control
 								ICON_SUBNUM.Texture = _numberTexture;
 								SHDW_SUBNUM.Texture = _numberTexture;
 								
-								if (_count > 1 && !ICON_SUBNUM.Visible)
+								if (_count >= 1 && !ICON_SUBNUM.Visible)
 									ANIM_SUBNUM.Play("SUBNUM_APPEAR");
 							}
 							
 							SUB_AMOUNT = _count;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+								EmitSignal("AUTOSAVE");
 						}
 						
 						break;
@@ -261,6 +289,9 @@ public partial class IC_SCRIPT : Control
 							}
 							
 							AMOUNT = _fetchAmount;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+							EmitSignal("AUTOSAVE");
 						}
 						
 						break;
@@ -279,12 +310,15 @@ public partial class IC_SCRIPT : Control
 						
 						if (_valueBitwise > AMOUNT)
 						{
-							var _mainTexture = ResourceLoader.Load(_texturePath + "Important Checks/" + ICON_PATH + _valueBitwise.ToString("_0") + ".png") as Texture2D;
+							var _mainTexture = ResourceLoader.Load(_texturePath + "Important Checks/" + ICON_PATH + _valueBitwise.ToString("_0") + ".dds") as Texture2D;
 							
 							ICON_MAIN.Texture = _mainTexture;
 							SHDW_MAIN.Texture = _mainTexture;
 							
 							AMOUNT = (int)_valueBitwise;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+								EmitSignal("AUTOSAVE");
 						}
 						
 						break;
@@ -326,6 +360,9 @@ public partial class IC_SCRIPT : Control
 							}
 							
 							AMOUNT = (int)_count;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+								EmitSignal("AUTOSAVE");
 						}
 						
 						break;
@@ -356,6 +393,9 @@ public partial class IC_SCRIPT : Control
 							}
 							
 							AMOUNT = (int)_count;
+							
+							if (GLOBAL_VARS.IS_AUTOSAVE)
+								EmitSignal("AUTOSAVE");
 						}
 						
 						break;

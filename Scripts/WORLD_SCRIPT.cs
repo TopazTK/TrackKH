@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 public partial class WORLD_SCRIPT : Control
@@ -61,18 +62,19 @@ public partial class WORLD_SCRIPT : Control
 	bool _mouseOver = false;
 	bool _signalConnect = false;
 	
+	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
-
+	
 	public void mouseEnter() => _mouseOver = true;
 	public void mouseExit() => _mouseOver = false;
 	
 	public override void _Ready()
 	{
-		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
-		var _loadMain = ResourceLoader.Load(_texturePath + "Worlds/" + ICON_PATH + ".png") as Texture2D;
-		var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.png") as Texture2D;
+		var _loadMain = ResourceLoader.Load(_texturePath + "Worlds/" + ICON_PATH + ".dds") as Texture2D;
+		var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.dds") as Texture2D;
 		
 		IS_LOCKED = false;
 		IS_ACTIVE = false;
@@ -128,11 +130,32 @@ public partial class WORLD_SCRIPT : Control
 			ANIM_NUMBER.Play("NUMBER_APPEAR");
 		}
 		
+		if (ICON_PATH == "archi")
+		{
+			var _backTexture = ResourceLoader.Load("Assets/General/archi_box.png") as Texture2D;
+			BACKDROP.Texture = _backTexture;
+			CHECK_CONTAIN.Columns = 14;
+		}
+		
+		AddUserSignal("AUTOSAVE");
 		ExecuteLogic();
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (_iconMode != GLOBAL_VARS.ICON_CLASSIC)
+		{
+			_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+			_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+			
+			var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Worlds/" + ICON_PATH + ".dds";
+			
+			var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
+			
+			ICON_MAIN.Texture = _loadMain;
+			SHDW_MAIN.Texture = _loadMain;
+		}
+		
 		if (!_signalConnect)
 		{
 			var _parentNode = GetParent().GetParent();
@@ -147,10 +170,16 @@ public partial class WORLD_SCRIPT : Control
 			_signalConnect = true;
 		}
 		
+		if ((ICON_PATH == "archi" && GHOST_NAMES.Length > 28) || (ICON_PATH != "archi" && GHOST_NAMES.Length > 10))
+			CHECK_CONTAIN.AddThemeConstantOverride("v_separation", -6);
+		
+		else
+			CHECK_CONTAIN.AddThemeConstantOverride("v_separation", 2);
+		
 		if (Input.IsActionJustPressed("track_toggle") && _mouseOver)
 		{
-			var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.png") as Texture2D;
-			var _lockTexture = ResourceLoader.Load("Assets/General/lock.png") as Texture2D;
+			var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.dds") as Texture2D;
+			var _lockTexture = ResourceLoader.Load("Assets/General/lock.dds") as Texture2D;
 			
 			ICON_SPECIAL.Texture = _ignoreTexture;
 			SHDW_SPECIAL.Texture = _ignoreTexture;
@@ -174,6 +203,9 @@ public partial class WORLD_SCRIPT : Control
 			}
 			
 			IS_IGNORED = !IS_IGNORED;
+			
+			if (GLOBAL_VARS.IS_AUTOSAVE)
+				EmitSignal("AUTOSAVE");
 		}
 		
 		ExecuteLogic();
@@ -194,7 +226,7 @@ public partial class WORLD_SCRIPT : Control
 				
 				if (_unlockAmount == 0x00 && !IS_LOCKED)
 				{
-					var _lockTexture = ResourceLoader.Load("Assets/General/lock.png") as Texture2D;
+					var _lockTexture = ResourceLoader.Load("Assets/General/lock.dds") as Texture2D;
 					
 					ICON_SPECIAL.Texture = _lockTexture;
 					SHDW_SPECIAL.Texture = _lockTexture;
@@ -203,6 +235,9 @@ public partial class WORLD_SCRIPT : Control
 					ANIM_SPECIAL.Play("SPECIAL_APPEAR");
 					
 					IS_LOCKED = true;
+					
+					if (GLOBAL_VARS.IS_AUTOSAVE)
+						EmitSignal("AUTOSAVE");
 				}
 				
 				else if (_unlockAmount > 0x00 && IS_LOCKED)
@@ -211,6 +246,9 @@ public partial class WORLD_SCRIPT : Control
 					ANIM_SPECIAL.Play("SPECIAL_DISAPPEAR");
 					
 					IS_LOCKED = false;
+					
+					if (GLOBAL_VARS.IS_AUTOSAVE)
+						EmitSignal("AUTOSAVE");
 				}
 			}
 			
@@ -228,6 +266,9 @@ public partial class WORLD_SCRIPT : Control
 					ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
 				
 				AMOUNT = _amountRead;
+				
+				if (GLOBAL_VARS.IS_AUTOSAVE)
+					EmitSignal("AUTOSAVE");
 			}
 			
 			if (WORLD_ID != 0x00 && !IS_LOCKED)
@@ -251,17 +292,21 @@ public partial class WORLD_SCRIPT : Control
 	{
 		var _fetchScene = GD.Load<PackedScene>("res://Scenes/GHOST_CHECK.tscn");
 		
-		var _textPointer = Hypervisor.Read<ulong>(0x283B3C0);
-		var _checkText = Hypervisor.Read<byte>(_textPointer, 0x05, true);
+		var _labelPointer = Hypervisor.Read<ulong>(0x283B3C0);
+		var _textPointer = Hypervisor.Read<ulong>(0x283B3B0);
+		
+		var _checkLabel = Hypervisor.Read<byte>(_labelPointer, 0x05, true);
+		var _checkText = Hypervisor.Read<byte>(_textPointer, 0x09, true);
+		
+		var _checkServer = Hypervisor.Read<byte>(_textPointer, 0x09, true);
 		
 		var _checkActive = Hypervisor.Read<byte>(0x283B380);
-		var _checkColor = Hypervisor.Read<int>(0x0527A10, 0x04);
-		
 		var _checkShowing = Hypervisor.Read<byte>(0x283B390);
 		
-		var _colorEnsure = _checkColor[0] == 0xCA && _checkColor[1] == 0x43 && _checkColor[2] == 0x31 && _checkColor[3] == 0x80;
+		var _textMatch = _checkText.Take(5).SequenceEqual<byte>([ 0x30, 0x56, 0x53, 0x51, 0x01 ]);
+		var _serverMatch = _checkText.SequenceEqual<byte>([ 0x3C, 0x49, 0x47, 0x4D, 0x49, 0x5A, 0x49, 0x48, 0x01 ]);
 		
-		if (_checkText.SequenceEqual<byte>([ 0x3D, 0x53, 0x56, 0x45, 0x00 ]) && _colorEnsure && _checkActive > 0 && _checkShowing > 0)
+		if (_checkLabel.SequenceEqual<byte>([ 0x3D, 0x53, 0x56, 0x45, 0x00 ]) && _checkActive > 0 && _checkShowing > 0)
 		{
 			if (ICON_PATH == "levels")
 			{
@@ -279,6 +324,26 @@ public partial class WORLD_SCRIPT : Control
 			else
 				return;
 		}
+		
+		else if ((_textMatch || _serverMatch) && _checkActive > 0 && _checkShowing > 0)
+		{
+			if (ICON_PATH == "archi")
+			{
+				var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
+				_ghostCheck.ICON_PATH = "Regular Checks/" + CHECK_NAME;
+				CHECK_CONTAIN.AddChild(_ghostCheck);
+				
+				var _ghostList = new List<string>();
+				_ghostList.AddRange(GHOST_NAMES);
+				_ghostList.Add(CHECK_NAME);
+				
+				GHOST_NAMES = _ghostList.ToArray();
+			}
+			
+			else
+				return;
+		}
+		
 		
 		else if (IS_ACTIVE)
 		{

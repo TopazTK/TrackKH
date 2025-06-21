@@ -26,7 +26,7 @@ public partial class DEATH_SCRIPT : Control
 		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		var _texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
-		var _loadMain = ResourceLoader.Load(_texturePath + "Important Checks/death.png") as Texture2D;
+		var _loadMain = ResourceLoader.Load(_texturePath + "Important Checks/death.dds") as Texture2D;
 		
 		ICON_MAIN = GetNode("ICON_MAIN") as TextureRect;
 		ICON_NUMBER = GetNode("ICON_NUMBER") as TextureRect;
@@ -42,6 +42,21 @@ public partial class DEATH_SCRIPT : Control
 		
 		ICON_MAIN.Texture = _loadMain;
 		SHDW_MAIN.Texture = _loadMain;
+		
+		if (AMOUNT > 0)
+		{
+			ANIM_MAIN.Play("MAIN_ACTIVATE");
+			
+			var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (AMOUNT + 1) + ".png") as Texture2D;
+			
+			ICON_NUMBER.Texture = _numberTexture;
+			SHDW_NUMBER.Texture = _numberTexture;
+			
+			if (!ICON_NUMBER.Visible)
+				ANIM_NUMBER.Play("NUMBER_APPEAR");
+		}
+		
+		AddUserSignal("AUTOSAVE");
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -63,6 +78,9 @@ public partial class DEATH_SCRIPT : Control
 				
 			AMOUNT++;
 			_isDead = true;
+			
+			if (GLOBAL_VARS.IS_AUTOSAVE)
+				EmitSignal("AUTOSAVE");
 		}
 		
 		if (_checkDeath != Hypervisor.PureAddress + 0x23DB2F0 && _isDead)

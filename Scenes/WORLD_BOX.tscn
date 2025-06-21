@@ -1,11 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://bd0wm3mp0nbct"]
+[gd_scene load_steps=20 format=3 uid="uid://bd0wm3mp0nbct"]
 
-[ext_resource type="Texture2D" uid="uid://cuuuvfae8dwla" path="res://Assets/General/world_box.png" id="1_q3d3o"]
+[ext_resource type="Texture2D" uid="uid://cqcj0rcxkatyu" path="res://Assets/General/world_box.png" id="1_q3d3o"]
 [ext_resource type="Script" uid="uid://c3u0aaraa7n86" path="res://Scripts/WORLD_SCRIPT.cs" id="1_vt4t2"]
-[ext_resource type="Texture2D" uid="uid://dx5t6fumskwpu" path="res://Assets/debug.png" id="3_vt4t2"]
-[ext_resource type="Texture2D" uid="uid://c2ok0l5l7i2vg" path="res://Assets/General/Numbers/20.png" id="4_vybjb"]
-[ext_resource type="Texture2D" uid="uid://c4ya3ov0pj4ji" path="res://Assets/General/lock.png" id="5_gxhhx"]
-[ext_resource type="Texture2D" uid="uid://wj32st3tpybw" path="res://Assets/General/ignore.png" id="5_sjkt1"]
+[ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="3_vt4t2"]
 
 [sub_resource type="Animation" id="Animation_8xhlf"]
 resource_name = "BACKDROP_ACTIVE"
@@ -525,7 +522,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -308.0
-offset_bottom = -989.0
+offset_bottom = -1174.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -534,10 +531,10 @@ script = ExtResource("1_vt4t2")
 [node name="BACKDROP" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.437
-anchor_bottom = 0.074
-offset_right = -222.2
-offset_bottom = -41.4
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -369.706
+offset_bottom = -159.141
 texture = ExtResource("1_q3d3o")
 
 [node name="ICON_MAIN" type="TextureRect" parent="."]
@@ -568,7 +565,6 @@ offset_left = 26.0
 offset_top = 61.0
 offset_right = 90.0
 offset_bottom = 82.0
-texture = ExtResource("4_vybjb")
 expand_mode = 1
 stretch_mode = 4
 
@@ -580,7 +576,6 @@ offset_left = 1.0
 offset_top = 2.0
 offset_right = 65.0
 offset_bottom = 23.0
-texture = ExtResource("4_vybjb")
 expand_mode = 1
 stretch_mode = 4
 
@@ -592,7 +587,6 @@ offset_left = 19.0
 offset_top = 16.0
 offset_right = 75.0
 offset_bottom = 72.0
-texture = ExtResource("5_sjkt1")
 expand_mode = 1
 stretch_mode = 5
 
@@ -604,20 +598,18 @@ offset_left = 2.0
 offset_top = 1.0
 offset_right = 60.0
 offset_bottom = 59.0
-texture = ExtResource("5_gxhhx")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="CHECK_CONTAIN" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.366
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.108
+offset_left = 101.0
 offset_top = 8.0
-offset_right = -3.0
-offset_bottom = -8.0
+offset_right = -6.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = -2

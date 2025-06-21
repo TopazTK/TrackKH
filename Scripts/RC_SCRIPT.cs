@@ -25,6 +25,7 @@ public partial class RC_SCRIPT : Control
 	AnimationPlayer ANIM_NUMBER;
 	
 	bool _mouseOver = false;
+	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
 	
 	public void mouseEnter() => _mouseOver = true;
@@ -32,10 +33,10 @@ public partial class RC_SCRIPT : Control
 	
 	public override void _Ready()
 	{
-		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
-		var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Regular Checks/" + ICON_PATH + ".png";
+		var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Regular Checks/" + ICON_PATH + ".dds";
 		
 		var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
 		
@@ -58,6 +59,7 @@ public partial class RC_SCRIPT : Control
 			ICON_NUMBER.Texture = _numberTexture;
 			SHDW_NUMBER.Texture = _numberTexture;
 		}
+		
 		this.MouseEntered += mouseEnter;
 		this.MouseExited += mouseExit;
 		
@@ -67,11 +69,24 @@ public partial class RC_SCRIPT : Control
 		if (AMOUNT > 1)
 			ANIM_NUMBER.Play("NUMBER_APPEAR");
 		
+		AddUserSignal("AUTOSAVE");
 		AddUserSignal("RECEIVE_SIGNAL");
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (_iconMode != GLOBAL_VARS.ICON_CLASSIC)
+		{
+			_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+			_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+			
+			var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + "Regular Checks/" + ICON_PATH + (TRACK_MODE == 0x01 ? AMOUNT.ToString("_0") + ".dds" : ".dds");
+			var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
+			
+			ICON_MAIN.Texture = _loadMain;
+			SHDW_MAIN.Texture = _loadMain;
+		}
+		
 		if (TRACK_ADDRESS != 0x00)
 		{
 			switch (TRACK_MODE)
@@ -81,7 +96,7 @@ public partial class RC_SCRIPT : Control
 					var _fetchAmount = Hypervisor.Read<byte>(TRACK_ADDRESS);
 					var _fetchRemain = MAX_AMOUNT - _fetchAmount;
 					
-					if (_fetchRemain < AMOUNT)
+					if (_fetchRemain < AMOUNT && AMOUNT > 0)
 					{
 						if (_fetchRemain == 0 && AMOUNT != _fetchRemain)
 							ANIM_MAIN.Play("MAIN_DEACTIVATE");
@@ -99,6 +114,9 @@ public partial class RC_SCRIPT : Control
 						
 						AMOUNT = _fetchRemain;
 						EmitSignal("RECEIVE_SIGNAL", ICON_PATH);
+						
+						if (GLOBAL_VARS.IS_AUTOSAVE)
+							EmitSignal("AUTOSAVE");
 					}
 					
 					break;
@@ -114,7 +132,7 @@ public partial class RC_SCRIPT : Control
 					
 					var _fetchRemain = MAX_AMOUNT - _count;
 					
-					if (_fetchRemain < AMOUNT)
+					if (_fetchRemain < AMOUNT && AMOUNT > 0)
 					{
 						if (_fetchRemain == 0 && AMOUNT != _fetchRemain)
 						{
@@ -135,11 +153,23 @@ public partial class RC_SCRIPT : Control
 						
 						AMOUNT = _fetchRemain;
 						EmitSignal("RECEIVE_SIGNAL", ICON_PATH);
+						
+						if (GLOBAL_VARS.IS_AUTOSAVE)
+							EmitSignal("AUTOSAVE");
 					}
 					
 					break;
 				}
 			}
+		}
+		
+		if (AMOUNT == 0x00)
+		{
+			if (ICON_NUMBER.Visible)
+				ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
+			
+			if (ICON_MAIN.Modulate.R == 1)
+				ANIM_MAIN.Play("MAIN_DEACTIVATE");
 		}
 	}
 }

@@ -10,12 +10,15 @@ public partial class GHOST_SCRIPT : Control
 	
 	AnimationPlayer ANIM_MAIN;
 	
+	bool _iconMode = false;
+	string _texturePath = "Assets/Minimal/";
+	
 	public override void _Ready()
 	{
-		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
-		var _texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
-		var _loadMain = ResourceLoader.Load(_texturePath + ICON_PATH + ".png") as Texture2D;
+		var _loadMain = ResourceLoader.Load(_texturePath + ICON_PATH + ".dds") as Texture2D;
 		
 		ICON_MAIN = GetNode("ICON_MAIN") as TextureRect;
 		SHDW_MAIN = GetNode("ICON_MAIN/SHDW_MAIN") as TextureRect;
@@ -26,5 +29,20 @@ public partial class GHOST_SCRIPT : Control
 		SHDW_MAIN.Texture = _loadMain;
 		
 		ANIM_MAIN.Play("MAIN_ACTIVATE");
+	}
+	
+	public override void _PhysicsProcess(double delta)
+	{
+		if (_iconMode != GLOBAL_VARS.ICON_CLASSIC)
+		{
+			_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+			_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+			
+			var _fetchMainPath = ICON_PATH == "debug" ? "Assets/debug.png" : _texturePath + ICON_PATH + ".dds";
+			var _loadMain = ResourceLoader.Load(_fetchMainPath) as Texture2D;
+			
+			ICON_MAIN.Texture = _loadMain;
+			SHDW_MAIN.Texture = _loadMain;
+		}
 	}
 }
