@@ -5,6 +5,7 @@ public partial class DEATH_SCRIPT : Control
 {
 	[Export] public int AMOUNT = 0;
 	[Export] public string ICON_PATH = "debug";
+	[Export] public long EPIC_OFFSET = 0x00;
 	
 	TextureRect ICON_MAIN;
 	TextureRect SHDW_MAIN;
@@ -19,10 +20,13 @@ public partial class DEATH_SCRIPT : Control
 	AnimationPlayer ANIM_NUMBER;
 	AnimationPlayer ANIM_SPECIAL;
 	
+	bool _isInit = false;
 	bool _isDead = false;
 	
 	public override void _Ready()
 	{
+		_isInit = false;
+		
 		var _iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		var _texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
@@ -57,13 +61,15 @@ public partial class DEATH_SCRIPT : Control
 		}
 		
 		AddUserSignal("AUTOSAVE");
+		_isInit = true;
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		var _checkDeath = Hypervisor.Read<ulong>(0x2382568);
+		var _checkDeath = Hypervisor.Read<ulong>(Hypervisor.BaseOffset == 0xA00 ? 0x2397E38U : 0x2382568U);
+		var _checkAddress = Hypervisor.BaseOffset == 0xA00 ? 0x23DB300U : 0x23DB2F0U;
 		
-		if (_checkDeath == Hypervisor.PureAddress + 0x23DB2F0 && !_isDead)
+		if (_checkDeath == Hypervisor.PureAddress + _checkAddress && !_isDead)
 		{
 			if (AMOUNT == 0)
 				ANIM_MAIN.Play("MAIN_ACTIVATE");
@@ -79,11 +85,11 @@ public partial class DEATH_SCRIPT : Control
 			AMOUNT++;
 			_isDead = true;
 			
-			if (GLOBAL_VARS.IS_AUTOSAVE)
+			if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 				EmitSignal("AUTOSAVE");
 		}
 		
-		if (_checkDeath != Hypervisor.PureAddress + 0x23DB2F0 && _isDead)
+		if (_checkDeath != Hypervisor.PureAddress + _checkAddress && _isDead)
 			_isDead = false;
 	}
 }

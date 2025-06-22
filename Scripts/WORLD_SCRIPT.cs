@@ -62,6 +62,7 @@ public partial class WORLD_SCRIPT : Control
 	bool _mouseOver = false;
 	bool _signalConnect = false;
 	
+	bool _isInit = false;
 	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
 	
@@ -70,14 +71,17 @@ public partial class WORLD_SCRIPT : Control
 	
 	public override void _Ready()
 	{
-		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
-		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
-		
-		var _loadMain = ResourceLoader.Load(_texturePath + "Worlds/" + ICON_PATH + ".dds") as Texture2D;
-		var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.dds") as Texture2D;
+		_isInit = false;
 		
 		IS_LOCKED = false;
 		IS_ACTIVE = false;
+		
+		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
+		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
+		
+		var _ignoreTexture = ResourceLoader.Load("Assets/General/ignore.dds") as Texture2D;
+		var _backTexture = ResourceLoader.Load("Assets/General/archi_box.png") as Texture2D;
+		var _loadMain = ResourceLoader.Load(_texturePath + "Worlds/" + ICON_PATH + ".dds") as Texture2D;
 		
 		BACKDROP = GetNode("BACKDROP") as TextureRect;
 		
@@ -111,15 +115,6 @@ public partial class WORLD_SCRIPT : Control
 			ANIM_SPECIAL.Play("SPECIAL_APPEAR");
 		}
 		
-		foreach(var _ghostName in GHOST_NAMES)
-		{
-			var _fetchScene = GD.Load<PackedScene>("res://Scenes/GHOST_CHECK.tscn");
-			var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
-			_ghostCheck.ICON_PATH = "Regular Checks/" + _ghostName;
-			
-			CHECK_CONTAIN.AddChild(_ghostCheck);
-		}
-		
 		if (AMOUNT > 0)
 		{
 			var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + AMOUNT + ".png") as Texture2D;
@@ -132,13 +127,23 @@ public partial class WORLD_SCRIPT : Control
 		
 		if (ICON_PATH == "archi")
 		{
-			var _backTexture = ResourceLoader.Load("Assets/General/archi_box.png") as Texture2D;
 			BACKDROP.Texture = _backTexture;
 			CHECK_CONTAIN.Columns = 14;
 		}
 		
+		foreach(var _ghostName in GHOST_NAMES)
+		{
+			var _fetchScene = GD.Load<PackedScene>("res://Scenes/GHOST_CHECK.tscn");
+			var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
+			_ghostCheck.ICON_PATH = "Regular Checks/" + _ghostName;
+			
+			CHECK_CONTAIN.AddChild(_ghostCheck);
+		}
+		
 		AddUserSignal("AUTOSAVE");
 		ExecuteLogic();
+		
+		_isInit = true;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -204,7 +209,7 @@ public partial class WORLD_SCRIPT : Control
 			
 			IS_IGNORED = !IS_IGNORED;
 			
-			if (GLOBAL_VARS.IS_AUTOSAVE)
+			if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 				EmitSignal("AUTOSAVE");
 		}
 		
@@ -236,7 +241,7 @@ public partial class WORLD_SCRIPT : Control
 					
 					IS_LOCKED = true;
 					
-					if (GLOBAL_VARS.IS_AUTOSAVE)
+					if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 						EmitSignal("AUTOSAVE");
 				}
 				
@@ -247,7 +252,7 @@ public partial class WORLD_SCRIPT : Control
 					
 					IS_LOCKED = false;
 					
-					if (GLOBAL_VARS.IS_AUTOSAVE)
+					if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 						EmitSignal("AUTOSAVE");
 				}
 			}
@@ -267,7 +272,7 @@ public partial class WORLD_SCRIPT : Control
 				
 				AMOUNT = _amountRead;
 				
-				if (GLOBAL_VARS.IS_AUTOSAVE)
+				if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 					EmitSignal("AUTOSAVE");
 			}
 			
@@ -288,27 +293,13 @@ public partial class WORLD_SCRIPT : Control
 		}
 	}
 	
-	public void ApplyCheck(string CHECK_NAME)
+	public void ApplyCheck(string CHECK_NAME, int AMOUNT)
 	{
-		var _fetchScene = GD.Load<PackedScene>("res://Scenes/GHOST_CHECK.tscn");
-		
-		var _labelPointer = Hypervisor.Read<ulong>(0x283B3C0);
-		var _textPointer = Hypervisor.Read<ulong>(0x283B3B0);
-		
-		var _checkLabel = Hypervisor.Read<byte>(_labelPointer, 0x05, true);
-		var _checkText = Hypervisor.Read<byte>(_textPointer, 0x09, true);
-		
-		var _checkServer = Hypervisor.Read<byte>(_textPointer, 0x09, true);
-		
-		var _checkActive = Hypervisor.Read<byte>(0x283B380);
-		var _checkShowing = Hypervisor.Read<byte>(0x283B390);
-		
-		var _textMatch = _checkText.Take(5).SequenceEqual<byte>([ 0x30, 0x56, 0x53, 0x51, 0x01 ]);
-		var _serverMatch = _checkText.SequenceEqual<byte>([ 0x3C, 0x49, 0x47, 0x4D, 0x49, 0x5A, 0x49, 0x48, 0x01 ]);
-		
-		if (_checkLabel.SequenceEqual<byte>([ 0x3D, 0x53, 0x56, 0x45, 0x00 ]) && _checkActive > 0 && _checkShowing > 0)
+		void _initGhost()
 		{
-			if (ICON_PATH == "levels")
+			var _fetchScene = GD.Load<PackedScene>("res://Scenes/GHOST_CHECK.tscn");
+			
+			for (int i = 0; i < AMOUNT; i++)
 			{
 				var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
 				_ghostCheck.ICON_PATH = "Regular Checks/" + CHECK_NAME;
@@ -320,6 +311,31 @@ public partial class WORLD_SCRIPT : Control
 				
 				GHOST_NAMES = _ghostList.ToArray();
 			}
+			
+			if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
+				EmitSignal("AUTOSAVE");
+		}
+		
+		var _labelPointer = Hypervisor.Read<ulong>(0x283B3C0);
+		var _textPointer = Hypervisor.Read<ulong>(0x283B3B0);
+		
+		var _checkLabel = Hypervisor.Read<byte>(_labelPointer, 0x05, true);
+		
+		var _checkText = Hypervisor.Read<byte>(_textPointer, 0x05, true);
+		var _checkServer = Hypervisor.Read<byte>(_textPointer, 0x09, true);
+		
+		var _checkActive = Hypervisor.Read<byte>(0x283B380);
+		var _checkShowing = Hypervisor.Read<byte>(0x283B390);
+		
+		var _labelMatch = _checkLabel.SequenceEqual<byte>([ 0x3D, 0x53, 0x56, 0x45, 0x00 ]);
+		
+		var _textMatch = _checkText.SequenceEqual<byte>([ 0x30, 0x56, 0x53, 0x51, 0x01 ]);
+		var _serverMatch = _checkServer.SequenceEqual<byte>([ 0x3C, 0x49, 0x47, 0x4D, 0x49, 0x5A, 0x49, 0x48, 0x01 ]);
+		
+		if (_labelMatch && _checkActive > 0 && _checkShowing > 0)
+		{
+			if (ICON_PATH == "levels")
+				_initGhost();
 			
 			else
 				return;
@@ -328,34 +344,13 @@ public partial class WORLD_SCRIPT : Control
 		else if ((_textMatch || _serverMatch) && _checkActive > 0 && _checkShowing > 0)
 		{
 			if (ICON_PATH == "archi")
-			{
-				var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
-				_ghostCheck.ICON_PATH = "Regular Checks/" + CHECK_NAME;
-				CHECK_CONTAIN.AddChild(_ghostCheck);
-				
-				var _ghostList = new List<string>();
-				_ghostList.AddRange(GHOST_NAMES);
-				_ghostList.Add(CHECK_NAME);
-				
-				GHOST_NAMES = _ghostList.ToArray();
-			}
+				_initGhost();
 			
 			else
 				return;
 		}
 		
-		
 		else if (IS_ACTIVE)
-		{
-			var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
-			_ghostCheck.ICON_PATH = "Regular Checks/" + CHECK_NAME;
-			CHECK_CONTAIN.AddChild(_ghostCheck);
-			
-			var _ghostList = new List<string>();
-			_ghostList.AddRange(GHOST_NAMES);
-			_ghostList.Add(CHECK_NAME);
-				
-			GHOST_NAMES = _ghostList.ToArray();
-		}
+			_initGhost();
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bjwrmgcadx76"]
+[gd_scene load_steps=20 format=3 uid="uid://poicgrcyl5h0"]
 
 [ext_resource type="Texture2D" uid="uid://c3436lxxltemj" path="res://Assets/General/archi_box.png" id="2_hul6t"]
 [ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="3_dcpi3"]

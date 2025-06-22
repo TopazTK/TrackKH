@@ -24,6 +24,7 @@ public partial class RC_SCRIPT : Control
 	AnimationPlayer ANIM_MAIN;
 	AnimationPlayer ANIM_NUMBER;
 	
+	bool _isInit = false;
 	bool _mouseOver = false;
 	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
@@ -33,6 +34,8 @@ public partial class RC_SCRIPT : Control
 	
 	public override void _Ready()
 	{
+		_isInit = false;
+		
 		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
@@ -71,6 +74,8 @@ public partial class RC_SCRIPT : Control
 		
 		AddUserSignal("AUTOSAVE");
 		AddUserSignal("RECEIVE_SIGNAL");
+		
+		_isInit = true;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -112,10 +117,10 @@ public partial class RC_SCRIPT : Control
 						else if (_fetchRemain <= 1 && ICON_NUMBER.Visible)
 							ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
 						
+						EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain));
 						AMOUNT = _fetchRemain;
-						EmitSignal("RECEIVE_SIGNAL", ICON_PATH);
 						
-						if (GLOBAL_VARS.IS_AUTOSAVE)
+						if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 							EmitSignal("AUTOSAVE");
 					}
 					
@@ -151,10 +156,10 @@ public partial class RC_SCRIPT : Control
 						else if (_fetchRemain <= 1 && ICON_NUMBER.Visible)
 							ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
 						
+						EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain));
 						AMOUNT = _fetchRemain;
-						EmitSignal("RECEIVE_SIGNAL", ICON_PATH);
 						
-						if (GLOBAL_VARS.IS_AUTOSAVE)
+						if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 							EmitSignal("AUTOSAVE");
 					}
 					

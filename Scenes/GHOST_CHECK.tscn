@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ck2bi7mhggcss"]
 
-[ext_resource type="Script" uid="uid://do730km481xcw" path="res://Scripts/GHOST_SCRIPT.cs" id="1_lx8jo"]
-[ext_resource type="Texture2D" uid="uid://1vxifm1qhce5" path="res://Assets/debug.png" id="2_qunu6"]
+[ext_resource type="Script" uid="uid://tgobi8l533hb" path="res://Scripts/GHOST_SCRIPT.cs" id="1_lx8jo"]
+[ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="2_qunu6"]
 
 [sub_resource type="Animation" id="Animation_d7iue"]
 resource_name = "MAIN_ACTIVATE"

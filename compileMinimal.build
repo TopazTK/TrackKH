@@ -1,0 +1,31 @@
+{
+	"disabled_build_options": {
+		"disable_2d_physics": true,
+		"disable_3d": true,
+		"disable_3d_physics": true,
+		"opengl3": false,
+		"openxr": false
+	},
+	"disabled_classes": [
+		"BaseMaterial3D",
+		"Mesh",
+		"MeshLibrary",
+		"MultiMesh",
+		"NavigationAgent3D",
+		"NavigationMesh",
+		"NavigationMeshSourceGeometryData3D",
+		"Node3D",
+		"Occluder3D",
+		"OpenXRAction",
+		"OpenXRActionMap",
+		"OpenXRActionSet",
+		"OpenXRBindingModifier",
+		"OpenXRHapticBase",
+		"OpenXRIPBinding",
+		"OpenXRInteractionProfile",
+		"Shape3D",
+		"Texture3D",
+		"World3D"
+	],
+	"type": "build_profile"
+}

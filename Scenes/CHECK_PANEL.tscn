@@ -196,11 +196,13 @@ ICON_PATH = "Emblems/emblem"
 
 [node name="MITSUBISHI" parent="MAIN_CONTAINER/COUNTABLES/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
 layout_mode = 2
+MAX_AMOUNT = 20
 TRACK_ADDRESS = 48142341
 ICON_PATH = "mitsubishi"
 
 [node name="LUCKY" parent="MAIN_CONTAINER/COUNTABLES/IC_CONTAINER" instance=ExtResource("4_ak5n4")]
 layout_mode = 2
+MAX_AMOUNT = 20
 TRACK_ADDRESS = 48142567
 ICON_PATH = "lucky"
 

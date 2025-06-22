@@ -18,7 +18,7 @@ public partial class IC_SCRIPT : Control
 	[Export] public ulong SUB_TRACK_ADDRESS = 0x00;
 	[Export] public string ICON_PATH = "debug";
 	[Export] public string SUB_ICON_PATH = "debug";
-
+	
 	TextureRect ICON_MAIN;
 	TextureRect SHDW_MAIN;
 	
@@ -42,6 +42,7 @@ public partial class IC_SCRIPT : Control
 	
 	bool _mouseOver = false;
 	
+	bool _isInit = false;
 	bool _iconMode = false;
 	string _texturePath = "Assets/Minimal/";
 	
@@ -50,6 +51,8 @@ public partial class IC_SCRIPT : Control
 	
 	public override void _Ready()
 	{
+		_isInit = false;
+		
 		_iconMode = GLOBAL_VARS.ICON_CLASSIC;
 		_texturePath = _iconMode ? "Assets/Classic/" : "Assets/Minimal/";
 		
@@ -142,6 +145,7 @@ public partial class IC_SCRIPT : Control
 		}
 		
 		AddUserSignal("AUTOSAVE");
+		_isInit = true;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -197,6 +201,49 @@ public partial class IC_SCRIPT : Control
 	
 	public void ExecuteLogic()
 	{
+		void _activateCheck(int Input)
+		{
+			if (Input > 0 && AMOUNT == 0)
+				ANIM_MAIN.Play("MAIN_ACTIVATE");
+			
+			if (Input > 1)
+			{
+				var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (Input == MAX_AMOUNT ? "max" : Input) + ".png") as Texture2D;
+									
+				ICON_NUMBER.Texture = _numberTexture;
+				SHDW_NUMBER.Texture = _numberTexture;
+				
+				if (!ICON_NUMBER.Visible)
+					ANIM_NUMBER.Play("NUMBER_APPEAR");
+			}
+			
+			AMOUNT = Input;
+			
+			if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
+				EmitSignal("AUTOSAVE");
+		}
+		
+		void _activateSubCheck(int Input)
+		{
+			if (Input > 0 && SUB_AMOUNT == 0)
+			{
+				ANIM_SUBCHECK.Play("SUBCHECK_APPEAR");
+				
+				var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (Input == MAX_SUB_AMOUNT ? "max" : Input) + ".png") as Texture2D;
+				
+				ICON_SUBNUM.Texture = _numberTexture;
+				SHDW_SUBNUM.Texture = _numberTexture;
+				
+				if (Input >= 1 && !ICON_SUBNUM.Visible)
+					ANIM_SUBNUM.Play("SUBNUM_APPEAR");
+			}
+			
+			SUB_AMOUNT = Input;
+			
+			if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
+				EmitSignal("AUTOSAVE");
+		}
+		
 		if (!IS_IGNORED)
 		{
 			if (SUB_TRACK_ADDRESS != 0x00)
@@ -208,26 +255,7 @@ public partial class IC_SCRIPT : Control
 						var _fetchAmount = Hypervisor.Read<byte>(SUB_TRACK_ADDRESS);
 						
 						if (_fetchAmount > SUB_AMOUNT)
-						{
-							if (_fetchAmount > 0)
-							{
-								if (SUB_AMOUNT == 0)
-									ANIM_SUBCHECK.Play("SUBCHECK_APPEAR");
-								
-								var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (_fetchAmount == MAX_SUB_AMOUNT ? "max" : _fetchAmount) + ".png") as Texture2D;
-								
-								ICON_SUBNUM.Texture = _numberTexture;
-								SHDW_SUBNUM.Texture = _numberTexture;
-								
-								if (_fetchAmount >= 1 && !ICON_SUBNUM.Visible)
-									ANIM_SUBNUM.Play("SUBNUM_APPEAR");
-							}
-							
-							SUB_AMOUNT = _fetchAmount;
-							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
-								EmitSignal("AUTOSAVE");
-						}
+							_activateSubCheck(_fetchAmount);
 						
 						break;
 					}
@@ -238,26 +266,7 @@ public partial class IC_SCRIPT : Control
 						var _count = _fetchAmount.Where(x => x > 0x00).Count();
 						
 						if (_count > SUB_AMOUNT)
-						{
-							if (_count > 0)
-							{
-								if (SUB_AMOUNT == 0)
-									ANIM_SUBCHECK.Play("SUBCHECK_APPEAR");
-								
-								var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (_count == MAX_SUB_AMOUNT ? "max" : _count) + ".png") as Texture2D;
-								
-								ICON_SUBNUM.Texture = _numberTexture;
-								SHDW_SUBNUM.Texture = _numberTexture;
-								
-								if (_count >= 1 && !ICON_SUBNUM.Visible)
-									ANIM_SUBNUM.Play("SUBNUM_APPEAR");
-							}
-							
-							SUB_AMOUNT = _count;
-							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
-								EmitSignal("AUTOSAVE");
-						}
+							_activateSubCheck(_count);
 						
 						break;
 					}
@@ -273,26 +282,7 @@ public partial class IC_SCRIPT : Control
 						var _fetchAmount = Hypervisor.Read<byte>(TRACK_ADDRESS) + (SHOW_SUM_AMOUNT ? SUB_AMOUNT : 0);
 						
 						if (_fetchAmount > AMOUNT)
-						{
-							if (_fetchAmount > 0 && AMOUNT == 0)
-								ANIM_MAIN.Play("MAIN_ACTIVATE");
-							
-							if (_fetchAmount > 1)
-							{
-								var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (_fetchAmount == MAX_AMOUNT ? "max" : _fetchAmount) + ".png") as Texture2D;
-								
-								ICON_NUMBER.Texture = _numberTexture;
-								SHDW_NUMBER.Texture = _numberTexture;
-								
-								if (!ICON_NUMBER.Visible)
-									ANIM_NUMBER.Play("NUMBER_APPEAR");
-							}
-							
-							AMOUNT = _fetchAmount;
-							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
-							EmitSignal("AUTOSAVE");
-						}
+							_activateCheck(_fetchAmount);
 						
 						break;
 					}
@@ -317,7 +307,7 @@ public partial class IC_SCRIPT : Control
 							
 							AMOUNT = (int)_valueBitwise;
 							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
+							if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
 								EmitSignal("AUTOSAVE");
 						}
 						
@@ -327,7 +317,7 @@ public partial class IC_SCRIPT : Control
 					case 2:
 					{
 						var _fetchArray = Hypervisor.Read<byte>(TRACK_ADDRESS, ARRAY_LENGTH);
-						double _count = 0 + (SHOW_SUM_AMOUNT ? SUB_AMOUNT : 0);
+						int _count = 0 + (SHOW_SUM_AMOUNT ? SUB_AMOUNT : 0);
 						
 						for (int i = 0; i < _fetchArray.Length; i++)
 						{
@@ -344,26 +334,7 @@ public partial class IC_SCRIPT : Control
 						}
 						
 						if (_count > AMOUNT)
-						{
-							if (_count > 0 && AMOUNT == 0)
-								ANIM_MAIN.Play("MAIN_ACTIVATE");
-							
-							if (_count > 1)
-							{
-								var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (_count == MAX_AMOUNT ? "max" : _count) + ".png") as Texture2D;
-								
-								ICON_NUMBER.Texture = _numberTexture;
-								SHDW_NUMBER.Texture = _numberTexture;
-								
-								if (!ICON_NUMBER.Visible)
-									ANIM_NUMBER.Play("NUMBER_APPEAR");
-							}
-							
-							AMOUNT = (int)_count;
-							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
-								EmitSignal("AUTOSAVE");
-						}
+							_activateCheck(_count);
 						
 						break;
 					}
@@ -377,26 +348,7 @@ public partial class IC_SCRIPT : Control
 							_count += _fetchArray.Where(x => x == MAX_SUB_AMOUNT || x - 0x80 == MAX_SUB_AMOUNT).Count();
 						
 						if (_count > AMOUNT)
-						{
-							if (_count > 0 && AMOUNT == 0)
-								ANIM_MAIN.Play("MAIN_ACTIVATE");
-							
-							if (_count > 1)
-							{
-								var _numberTexture = ResourceLoader.Load("Assets/General/Numbers/" + (_count == MAX_AMOUNT ? "max" : _count) + ".png") as Texture2D;
-								
-								ICON_NUMBER.Texture = _numberTexture;
-								SHDW_NUMBER.Texture = _numberTexture;
-								
-								if (!ICON_NUMBER.Visible)
-									ANIM_NUMBER.Play("NUMBER_APPEAR");
-							}
-							
-							AMOUNT = (int)_count;
-							
-							if (GLOBAL_VARS.IS_AUTOSAVE)
-								EmitSignal("AUTOSAVE");
-						}
+							_activateCheck(_count);
 						
 						break;
 					}

@@ -40,20 +40,26 @@ public partial class MAIN_SCRIPT : Control
 		GetWindow().ContentScaleSize = new Vector2I(570, Input ? 1340 : 1255);
 		this.SetPosition(new Vector2(0, 0));
 		
-		var _worldNode = GetNode("CHECK_SCENE/MAIN_CONTAINER/WORLD_CONTAINER") as Container;
-		var _countChecks = GetNode("CHECK_SCENE/MAIN_CONTAINER/COUNTABLES") as Container;
-		var _trackChecks = GetNode("CHECK_SCENE/MAIN_CONTAINER/TRACKABLES") as Container;
-		
-		foreach (var _item in _worldNode.GetChildren())
-			_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
-		
-		foreach (var _parent in _countChecks.GetChildren())
-			foreach (var _item in _parent.GetChildren())
-				_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
-		
-		foreach (var _parent in _trackChecks.GetChildren())
-			foreach (var _item in _parent.GetChildren())
-				_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
+		Task.Run(() => 
+		{
+			Callable.From(() => 
+			{
+				var _worldNode = GetNode("CHECK_SCENE/MAIN_CONTAINER/WORLD_CONTAINER") as Container;
+				var _countChecks = GetNode("CHECK_SCENE/MAIN_CONTAINER/COUNTABLES") as Container;
+				var _trackChecks = GetNode("CHECK_SCENE/MAIN_CONTAINER/TRACKABLES") as Container;
+				
+				foreach (var _item in _worldNode.GetChildren())
+					_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
+				
+				foreach (var _parent in _countChecks.GetChildren())
+					foreach (var _item in _parent.GetChildren())
+						_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
+				
+				foreach (var _parent in _trackChecks.GetChildren())
+					foreach (var _item in _parent.GetChildren())
+						_item.Connect("AUTOSAVE", new Callable(this, MethodName.DoAutosave));
+			}).CallDeferred();
+		});
 		
 		if (Input)
 		{
@@ -93,11 +99,12 @@ public partial class MAIN_SCRIPT : Control
 		_saveScene.Pack(_checkNode);
 		
 		ResourceSaver.Save(_saveScene, "user://saveTrack.tscn");
+		GD.Print("SAVE!");
 	}
 	
 	public override void _Ready()
 	{
-		GetWindow().Title = "Auto-Tracker for KH Randomizer [v4.00] | TopazTK";
+		GetWindow().Title = "Auto-Tracker for KH Randomizer [v4.20] | TopazTK";
 		
 		OPTIONS = GetNode("OPTIONS") as Control;
 		ANIM_WINDOW = GetNode("ANIM_WINDOW") as AnimationPlayer;

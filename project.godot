@@ -30,8 +30,7 @@ GLOBAL_VARS="*res://Scripts/GLOBAL_VARS.cs"
 window/size/viewport_width=570
 window/size/viewport_height=1255
 window/size/extend_to_title=true
-window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
