@@ -2,11 +2,11 @@
 
 ![171330349-49a734fc-763f-4e2e-bc1a-cc24ebebe975](https://github.com/user-attachments/assets/38089599-788a-40d0-b9c8-bd9a9331af02)
   
-This is a full-fledged, world-based Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/) and reworked to behave similar to [RedBuddha's Auto-Tracker (maintained by Dee-Ayy)](https://github.com/Dee-Ayy/KhTracker).
+This is a full-fledged, world-based Auto-Tracker for Kingdom Hearts Randomizers, heavily inspired by [zax's web-tracker](https://tracker.zaxu.xyz/) and reworked to behave similar to [RedBuddha's Auto-Tracker (maintained by Dee-Ayy)](https://github.com/Dee-Ayy/KH2Tracker).
 
 ## Supported Games
 
-- Kingdom Hearts I [GICU]
+- Kingdom Hearts I [GICU] | BETA v0.7.2
 
 ---
 
@@ -20,8 +20,10 @@ Get the latest release by clicking the button below.
 
 ## Features
 - Automatic Tracking for Worlds, Counted Checks, and Important Checks.
+- Separate tracking for Archipelago Multiworld Checks.
 - Item and World exclusion from tracking logic.
-- Ability to save and load the current state with ease.
+- Ability to customize with options such as Custom Background Images/Colors and Icons!
+- Ability to save and load the current state with ease, with included Autosave!
 - Ability to resize the window at will.
 - Many more to come!
 
@@ -45,15 +47,14 @@ Get the latest release by clicking the button below.
 ## Controls
 - Middle Click -> Un/Ignore Check/World.
 - F1 -> Save Tracker State.
-- F3 - Load Tracker State.
+- F2 -> Show Options.
+- F3 -> Load Tracker State.
 
 ---
 
 ## Planned Features
 - Manual Tracking Support.
-- Android Support (Both Manual and Automatic).
-- Custom Background Support.
-- Ability to customize icons or select from presets.
+- Android Support (Both Manual and Automatic)
 - Ability to track KH2, BBS, Re:COM, and KH3.
 
 ---
