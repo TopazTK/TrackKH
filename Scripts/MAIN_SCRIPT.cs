@@ -104,7 +104,7 @@ public partial class MAIN_SCRIPT : Control
 	
 	public override void _Ready()
 	{
-		GetWindow().Title = "Auto-Tracker for KH Randomizer [v4.20] | TopazTK";
+		GetWindow().Title = "Auto-Tracker for KH Randomizer [v4.50] | TopazTK";
 		
 		OPTIONS = GetNode("OPTIONS") as Control;
 		ANIM_WINDOW = GetNode("ANIM_WINDOW") as AnimationPlayer;

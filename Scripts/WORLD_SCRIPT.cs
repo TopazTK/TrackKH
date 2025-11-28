@@ -169,7 +169,10 @@ public partial class WORLD_SCRIPT : Control
 			foreach (var _node in _trackableNode.GetChildren())
 			{
 				foreach (var _subNode in _node.GetChildren())
+				{
+					GD.Print(_subNode.Name);
 					_subNode.Connect("RECEIVE_SIGNAL", new Callable(this, MethodName.ApplyCheck));
+				}
 			}
 			
 			_signalConnect = true;
@@ -293,7 +296,7 @@ public partial class WORLD_SCRIPT : Control
 		}
 	}
 	
-	public void ApplyCheck(string CHECK_NAME, int AMOUNT)
+	public void ApplyCheck(string CHECK_NAME, int AMOUNT, string CAT_NAME)
 	{
 		void _initGhost()
 		{
@@ -302,7 +305,7 @@ public partial class WORLD_SCRIPT : Control
 			for (int i = 0; i < AMOUNT; i++)
 			{
 				var _ghostCheck = _fetchScene.Instantiate() as GHOST_SCRIPT;
-				_ghostCheck.ICON_PATH = "Regular Checks/" + CHECK_NAME;
+				_ghostCheck.ICON_PATH = CAT_NAME + "/" + CHECK_NAME;
 				CHECK_CONTAIN.AddChild(_ghostCheck);
 				
 				var _ghostList = new List<string>();

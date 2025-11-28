@@ -117,7 +117,7 @@ public partial class RC_SCRIPT : Control
 						else if (_fetchRemain <= 1 && ICON_NUMBER.Visible)
 							ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
 						
-						EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain));
+						// EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain), "Regular Checks");
 						AMOUNT = _fetchRemain;
 						
 						if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)
@@ -156,7 +156,7 @@ public partial class RC_SCRIPT : Control
 						else if (_fetchRemain <= 1 && ICON_NUMBER.Visible)
 							ANIM_NUMBER.Play("NUMBER_DISAPPEAR");
 						
-						EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain));
+						// EmitSignal("RECEIVE_SIGNAL", ICON_PATH, Math.Abs(AMOUNT - _fetchRemain), "Regular Checks");
 						AMOUNT = _fetchRemain;
 						
 						if (GLOBAL_VARS.IS_AUTOSAVE && _isInit)

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cowfykpcgihp8"]
+
+[ext_resource type="Script" uid="uid://cogkrlpmk3n27" path="res://Scripts/INVISI_SCRIPT.cs" id="1_jwi5x"]
+
+[node name="INVISIBLE_CHECK" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jwi5x")

@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq5acceq4rgat"]
+[gd_scene load_steps=9 format=3 uid="uid://bq5acceq4rgat"]
 
 [ext_resource type="Script" uid="uid://mshh3llfdpgc" path="res://Scripts/PANEL_SCRIPT.cs" id="1_qvuw4"]
 [ext_resource type="StyleBox" uid="uid://c7vip428khkav" path="res://Assets/Styles/PanelStyle.tres" id="1_xjvo1"]
 [ext_resource type="PackedScene" uid="uid://bd0wm3mp0nbct" path="res://Scenes/WORLD_BOX.tscn" id="2_bs8br"]
 [ext_resource type="PackedScene" uid="uid://3hdu6yv5hif4" path="res://Scenes/IMPORTANT_CHECK.tscn" id="4_ak5n4"]
-[ext_resource type="Texture2D" uid="uid://bcqskwcjg2ynd" path="res://Assets/General/separator.png" id="4_evkeg"]
+[ext_resource type="Texture2D" uid="uid://bf07f5tkcccfu" path="res://Assets/General/separator.png" id="4_evkeg"]
 [ext_resource type="PackedScene" uid="uid://311ela8bwpxn" path="res://Scenes/DEATH_CHECK.tscn" id="6_n1aln"]
 [ext_resource type="PackedScene" uid="uid://bo5b2p8pl20p4" path="res://Scenes/REGULAR_CHECK.tscn" id="7_uyawc"]
+[ext_resource type="PackedScene" uid="uid://cowfykpcgihp8" path="res://Scenes/INVISI_CHECK.tscn" id="8_l7djp"]
 
 [node name="CHECK_SCENE" type="Panel"]
 self_modulate = Color(0.137255, 0.137255, 0.137255, 1)
@@ -585,3 +586,166 @@ AMOUNT = 1
 MAX_AMOUNT = 1
 TRACK_ADDRESS = 48142512
 ICON_PATH = "Entry/book"
+
+[node name="WORLD_CHECKS" type="Control" parent="MAIN_CONTAINER/TRACKABLES"]
+layout_mode = 2
+
+[node name="ISLANDS" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142340
+CAT_PATH = "Worlds"
+ICON_PATH = "islands"
+
+[node name="WONDERLAND" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142478
+CAT_PATH = "Worlds"
+ICON_PATH = "wonderland"
+
+[node name="COLISEUM" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142479
+CAT_PATH = "Worlds"
+ICON_PATH = "coliseum"
+
+[node name="JUNGLE" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142480
+CAT_PATH = "Worlds"
+ICON_PATH = "jungle"
+
+[node name="AGRABAH" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142484
+CAT_PATH = "Worlds"
+ICON_PATH = "agrabah"
+
+[node name="MONSTRO" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142485
+CAT_PATH = "Worlds"
+ICON_PATH = "monstro"
+
+[node name="HALLOWEEN" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142495
+CAT_PATH = "Worlds"
+ICON_PATH = "halloween"
+
+[node name="ATLANTICA" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142486
+CAT_PATH = "Worlds"
+ICON_PATH = "atlantica"
+
+[node name="NEVERLAND" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142494
+CAT_PATH = "Worlds"
+ICON_PATH = "neverland"
+
+[node name="BASTION" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142497
+CAT_PATH = "Worlds"
+ICON_PATH = "bastion"
+
+[node name="FINAL" parent="MAIN_CONTAINER/TRACKABLES/WORLD_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 1
+MAX_AMOUNT = 1
+TRACK_ADDRESS = 48142498
+CAT_PATH = "Worlds"
+ICON_PATH = "final"
+
+[node name="IMPORTANT_CHECKS" type="Control" parent="MAIN_CONTAINER/TRACKABLES"]
+layout_mode = 2
+
+[node name="POSTCARD" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 10
+MAX_AMOUNT = 10
+TRACK_ADDRESS = 48142540
+CAT_PATH = "Important Checks"
+ICON_PATH = "postcard"
+
+[node name="MITSUBISHI" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 99
+MAX_AMOUNT = 99
+TRACK_ADDRESS = 48142341
+CAT_PATH = "Important Checks"
+ICON_PATH = "mitsubishi"
+
+[node name="LUCKY" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 99
+MAX_AMOUNT = 99
+TRACK_ADDRESS = 48142567
+CAT_PATH = "Important Checks"
+ICON_PATH = "lucky"
+
+[node name="ROLL" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 5
+MAX_AMOUNT = 5
+SUB_AMOUNT = 22
+ARRAY_LENGTH = 40
+TRACK_MODE = 3
+TRACK_ADDRESS = 48141220
+CAT_PATH = "Important Checks/Movement"
+ICON_PATH = "roll"
+
+[node name="JUMP" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 5
+MAX_AMOUNT = 5
+SUB_AMOUNT = 1
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+CAT_PATH = "Important Checks/Movement"
+ICON_PATH = "jump"
+
+[node name="KICK" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 5
+MAX_AMOUNT = 5
+SUB_AMOUNT = 2
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+CAT_PATH = "Important Checks/Movement"
+ICON_PATH = "kick"
+
+[node name="GLIDE" parent="MAIN_CONTAINER/TRACKABLES/IMPORTANT_CHECKS" instance=ExtResource("8_l7djp")]
+layout_mode = 1
+AMOUNT = 5
+MAX_AMOUNT = 5
+SUB_AMOUNT = 3
+MAX_SUB_AMOUNT = 4
+ARRAY_LENGTH = 16
+TRACK_MODE = 3
+TRACK_ADDRESS = 48142585
+CAT_PATH = "Important Checks/Movement"
+ICON_PATH = "glide"

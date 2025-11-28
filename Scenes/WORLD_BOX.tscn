@@ -1,8 +1,8 @@
 [gd_scene load_steps=20 format=3 uid="uid://bd0wm3mp0nbct"]
 
-[ext_resource type="Texture2D" uid="uid://cqcj0rcxkatyu" path="res://Assets/General/world_box.png" id="1_q3d3o"]
+[ext_resource type="Texture2D" uid="uid://c02kxk6yeyp57" path="res://Assets/General/world_box.png" id="1_q3d3o"]
 [ext_resource type="Script" uid="uid://c3u0aaraa7n86" path="res://Scripts/WORLD_SCRIPT.cs" id="1_vt4t2"]
-[ext_resource type="Texture2D" uid="uid://727fo1pouk2" path="res://Assets/debug.png" id="3_vt4t2"]
+[ext_resource type="Texture2D" uid="uid://d2m6i8vmngds7" path="res://Assets/debug.png" id="3_vt4t2"]
 
 [sub_resource type="Animation" id="Animation_8xhlf"]
 resource_name = "BACKDROP_ACTIVE"
